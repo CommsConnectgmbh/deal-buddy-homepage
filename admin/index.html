@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealBuddy Empire – Admin Panel</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #060606; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+
+  /* AUTH SCREEN */
+  #auth-screen { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .auth-card { background: #111; border: 2px solid #FFB800; border-radius: 20px; padding: 40px; width: 360px; text-align: center; }
+  .auth-logo { font-size: 48px; margin-bottom: 8px; }
+  .auth-title { color: #FFB800; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .auth-sub { color: #555; font-size: 13px; margin-bottom: 28px; }
+  .auth-input { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 14px; color: #fff; font-size: 15px; margin-bottom: 12px; }
+  .auth-btn { width: 100%; background: #FFB800; color: #000; border: none; border-radius: 10px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+  .auth-btn:hover { background: #e6a800; }
+
+  /* MAIN LAYOUT */
+  #app { display: none; }
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #0d0d0d; border-right: 1px solid #1a1a1a; padding: 24px 0; }
+  .sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #1a1a1a; }
+  .sidebar-logo-icon { font-size: 32px; }
+  .sidebar-logo-title { color: #FFB800; font-size: 16px; font-weight: 800; margin-top: 4px; }
+  .sidebar-logo-sub { color: #444; font-size: 11px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 12px 20px; color: #555; text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; background: none; width: 100%; text-align: left; }
+  .nav-item:hover, .nav-item.active { background: #1a1500; color: #FFB800; border-right: 2px solid #FFB800; }
+  .nav-icon { font-size: 18px; width: 24px; }
+
+  .main { margin-left: 220px; padding: 32px; min-height: 100vh; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .page-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .page-sub { color: #555; font-size: 13px; margin-bottom: 28px; }
+
+  /* STATS GRID */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-card { background: #111; border: 1px solid #1a1a1a; border-radius: 14px; padding: 20px; }
+  .stat-card.gold { border-color: #FFB800; background: #1a1500; }
+  .stat-emoji { font-size: 28px; margin-bottom: 10px; }
+  .stat-value { font-size: 28px; font-weight: 800; color: #FFB800; }
+  .stat-label { color: #555; font-size: 12px; margin-top: 4px; }
+
+  /* TABLES */
+  .card { background: #111; border: 1px solid #1a1a1a; border-radius: 14px; overflow: hidden; margin-bottom: 24px; }
+  .card-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #1a1a1a; }
+  .card-title { font-size: 15px; font-weight: 700; color: #fff; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #0d0d0d; color: #555; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 12px 16px; text-align: left; }
+  td { padding: 14px 16px; border-bottom: 1px solid #0d0d0d; font-size: 13px; color: #ccc; vertical-align: middle; }
+  tr:hover td { background: #151515; }
+  tr:last-child td { border-bottom: none; }
+
+  /* FORM */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { color: #888; font-size: 12px; font-weight: 600; }
+  input, select, textarea { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; font-size: 14px; width: 100%; }
+  input:focus, select:focus { border-color: #FFB800; outline: none; }
+  select option { background: #1a1a1a; }
+
+  /* BUTTONS */
+  .btn { padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; }
+  .btn-gold { background: #FFB800; color: #000; }
+  .btn-gold:hover { background: #e6a800; }
+  .btn-outline { background: transparent; color: #FFB800; border: 1px solid #FFB800; }
+  .btn-outline:hover { background: #1a1500; }
+  .btn-red { background: #ef4444; color: #fff; }
+  .btn-green { background: #22c55e; color: #fff; }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+
+  /* BADGES */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-legendary { background: #FFB80020; color: #FFB800; border: 1px solid #FFB800; }
+  .badge-epic { background: #a855f720; color: #a855f7; border: 1px solid #a855f7; }
+  .badge-rare { background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f6; }
+  .badge-common { background: #9ca3af20; color: #9ca3af; border: 1px solid #9ca3af; }
+  .badge-active { background: #22c55e20; color: #22c55e; border: 1px solid #22c55e; }
+  .badge-inactive { background: #33333380; color: #555; }
+
+  /* TOGGLE */
+  .toggle { position: relative; width: 44px; height: 24px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: #333; border-radius: 24px; cursor: pointer; transition: 0.3s; }
+  .toggle-slider:before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px; background: #666; border-radius: 50%; transition: 0.3s; }
+  .toggle input:checked + .toggle-slider { background: #FFB800; }
+  .toggle input:checked + .toggle-slider:before { transform: translateX(20px); background: #000; }
+
+  /* EVENTS */
+  .event-card { background: #111; border: 1px solid #1a1a1a; border-radius: 14px; padding: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .event-card.active { border-color: #FFB800; background: #1a1500; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #22c55e; color: #fff; padding: 14px 24px; border-radius: 12px; font-weight: 700; font-size: 14px; transform: translateY(100px); transition: transform 0.3s; z-index: 9999; }
+  .toast.show { transform: translateY(0); }
+  .toast.error { background: #ef4444; }
+
+  .loading { color: #555; text-align: center; padding: 40px; font-size: 24px; }
+  .empty { color: #444; text-align: center; padding: 40px; }
+  .glow-gold { text-shadow: 0 0 20px #FFB800; }
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">⚙️</div>
+    <div class="auth-title">Empire Admin</div>
+    <div class="auth-sub">Comms Connect GmbH · Nur für Administratoren</div>
+    <input class="auth-input" id="auth-email" type="email" placeholder="E-Mail" />
+    <input class="auth-input" id="auth-password" type="password" placeholder="Passwort" />
+    <button class="auth-btn" onclick="login()">Einloggen</button>
+    <p id="auth-error" style="color:#ef4444;font-size:12px;margin-top:12px;display:none;"></p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon"><img src="../assets/images/buddy-coin.png" style="width:48px;height:48px;filter:drop-shadow(0 0 8px #FFB800)"></div>
+      <div class="sidebar-logo-title">DealBuddy</div>
+      <div class="sidebar-logo-sub">Empire Admin Panel</div>
+    </div>
+    <button class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">📊</span>Dashboard</button>
+    <button class="nav-item" onclick="showPage('items')"><span class="nav-icon">🃏</span>Items & Shop</button>
+    <button class="nav-item" onclick="showPage('battlepass')"><span class="nav-icon">⚡</span>Battle Pass</button>
+    <button class="nav-item" onclick="showPage('events')"><span class="nav-icon">🎉</span>Events</button>
+    <button class="nav-item" onclick="showPage('config')"><span class="nav-icon">⚙️</span>App Config</button>
+    <button class="nav-item" onclick="showPage('users')"><span class="nav-icon">👥</span>Nutzer</button>
+    <button class="nav-item" onclick="showPage('finance')"><span class="nav-icon">💰</span>Finanzen</button>
+    <div style="position:absolute;bottom:20px;left:0;right:0;padding:0 20px;">
+      <button class="btn btn-outline" style="width:100%" onclick="logout()">Ausloggen</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-title">📊 Empire Dashboard</div>
+      <div class="page-sub">Live-Statistiken · Comms Connect GmbH · München</div>
+      <div class="stats-grid" id="stats-grid"><div class="loading">⏳ Lade...</div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">🧾 GmbH Steuer-Notizen</span></div>
+        <div style="padding:20px;color:#888;font-size:13px;line-height:2">
+          • Alle Stripe-Transaktionen mit Invoice-Nummer in <code style="color:#FFB800">stripe_orders</code><br>
+          • MwSt.: 19% auf digitale Güter (§ 3a UStG) · Buddy Coins = virtuelle Güter ohne Geldwert<br>
+          • Schulden-Tracking = keine steuerliche Relevanz für GmbH<br>
+          • Rechnungsnummer-Format: DB-YYYY-XXXXXX (auto-generiert)<br>
+          • CSV-Export für DATEV: Nutze den Finance-Tab
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEMS -->
+    <div class="page" id="page-items">
+      <div class="page-title">🃏 Items & Shop</div>
+      <div class="page-sub">Neue Items erstellen, bearbeiten und verwalten</div>
+
+      <!-- Add Item Form -->
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header">
+          <span class="card-title">➕ Neues Item erstellen</span>
+          <button class="btn btn-gold btn-sm" onclick="createItem()">Item speichern</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label>Name</label><input id="item-name" placeholder="z.B. Goldener Kaffee" /></div>
+          <div class="form-group"><label>Emoji</label><input id="item-emoji" placeholder="☕" maxlength="2" /></div>
+          <div class="form-group"><label>Beschreibung</label><input id="item-desc" placeholder="Kurze Beschreibung" /></div>
+          <div class="form-group"><label>Seltenheit</label>
+            <select id="item-rarity">
+              <option value="common">Common</option>
+              <option value="rare">Rare</option>
+              <option value="epic">Epic</option>
+              <option value="legendary">Legendary</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Kategorie</label>
+            <select id="item-category">
+              <option value="sticker">Sticker</option>
+              <option value="frame">Frame</option>
+              <option value="badge">Badge</option>
+              <option value="effect">Effect</option>
+              <option value="deal_card">Deal Card</option>
+            </select>
+          </div>
+          <div class="form-group"><label>BC-Preis</label><input id="item-price" type="number" placeholder="100" /></div>
+          <div class="form-group"><label>Glow-Farbe (hex)</label><input id="item-glow" placeholder="#FFB800" /></div>
+          <div class="form-group"><label>Image URL (optional)</label><input id="item-image" placeholder="https://..." /></div>
+          <div class="form-group"><label>Battle Pass only?</label>
+            <select id="item-bponly"><option value="false">Nein – im Shop verfügbar</option><option value="true">Ja – nur Battle Pass</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Items Table -->
+      <div class="card">
+        <div class="card-header"><span class="card-title">Alle Items</span><span id="items-count" style="color:#555;font-size:13px"></span></div>
+        <table>
+          <thead><tr><th>Item</th><th>Seltenheit</th><th>Kategorie</th><th>BC-Preis</th><th>Status</th><th>Aktionen</th></tr></thead>
+          <tbody id="items-table"><tr><td colspan="6" class="loading">⏳ Lade...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BATTLE PASS -->
+    <div class="page" id="page-battlepass">
+      <div class="page-title">⚡ Battle Pass</div>
+      <div class="page-sub">Season-Management und Milestone-Tiers</div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header"><span class="card-title">🏆 Aktuelle Season</span></div>
+        <div id="season-info" style="padding:20px"><div class="loading">⏳ Lade...</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">5 Milestone-Tiers</span></div>
+        <table>
+          <thead><tr><th>Tier</th><th>Titel</th><th>XP benötigt</th><th>Free Reward</th><th>Premium Reward</th></tr></thead>
+          <tbody id="tiers-table"><tr><td colspan="5" class="loading">⏳ Lade...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="page" id="page-events">
+      <div class="page-title">🎉 Admin Events</div>
+      <div class="page-sub">Double Coin Weekends und andere Events steuern</div>
+
+      <div style="display:flex;gap:12px;margin-bottom:24px">
+        <button class="btn btn-gold" onclick="createEvent('double_coins', 2.0, 48)">🪙 Double Coins (48h) starten</button>
+        <button class="btn btn-outline" onclick="createEvent('bonus_xp', 2.0, 24)">⚡ Double XP (24h) starten</button>
+      </div>
+
+      <div id="events-list"><div class="loading">⏳ Lade...</div></div>
+    </div>
+
+    <!-- CONFIG -->
+    <div class="page" id="page-config">
+      <div class="page-title">⚙️ App-Konfiguration</div>
+      <div class="page-sub">Globale Einstellungen für Coins, Multiplier und mehr</div>
+      <div id="config-list"><div class="loading">⏳ Lade...</div></div>
+    </div>
+
+    <!-- USERS -->
+    <div class="page" id="page-users">
+      <div class="page-title">👥 Nutzer-Management</div>
+      <div class="page-sub">Suche, Profil-Ansicht und BC-Gutschriften</div>
+      <div style="display:flex;gap:12px;margin-bottom:20px">
+        <input id="user-search" placeholder="Nutzername suchen..." style="flex:1;background:#111;border:1px solid #333;border-radius:10px;padding:12px;color:#fff;font-size:14px" oninput="searchUsers()" />
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Nutzer</th><th>Level</th><th>BC Balance</th><th>Deals</th><th>Battle Pass</th><th>Aktionen</th></tr></thead>
+          <tbody id="users-table"><tr><td colspan="6" class="empty">Nutzer suchen...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="page" id="page-finance">
+      <div class="page-title">💰 Finanzen & Stripe</div>
+      <div class="page-sub">Revenue-Übersicht · Stripe-Transaktionen · DATEV-Export</div>
+      <div class="stats-grid" id="finance-stats"><div class="loading">⏳ Lade...</div></div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Stripe-Transaktionen</span>
+          <button class="btn btn-outline btn-sm" onclick="exportCSV()">📥 CSV für DATEV</button>
+        </div>
+        <table>
+          <thead><tr><th>Datum</th><th>Nutzer</th><th>Produkt</th><th>Betrag</th><th>MwSt.</th><th>Invoice</th><th>Status</th></tr></thead>
+          <tbody id="finance-table"><tr><td colspan="7" class="loading">⏳ Lade...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+// WICHTIG: Ersetze mit deinen Supabase-Daten!
+const SUPABASE_URL = 'https://vjygmfaefhkwznldegvq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqeWdtZmFlZmhrd3pubGRlZ3ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTg4MTAsImV4cCI6MjA4NzY3NDgxMH0.vnfOsWMFB4nQnEd5c1x5USrqUhiYBDwlEuPIAx8GkEI';
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── AUTH ──────────────────────────────────────────────────────
+async function login() {
+  const email = document.getElementById('auth-email').value;
+  const pw = document.getElementById('auth-password').value;
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pw });
+  if (error) {
+    document.getElementById('auth-error').style.display = 'block';
+    document.getElementById('auth-error').textContent = error.message;
+    return;
+  }
+  // Check admin
+  const { data: profile } = await db.from('profiles').select('is_admin').eq('id', data.user.id).single();
+  if (!profile?.is_admin) {
+    await db.auth.signOut();
+    document.getElementById('auth-error').style.display = 'block';
+    document.getElementById('auth-error').textContent = 'Kein Admin-Zugriff.';
+    return;
+  }
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadDashboard();
+  loadItems();
+  loadBattlePass();
+  loadEvents();
+  loadConfig();
+  loadFinance();
+}
+
+async function logout() {
+  await db.auth.signOut();
+  location.reload();
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function showToast(msg, error = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (error ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────
+async function loadDashboard() {
+  const [users, deals, econ, stripe, debts] = await Promise.all([
+    db.from('profiles').select('id', { count: 'exact', head: true }),
+    db.from('bets').select('id', { count: 'exact', head: true }),
+    db.from('user_economy').select('bc_balance'),
+    db.from('stripe_orders').select('amount_eur').eq('status', 'completed'),
+    db.from('private_debts').select('amount').eq('status', 'open'),
+  ]);
+  const totalBC = (econ.data || []).reduce((s, r) => s + (r.bc_balance || 0), 0);
+  const totalRev = (stripe.data || []).reduce((s, r) => s + Number(r.amount_eur || 0), 0);
+  const totalDebt = (debts.data || []).reduce((s, r) => s + Number(r.amount || 0), 0);
+
+  document.getElementById('stats-grid').innerHTML = [
+    { emoji: '👥', value: users.count || 0, label: 'Registrierte Nutzer', gold: false },
+    { emoji: '🤝', value: deals.count || 0, label: 'Deals gesamt', gold: false },
+    { emoji: '🪙', value: totalBC.toLocaleString('de') + ' BC', label: 'BC im Umlauf', gold: true },
+    { emoji: '💰', value: totalRev.toFixed(2) + ' €', label: 'Stripe Revenue', gold: true },
+    { emoji: '💸', value: totalDebt.toFixed(2) + ' €', label: 'Offene Schulden', gold: false },
+  ].map(s => `
+    <div class="stat-card ${s.gold ? 'gold' : ''}">
+      <div class="stat-emoji">${s.emoji}</div>
+      <div class="stat-value">${s.value}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>
+  `).join('');
+}
+
+// ── ITEMS ─────────────────────────────────────────────────────
+async function loadItems() {
+  const { data } = await db.from('items').select('*').order('created_at', { ascending: false });
+  document.getElementById('items-count').textContent = (data?.length || 0) + ' Items';
+  document.getElementById('items-table').innerHTML = (data || []).map(item => `
+    <tr>
+      <td><span style="font-size:20px;margin-right:8px">${item.emoji}</span>${item.name}</td>
+      <td><span class="badge badge-${item.rarity}">${item.rarity.toUpperCase()}</span></td>
+      <td>${item.category}</td>
+      <td style="color:#FFB800;font-weight:700">${item.bc_cost === 0 ? 'Gratis' : '🪙 ' + item.bc_cost}</td>
+      <td><span class="badge ${item.is_active ? 'badge-active' : 'badge-inactive'}">${item.is_active ? 'Aktiv' : 'Inaktiv'}</span></td>
+      <td>
+        <button class="btn btn-sm ${item.is_active ? 'btn-red' : 'btn-green'}" onclick="toggleItem('${item.id}', ${item.is_active})">
+          ${item.is_active ? 'Deaktivieren' : 'Aktivieren'}
+        </button>
+        <button class="btn btn-sm btn-outline" style="margin-left:6px" onclick="editPrice('${item.id}', '${item.name}', ${item.bc_cost})">
+          Preis ✏️
+        </button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" class="empty">Keine Items</td></tr>';
+}
+
+async function createItem() {
+  const item = {
+    name: document.getElementById('item-name').value,
+    emoji: document.getElementById('item-emoji').value,
+    description: document.getElementById('item-desc').value,
+    rarity: document.getElementById('item-rarity').value,
+    category: document.getElementById('item-category').value,
+    bc_cost: parseInt(document.getElementById('item-price').value) || 0,
+    glow_color: document.getElementById('item-glow').value || null,
+    image_url: document.getElementById('item-image').value || null,
+    battle_pass_only: document.getElementById('item-bponly').value === 'true',
+    is_active: true,
+  };
+  if (!item.name || !item.emoji) return showToast('Name und Emoji sind Pflicht', true);
+  const { error } = await db.from('items').insert(item);
+  if (error) return showToast('Fehler: ' + error.message, true);
+  showToast('✅ Item "' + item.name + '" erstellt!');
+  loadItems();
+}
+
+async function toggleItem(id, current) {
+  await db.from('items').update({ is_active: !current }).eq('id', id);
+  showToast(current ? '🚫 Item deaktiviert' : '✅ Item aktiviert');
+  loadItems();
+}
+
+async function editPrice(id, name, current) {
+  const newPrice = prompt(`Neuer BC-Preis für "${name}" (aktuell: ${current} BC):`);
+  if (newPrice === null) return;
+  await db.from('items').update({ bc_cost: parseInt(newPrice) || 0 }).eq('id', id);
+  showToast('✅ Preis aktualisiert: 🪙 ' + newPrice + ' BC');
+  loadItems();
+}
+
+// ── BATTLE PASS ───────────────────────────────────────────────
+const LEVEL_META = {
+  1:   { title: 'Rookie Dealer',    color: '#9ca3af', icon: '🌱' },
+  10:  { title: 'Street Hustler',   color: '#cd7f32', icon: '🤝' },
+  25:  { title: 'Tactical Genius',  color: '#3b82f6', icon: '🧠' },
+  50:  { title: 'Master of Stakes', color: '#a855f7', icon: '🏆' },
+  100: { title: 'Deal-Buddy God',   color: '#FFB800', icon: '👑' },
+};
+
+async function loadBattlePass() {
+  const { data: season } = await db.from('seasons').select('*').eq('is_active', true).single();
+  if (!season) {
+    document.getElementById('season-info').innerHTML = '<p style="color:#555;padding:20px">Keine aktive Season</p>';
+    return;
+  }
+  document.getElementById('season-info').innerHTML = `
+    <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+      <div><div style="color:#555;font-size:12px">Season Name</div><div style="color:#FFB800;font-size:16px;font-weight:700;margin-top:4px">${season.name}</div></div>
+      <div><div style="color:#555;font-size:12px">Zeitraum</div><div style="color:#fff;margin-top:4px">${season.start_date} – ${season.end_date}</div></div>
+      <div><div style="color:#555;font-size:12px">Pass-Preis</div><div style="color:#FFB800;font-size:16px;font-weight:700;margin-top:4px">🪙 ${season.battle_pass_price_bc} BC</div></div>
+    </div>
+  `;
+
+  const { data: tiers } = await db.from('battle_pass_tiers')
+    .select(`*, free:items!free_reward_item_id(name,emoji,rarity), premium:items!premium_reward_item_id(name,emoji,rarity)`)
+    .eq('season_id', season.id).in('tier', [1,10,25,50,100]).order('tier');
+
+  document.getElementById('tiers-table').innerHTML = (tiers || []).map(t => {
+    const meta = LEVEL_META[t.tier];
+    return `
+      <tr>
+        <td><span style="color:${meta.color};font-weight:800;font-size:16px">${meta.icon} ${t.tier}</span></td>
+        <td style="color:${meta.color};font-weight:700">${meta.title}</td>
+        <td style="color:#888">${t.xp_required.toLocaleString()} XP</td>
+        <td>${t.free ? `${t.free.emoji} ${t.free.name}` : `🪙 ${t.free_reward_bc} BC`}</td>
+        <td>${t.premium ? `<span style="color:${LEVEL_META[t.tier]?.color}">${t.premium.emoji} ${t.premium.name}</span>` : `🪙 ${t.premium_reward_bc} BC`}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ── EVENTS ────────────────────────────────────────────────────
+async function loadEvents() {
+  const { data } = await db.from('admin_events').select('*').order('created_at', { ascending: false });
+  document.getElementById('events-list').innerHTML = (data || []).length === 0
+    ? '<p class="empty">Noch keine Events erstellt</p>'
+    : (data || []).map(ev => `
+      <div class="event-card ${ev.is_active ? 'active' : ''}">
+        <div>
+          <div style="font-size:16px;font-weight:700;color:${ev.is_active ? '#FFB800' : '#fff'}">${ev.name}</div>
+          <div style="color:#555;font-size:12px;margin-top:4px">${ev.multiplier}x · ${new Date(ev.starts_at).toLocaleDateString('de-DE')} – ${new Date(ev.ends_at).toLocaleDateString('de-DE')}</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" ${ev.is_active ? 'checked' : ''} onchange="toggleEvent('${ev.id}', ${ev.is_active})">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    `).join('');
+}
+
+async function createEvent(type, multiplier, hours) {
+  const name = type === 'double_coins' ? 'Double Coin Weekend 🎉' : 'Double XP Event ⚡';
+  const now = new Date();
+  const end = new Date(now.getTime() + hours * 3600000);
+  const { error } = await db.from('admin_events').insert({ name, event_type: type, multiplier, starts_at: now.toISOString(), ends_at: end.toISOString(), is_active: true });
+  if (error) return showToast('Fehler: ' + error.message, true);
+  if (type === 'double_coins') await db.from('app_config').update({ value: 'true' }).eq('key', 'double_coin_weekend');
+  showToast('🎉 Event gestartet für ' + hours + 'h!');
+  loadEvents();
+}
+
+async function toggleEvent(id, current) {
+  await db.from('admin_events').update({ is_active: !current }).eq('id', id);
+  showToast(current ? '🚫 Event gestoppt' : '✅ Event aktiviert');
+  loadEvents();
+}
+
+// ── CONFIG ────────────────────────────────────────────────────
+async function loadConfig() {
+  const { data } = await db.from('app_config').select('*').order('key');
+  document.getElementById('config-list').innerHTML = (data || []).map(c => `
+    <div class="card" style="margin-bottom:12px">
+      <div style="padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="color:#FFB800;font-size:13px;font-weight:700;font-family:monospace">${c.key}</div>
+          <div style="color:#555;font-size:12px;margin-top:2px">${c.description || ''}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          ${c.value === 'true' || c.value === 'false'
+            ? `<label class="toggle"><input type="checkbox" ${c.value === 'true' ? 'checked' : ''} onchange="updateConfig('${c.key}', this.checked.toString())"><span class="toggle-slider"></span></label>`
+            : `<span id="val-${c.key}" style="color:#fff;min-width:120px;text-align:right">${c.value}</span>
+               <button class="btn btn-outline btn-sm" onclick="editConfig('${c.key}', '${c.value}')">✏️ Bearbeiten</button>`
+          }
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function updateConfig(key, value) {
+  await db.from('app_config').update({ value, updated_at: new Date().toISOString() }).eq('key', key);
+  showToast('✅ ' + key + ' aktualisiert');
+}
+
+async function editConfig(key, current) {
+  const newVal = prompt('Neuer Wert für ' + key + ':', current);
+  if (newVal === null) return;
+  await updateConfig(key, newVal);
+  document.getElementById('val-' + key).textContent = newVal;
+}
+
+// ── USERS ─────────────────────────────────────────────────────
+let searchTimeout;
+function searchUsers() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(async () => {
+    const q = document.getElementById('user-search').value;
+    if (!q) return;
+    const { data } = await db.from('profiles').select('id,username,reputation_score').ilike('username', `%${q}%`).limit(20);
+    if (!data?.length) {
+      document.getElementById('users-table').innerHTML = '<tr><td colspan="6" class="empty">Keine Nutzer gefunden</td></tr>';
+      return;
+    }
+    const ids = data.map(u => u.id);
+    const { data: econ } = await db.from('user_economy').select('*').in('user_id', ids);
+    document.getElementById('users-table').innerHTML = data.map(u => {
+      const e = econ?.find(e => e.user_id === u.id) || {};
+      return `
+        <tr>
+          <td style="font-weight:600">@${u.username}</td>
+          <td style="color:#FFB800">LVL ${e.level || 1}</td>
+          <td style="color:#FFB800">🪙 ${(e.bc_balance || 0).toLocaleString()}</td>
+          <td>${e.total_deals_played || 0} (${e.total_deals_won || 0} W)</td>
+          <td><span class="badge ${e.battle_pass_active ? 'badge-active' : 'badge-inactive'}">${e.battle_pass_active ? '✅ Aktiv' : 'Inaktiv'}</span></td>
+          <td>
+            <button class="btn btn-sm btn-outline" onclick="grantCoins('${u.id}', '${u.username}')">🪙 Coins geben</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }, 400);
+}
+
+async function grantCoins(userId, username) {
+  const amount = prompt(`Wie viele BC für @${username}?`);
+  if (!amount || isNaN(parseInt(amount))) return;
+  const bc = parseInt(amount);
+  const { data: econ } = await db.from('user_economy').select('bc_balance').eq('user_id', userId).single();
+  const newBal = (econ?.bc_balance || 0) + bc;
+  await db.from('user_economy').update({ bc_balance: newBal }).eq('user_id', userId);
+  await db.from('coin_transactions').insert({ user_id: userId, amount: bc, balance_after: newBal, reason: 'promo', multiplier: 1.0 });
+  showToast(`✅ ${bc} BC an @${username} vergeben!`);
+}
+
+// ── FINANCE ───────────────────────────────────────────────────
+async function loadFinance() {
+  const { data } = await db.from('stripe_orders').select('*, profiles(username)').order('created_at', { ascending: false }).limit(50);
+  const completed = (data || []).filter(o => o.status === 'completed');
+  const revenue = completed.reduce((s, o) => s + Number(o.amount_eur || 0), 0);
+  const tax = completed.reduce((s, o) => s + Number(o.tax_amount_eur || 0), 0);
+
+  document.getElementById('finance-stats').innerHTML = `
+    <div class="stat-card gold"><div class="stat-emoji">💰</div><div class="stat-value">${revenue.toFixed(2)} €</div><div class="stat-label">Gesamt-Revenue</div></div>
+    <div class="stat-card"><div class="stat-emoji">🧾</div><div class="stat-value">${tax.toFixed(2)} €</div><div class="stat-label">MwSt. (19%)</div></div>
+    <div class="stat-card"><div class="stat-emoji">📦</div><div class="stat-value">${completed.length}</div><div class="stat-label">Abgeschlossene Transaktionen</div></div>
+    <div class="stat-card"><div class="stat-emoji">⏳</div><div class="stat-value">${(data||[]).filter(o=>o.status==='pending').length}</div><div class="stat-label">Ausstehend</div></div>
+  `;
+
+  document.getElementById('finance-table').innerHTML = (data || []).map(o => `
+    <tr>
+      <td>${new Date(o.created_at).toLocaleDateString('de-DE')}</td>
+      <td>@${o.profiles?.username || '?'}</td>
+      <td style="color:#ccc">${o.product_type || '?'}</td>
+      <td style="color:#FFB800;font-weight:700">${Number(o.amount_eur || 0).toFixed(2)} €</td>
+      <td style="color:#888">${Number(o.tax_amount_eur || 0).toFixed(2)} €</td>
+      <td style="font-family:monospace;font-size:11px;color:#555">${o.invoice_number || 'ausstehend'}</td>
+      <td><span class="badge ${o.status === 'completed' ? 'badge-active' : o.status === 'failed' ? '' : 'badge-inactive'}" style="${o.status==='failed'?'color:#ef4444;border-color:#ef4444':''}">${o.status}</span></td>
+    </tr>
+  `).join('') || '<tr><td colspan="7" class="empty">Keine Transaktionen</td></tr>';
+}
+
+function exportCSV() {
+  showToast('📥 CSV-Export wird vorbereitet... (Stripe Dashboard für vollständigen DATEV-Export nutzen)');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Access to /dealbuddy/admin"
+AuthUserFile /kunden/homepages/6/d182641207/htpasswd
+Require user rainer.roloff

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealBuddy – Creator Portal</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #060606; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+
+  #auth-screen { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+  .auth-card { background: #111; border: 2px solid #FFB800; border-radius: 20px; padding: 40px; width: 100%; max-width: 400px; text-align: center; }
+  .auth-logo { font-size: 48px; margin-bottom: 8px; }
+  .auth-title { color: #FFB800; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .auth-sub { color: '#555'; font-size: 13px; margin-bottom: 8px; }
+  .auth-badge { display: inline-block; background: #1a1500; border: 1px solid #FFB800; color: #FFB800; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 24px; }
+  .auth-input { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 14px; color: #fff; font-size: 15px; margin-bottom: 12px; }
+  .auth-input:focus { border-color: #FFB800; outline: none; }
+  .auth-btn { width: 100%; background: #FFB800; color: #000; border: none; border-radius: 10px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 12px; }
+  .auth-btn:hover { background: #e6a800; }
+  .auth-link { color: #FFB800; font-size: 13px; cursor: pointer; text-decoration: underline; }
+  .auth-error { color: #ef4444; font-size: 12px; margin-top: 8px; display: none; }
+
+  #app { display: none; }
+  .header { background: #111; border-bottom: 1px solid #1a1a1a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+  .header-logo { display: flex; align-items: center; gap: 10px; }
+  .header-logo-text { color: #FFB800; font-size: 18px; font-weight: 800; }
+  .header-logo-sub { color: #555; font-size: 11px; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .creator-badge { background: #1a1500; border: 1px solid #FFB800; color: #FFB800; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; }
+  .btn { padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; }
+  .btn-gold { background: #FFB800; color: #000; }
+  .btn-outline { background: transparent; color: #FFB800; border: 1px solid #FFB800; }
+  .btn-sm { padding: 6px 14px; font-size: 12px; border-radius: 8px; }
+  .btn-red { background: #ef4444; color: #fff; }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+  .page-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+  .page-sub { color: #555; font-size: 13px; margin-bottom: 28px; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .stat-card { background: #111; border: 1px solid #1a1a1a; border-radius: 14px; padding: 16px; text-align: center; }
+  .stat-emoji { font-size: 24px; margin-bottom: 8px; }
+  .stat-value { font-size: 24px; font-weight: 800; color: #FFB800; }
+  .stat-label { color: #555; font-size: 11px; margin-top: 4px; }
+
+  .card { background: #111; border: 1px solid #1a1a1a; border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+  .card-header { padding: 18px 20px; border-bottom: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; }
+  .card-title { font-size: 16px; font-weight: 700; }
+
+  .upload-zone { border: 2px dashed #333; border-radius: 14px; padding: 40px; text-align: center; margin: 20px; cursor: pointer; transition: all 0.2s; }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: #FFB800; background: #1a1500; }
+  .upload-zone-icon { font-size: 48px; margin-bottom: 12px; }
+  .upload-zone-title { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .upload-zone-sub { color: #555; font-size: 13px; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { color: '#888'; font-size: 12px; font-weight: 600; color: #888; }
+  input, select, textarea { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; font-size: 14px; width: 100%; }
+  input:focus, select:focus { border-color: #FFB800; outline: none; }
+  select option { background: #1a1a1a; }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .preview-box { margin: 0 20px 20px; background: #0d0d0d; border-radius: 14px; padding: 20px; display: none; }
+  .preview-box.show { display: flex; align-items: center; gap: 16px; }
+  .preview-img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; border: 2px solid #FFB800; }
+  .preview-info { flex: 1; }
+  .preview-name { color: '#fff'; font-size: 16px; font-weight: 700; color: #fff; }
+  .preview-rarity { font-size: 12px; font-weight: 700; margin-top: 4px; }
+
+  .submissions-list { padding: 0; }
+  .submission-item { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-bottom: 1px solid #0d0d0d; }
+  .submission-item:last-child { border-bottom: none; }
+  .submission-img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; background: #1a1a1a; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .submission-info { flex: 1; }
+  .submission-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .submission-meta { color: #555; font-size: 12px; margin-top: 2px; }
+  .submission-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-pending { background: #FFB80020; color: #FFB800; border: 1px solid #FFB800; }
+  .badge-approved { background: #22c55e20; color: #22c55e; border: 1px solid #22c55e; }
+  .badge-rejected { background: #ef444420; color: #ef4444; border: 1px solid #ef4444; }
+  .badge-legendary { background: #FFB80020; color: #FFB800; }
+  .badge-epic { background: #a855f720; color: #a855f7; }
+  .badge-rare { background: #3b82f620; color: #3b82f6; }
+  .badge-common { background: #9ca3af20; color: #9ca3af; }
+
+  .revenue-card { background: linear-gradient(135deg, #1a1500, #111); border: 2px solid #FFB800; border-radius: 16px; padding: 24px; margin-bottom: 24px; }
+  .revenue-title { color: #FFB800; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .revenue-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #1a1a1a; }
+  .revenue-row:last-child { border-bottom: none; }
+  .revenue-label { color: #888; font-size: 13px; }
+  .revenue-value { color: #FFB800; font-size: 16px; font-weight: 800; }
+
+  .empty { color: #444; text-align: center; padding: 40px; font-size: 14px; }
+  .loading { color: #555; text-align: center; padding: 30px; }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #22c55e; color: #fff; padding: 14px 24px; border-radius: 12px; font-weight: 700; font-size: 14px; transform: translateY(100px); transition: transform 0.3s; z-index: 9999; }
+  .toast.show { transform: translateY(0); }
+  .toast.error { background: #ef4444; }
+
+  .progress-bar { height: 4px; background: #1a1a1a; border-radius: 2px; overflow: hidden; margin-top: 12px; display: none; }
+  .progress-fill { height: 4px; background: #FFB800; border-radius: 2px; width: 0%; transition: width 0.3s; }
+
+  .guidelines { background: #0d0d0d; border-radius: 12px; padding: 16px; margin: 20px; }
+  .guidelines-title { color: #FFB800; font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+  .guidelines li { color: #888; font-size: 12px; line-height: 2; margin-left: 16px; }
+
+  .royalty-banner { background: #0a1a0a; border: 1px solid #22c55e; border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .royalty-text { color: #22c55e; font-size: 14px; font-weight: 600; }
+  .royalty-sub { color: #888; font-size: 12px; }
+
+  @media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .header { padding: 12px 16px; }
+    .main { padding: 20px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">🎨</div>
+    <div class="auth-title">Creator Portal</div>
+    <div class="auth-sub">DealBuddy Empire</div>
+    <div class="auth-badge">✦ Powered by Comms Connect GmbH</div>
+    <div id="auth-login">
+      <input class="auth-input" id="login-email" type="email" placeholder="E-Mail" />
+      <input class="auth-input" id="login-password" type="password" placeholder="Passwort" />
+      <button class="auth-btn" onclick="login()">Einloggen</button>
+      <span class="auth-link" onclick="showRegister()">Noch kein Account? Jetzt bewerben →</span>
+      <p class="auth-error" id="login-error"></p>
+    </div>
+    <div id="auth-register" style="display:none">
+      <input class="auth-input" id="reg-email" type="email" placeholder="E-Mail" />
+      <input class="auth-input" id="reg-password" type="password" placeholder="Passwort (min. 8 Zeichen)" />
+      <input class="auth-input" id="reg-username" placeholder="Creator Name (öffentlich sichtbar)" />
+      <input class="auth-input" id="reg-paypal" placeholder="PayPal E-Mail (für Auszahlungen)" />
+      <button class="auth-btn" onclick="register()">Account erstellen</button>
+      <span class="auth-link" onclick="showLogin()">← Zurück zum Login</span>
+      <p class="auth-error" id="reg-error"></p>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="header">
+    <div class="header-logo">
+      <span style="font-size:28px">🎨</span>
+      <div>
+        <div class="header-logo-text">Creator Portal</div>
+        <div class="header-logo-sub">DealBuddy Empire</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="creator-badge" id="header-username">🎨 Creator</span>
+      <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- STATS -->
+    <div class="stats-row" id="creator-stats">
+      <div class="stat-card"><div class="stat-emoji">🃏</div><div class="stat-value" id="stat-submitted">0</div><div class="stat-label">Eingereicht</div></div>
+      <div class="stat-card"><div class="stat-emoji">✅</div><div class="stat-value" id="stat-approved">0</div><div class="stat-label">Genehmigt</div></div>
+      <div class="stat-card"><div class="stat-emoji">🛒</div><div class="stat-value" id="stat-sold">0</div><div class="stat-label">Verkauft</div></div>
+      <div class="stat-card"><div class="stat-emoji">💰</div><div class="stat-value" id="stat-revenue">0 €</div><div class="stat-label">Verdient (30%)</div></div>
+    </div>
+
+    <!-- ROYALTY BANNER -->
+    <div class="royalty-banner">
+      <span style="font-size:28px">💸</span>
+      <div>
+        <div class="royalty-text">Du verdienst 30% an jedem Verkauf deiner Items!</div>
+        <div class="royalty-sub">Auszahlung monatlich via PayPal · Minimum 10 € · Comms Connect GmbH behält 70%</div>
+      </div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">🆕 Neues Item einreichen</span>
+      </div>
+
+      <div class="guidelines">
+        <div class="guidelines-title">📋 Design-Richtlinien</div>
+        <ul>
+          <li>PNG oder GIF · Transparenter Hintergrund · Min. 512x512px</li>
+          <li>Max. Dateigröße: 5 MB · Animierte GIFs erlaubt (max. 3 MB)</li>
+          <li>Kein urheberrechtlich geschütztes Material (kein FIFA, NBA, etc.)</li>
+          <li>Kein anstößiger, politischer oder beleidigender Inhalt</li>
+          <li>Review-Zeit: 24–72 Stunden</li>
+        </ul>
+      </div>
+
+      <!-- Drag & Drop Upload -->
+      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+        <div class="upload-zone-icon" id="upload-icon">🖼️</div>
+        <div class="upload-zone-title" id="upload-title">Bild hierher ziehen oder klicken</div>
+        <div class="upload-zone-sub">PNG, GIF · Max. 5 MB · Transparenter Hintergrund empfohlen</div>
+        <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+      <input type="file" id="file-input" accept="image/png,image/gif" style="display:none" onchange="fileSelected(event)" />
+
+      <!-- Preview -->
+      <div class="preview-box" id="preview-box">
+        <img id="preview-img" class="preview-img" />
+        <div class="preview-info">
+          <div class="preview-name" id="preview-name">–</div>
+          <div class="preview-rarity" id="preview-rarity">–</div>
+          <div style="color:#555;font-size:12px;margin-top:4px" id="preview-size">–</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="clearUpload()">✕ Entfernen</button>
+      </div>
+
+      <!-- Form -->
+      <div class="form-grid">
+        <div class="form-group"><label>Item Name *</label><input id="item-name" placeholder="z.B. Neon Kaffee Sticker" /></div>
+        <div class="form-group"><label>Kategorie *</label>
+          <select id="item-category">
+            <option value="sticker">🎯 Sticker</option>
+            <option value="frame">🖼️ Profilrahmen</option>
+            <option value="badge">🏅 Badge / Medaille</option>
+            <option value="effect">✨ Effekt</option>
+            <option value="deal_card">🃏 Deal-Karte</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Gewünschte Seltenheit</label>
+          <select id="item-rarity">
+            <option value="common">⚪ Common</option>
+            <option value="rare">🔵 Rare</option>
+            <option value="epic">🟣 Epic</option>
+            <option value="legendary">⭐ Legendary</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Vorgeschlagener BC-Preis</label>
+          <select id="item-price">
+            <option value="0">Gratis</option>
+            <option value="50">50 BC</option>
+            <option value="100">100 BC</option>
+            <option value="200">200 BC</option>
+            <option value="300">300 BC</option>
+            <option value="500">500 BC</option>
+            <option value="999">999 BC (Legendary)</option>
+          </select>
+        </div>
+        <div class="form-group full"><label>Beschreibung / Inspiration</label>
+          <textarea id="item-desc" placeholder="Beschreibe dein Item und wofür es steht..."></textarea>
+        </div>
+      </div>
+
+      <div style="padding: 0 20px 20px; display:flex; gap:12px">
+        <button class="btn btn-gold" style="flex:1;padding:14px" onclick="submitItem()">🚀 Item einreichen</button>
+      </div>
+    </div>
+
+    <!-- MEINE EINREICHUNGEN -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">📋 Meine Einreichungen</span>
+        <button class="btn btn-outline btn-sm" onclick="loadMySubmissions()">🔄 Aktualisieren</button>
+      </div>
+      <div id="my-submissions"><div class="loading">⏳ Lade...</div></div>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="revenue-card">
+      <div class="revenue-title">💰 Meine Einnahmen</div>
+      <div class="revenue-row"><span class="revenue-label">Gesamt verkauft</span><span class="revenue-value" id="rev-sold">0 Items</span></div>
+      <div class="revenue-row"><span class="revenue-label">Gesamtumsatz (BC-Käufe)</span><span class="revenue-value" id="rev-total">0 BC</span></div>
+      <div class="revenue-row"><span class="revenue-label">Dein Anteil (30%)</span><span class="revenue-value" id="rev-share">0 €</span></div>
+      <div class="revenue-row"><span class="revenue-label">Nächste Auszahlung</span><span class="revenue-value" id="rev-next">1. des Monats</span></div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #1a1a1a">
+        <p style="color:#555;font-size:11px;line-height:1.8">
+          Auszahlungen erfolgen monatlich via PayPal · Mindestbetrag 10 € · 
+          Comms Connect GmbH, Tal 30, 80331 München · HRB 295951
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://vjygmfaefhkwznldegvq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqeWdtZmFlZmhrd3pubGRlZ3ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTg4MTAsImV4cCI6MjA4NzY3NDgxMH0.vnfOsWMFB4nQnEd5c1x5USrqUhiYBDwlEuPIAx8GkEI';
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let selectedFile = null;
+let uploadedImageUrl = null;
+
+// ── AUTH ──────────────────────────────────────────────────────
+function showRegister() {
+  document.getElementById('auth-login').style.display = 'none';
+  document.getElementById('auth-register').style.display = 'block';
+}
+function showLogin() {
+  document.getElementById('auth-register').style.display = 'none';
+  document.getElementById('auth-login').style.display = 'block';
+}
+
+async function login() {
+  const email = document.getElementById('login-email').value;
+  const pw = document.getElementById('login-password').value;
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pw });
+  if (error) { showError('login-error', error.message); return; }
+  currentUser = data.user;
+  initApp();
+}
+
+async function register() {
+  const email = document.getElementById('reg-email').value;
+  const pw = document.getElementById('reg-password').value;
+  const username = document.getElementById('reg-username').value;
+  const paypal = document.getElementById('reg-paypal').value;
+  if (!email || !pw || !username) { showError('reg-error', 'Alle Felder sind Pflicht.'); return; }
+  if (pw.length < 8) { showError('reg-error', 'Passwort min. 8 Zeichen.'); return; }
+
+  const { data, error } = await db.auth.signUp({ email, password: pw });
+  if (error) { showError('reg-error', error.message); return; }
+
+  // Creator-Profil anlegen
+  await db.from('creator_profiles').insert({
+    user_id: data.user.id,
+    username,
+    paypal_email: paypal,
+    status: 'active',
+  });
+
+  currentUser = data.user;
+  initApp();
+  showToast('🎉 Willkommen im Creator Portal, ' + username + '!');
+}
+
+async function logout() {
+  await db.auth.signOut();
+  location.reload();
+}
+
+async function initApp() {
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  const { data: profile } = await db.from('creator_profiles').select('*').eq('user_id', currentUser.id).single();
+  if (profile) document.getElementById('header-username').textContent = '🎨 ' + profile.username;
+  loadStats();
+  loadMySubmissions();
+}
+
+// ── FILE UPLOAD ───────────────────────────────────────────────
+function dragOver(e) { e.preventDefault(); document.getElementById('upload-zone').classList.add('drag-over'); }
+function dragLeave() { document.getElementById('upload-zone').classList.remove('drag-over'); }
+function dropFile(e) { e.preventDefault(); dragLeave(); const f = e.dataTransfer.files[0]; if (f) processFile(f); }
+function fileSelected(e) { const f = e.target.files[0]; if (f) processFile(f); }
+
+function processFile(file) {
+  if (!['image/png', 'image/gif'].includes(file.type)) { showToast('Nur PNG oder GIF erlaubt!', true); return; }
+  if (file.size > 5 * 1024 * 1024) { showToast('Datei zu groß! Max. 5 MB', true); return; }
+  selectedFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('preview-img').src = e.target.result;
+    document.getElementById('preview-name').textContent = file.name.replace(/\.[^.]+$/, '');
+    document.getElementById('preview-size').textContent = (file.size / 1024).toFixed(0) + ' KB · ' + file.type.split('/')[1].toUpperCase();
+    document.getElementById('preview-box').classList.add('show');
+    document.getElementById('upload-zone').style.display = 'none';
+    updatePreviewRarity();
+  };
+  reader.readAsDataURL(file);
+}
+
+function updatePreviewRarity() {
+  const rarity = document.getElementById('item-rarity').value;
+  const colors = { common: '#9ca3af', rare: '#3b82f6', epic: '#a855f7', legendary: '#FFB800' };
+  const labels = { common: '⚪ COMMON', rare: '🔵 RARE', epic: '🟣 EPIC', legendary: '⭐ LEGENDARY' };
+  document.getElementById('preview-rarity').style.color = colors[rarity];
+  document.getElementById('preview-rarity').textContent = labels[rarity];
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('item-rarity')?.addEventListener('change', updatePreviewRarity);
+});
+
+function clearUpload() {
+  selectedFile = null;
+  uploadedImageUrl = null;
+  document.getElementById('file-input').value = '';
+  document.getElementById('preview-box').classList.remove('show');
+  document.getElementById('upload-zone').style.display = 'block';
+}
+
+async function uploadToStorage(file) {
+  const ext = file.type === 'image/gif' ? 'gif' : 'png';
+  const fileName = `creator-items/${currentUser.id}/${Date.now()}.${ext}`;
+  const { data, error } = await db.storage.from('items').upload(fileName, file, { contentType: file.type, upsert: false });
+  if (error) throw error;
+  const { data: urlData } = db.storage.from('items').getPublicUrl(fileName);
+  return urlData.publicUrl;
+}
+
+// ── SUBMIT ITEM ───────────────────────────────────────────────
+async function submitItem() {
+  const name = document.getElementById('item-name').value.trim();
+  const category = document.getElementById('item-category').value;
+  const rarity = document.getElementById('item-rarity').value;
+  const price = parseInt(document.getElementById('item-price').value);
+  const desc = document.getElementById('item-desc').value.trim();
+
+  if (!name) { showToast('Name ist Pflicht!', true); return; }
+  if (!selectedFile) { showToast('Bitte lade ein Bild hoch!', true); return; }
+
+  // Progress anzeigen
+  document.getElementById('progress-bar').style.display = 'block';
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress = Math.min(progress + 10, 85);
+    document.getElementById('progress-fill').style.width = progress + '%';
+  }, 200);
+
+  try {
+    // Bild hochladen
+    const imageUrl = await uploadToStorage(selectedFile);
+    document.getElementById('progress-fill').style.width = '100%';
+    clearInterval(interval);
+
+    // Submission in DB
+    const { error } = await db.from('creator_submissions').insert({
+      creator_id: currentUser.id,
+      name,
+      description: desc,
+      category,
+      rarity,
+      suggested_price_bc: price,
+      image_url: imageUrl,
+      status: 'pending',
+    });
+
+    if (error) throw error;
+
+    showToast('🚀 Item eingereicht! Review dauert 24-72h.');
+    clearUpload();
+    document.getElementById('item-name').value = '';
+    document.getElementById('item-desc').value = '';
+    document.getElementById('progress-bar').style.display = 'none';
+    document.getElementById('progress-fill').style.width = '0%';
+    loadMySubmissions();
+    loadStats();
+  } catch (e) {
+    clearInterval(interval);
+    showToast('Fehler: ' + e.message, true);
+    document.getElementById('progress-bar').style.display = 'none';
+  }
+}
+
+// ── MY SUBMISSIONS ────────────────────────────────────────────
+async function loadMySubmissions() {
+  const { data } = await db.from('creator_submissions').select('*').eq('creator_id', currentUser.id).order('created_at', { ascending: false });
+  const el = document.getElementById('my-submissions');
+  if (!data?.length) { el.innerHTML = '<div class="empty">Noch keine Einreichungen. Lade dein erstes Item hoch! 🎨</div>'; return; }
+
+  const rarityColors = { common: '#9ca3af', rare: '#3b82f6', epic: '#a855f7', legendary: '#FFB800' };
+  el.innerHTML = data.map(item => `
+    <div class="submission-item">
+      <div class="submission-img">
+        ${item.image_url ? `<img src="${item.image_url}" style="width:56px;height:56px;border-radius:10px;object-fit:cover">` : '🃏'}
+      </div>
+      <div class="submission-info">
+        <div class="submission-name">${item.name}</div>
+        <div class="submission-meta">
+          <span style="color:${rarityColors[item.rarity]};font-weight:700">${item.rarity.toUpperCase()}</span>
+          · ${item.category} · 🪙 ${item.suggested_price_bc} BC
+        </div>
+        <div class="submission-meta" style="margin-top:4px">${new Date(item.created_at).toLocaleDateString('de-DE')}</div>
+        ${item.admin_note ? `<div style="margin-top:6px;padding:8px;background:#1a1a1a;border-radius:8px;font-size:12px;color:#888">💬 Admin: ${item.admin_note}</div>` : ''}
+      </div>
+      <div class="submission-status">
+        <span class="badge badge-${item.status}">
+          ${item.status === 'pending' ? '⏳ In Review' : item.status === 'approved' ? '✅ Genehmigt' : '❌ Abgelehnt'}
+        </span>
+        ${item.status === 'approved' ? `<span style="color:#22c55e;font-size:12px">🛒 ${item.sold_count || 0}x verkauft</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── STATS ─────────────────────────────────────────────────────
+async function loadStats() {
+  const { data } = await db.from('creator_submissions').select('status, sold_count, suggested_price_bc').eq('creator_id', currentUser.id);
+  if (!data) return;
+  const submitted = data.length;
+  const approved = data.filter(d => d.status === 'approved').length;
+  const sold = data.reduce((s, d) => s + (d.sold_count || 0), 0);
+  const revenueBC = data.reduce((s, d) => s + ((d.sold_count || 0) * (d.suggested_price_bc || 0)), 0);
+  const revenueEur = (revenueBC * 0.004 * 0.3).toFixed(2); // ~0.4ct pro BC, 30% Creator-Anteil
+
+  document.getElementById('stat-submitted').textContent = submitted;
+  document.getElementById('stat-approved').textContent = approved;
+  document.getElementById('stat-sold').textContent = sold;
+  document.getElementById('stat-revenue').textContent = revenueEur + ' €';
+  document.getElementById('rev-sold').textContent = sold + ' Items';
+  document.getElementById('rev-total').textContent = revenueBC.toLocaleString() + ' BC';
+  document.getElementById('rev-share').textContent = revenueEur + ' €';
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function showError(id, msg) { const el = document.getElementById(id); el.style.display = 'block'; el.textContent = msg; }
+function showToast(msg, error = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (error ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+// Auth State prüfen beim Laden
+db.auth.getSession().then(({ data: { session } }) => {
+  if (session) { currentUser = session.user; initApp(); }
+});
+</script>
+</body>
+</html>
