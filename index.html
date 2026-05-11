@@ -200,6 +200,8 @@ nav.s{padding:11px 56px;}
 .sbtn.noicon .ss2,.sbtn.noicon .sn,.sbtn.noicon .sv{text-align:center;}
 .sbtn.pwa-btn{border-color:rgba(255,184,0,.4);background:rgba(255,184,0,.06);}
 .sbtn.pwa-btn .sn{color:var(--gold);}
+.sbtn.disabled{cursor:default;opacity:.55;pointer-events:none;}
+.sbtn.disabled:hover{transform:none;box-shadow:none;border-color:rgba(255,184,0,.2);}
 .cwarn{font-family:"Cinzel",serif;font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:1px;}
 .cwarn a{color:rgba(255,255,255,.18);text-decoration:none;}
 
@@ -654,9 +656,9 @@ body.menu-open{overflow:hidden;}
 <div class="srow r">
 <a class="sbtn pwa-btn" href="https://app.deal-buddy.app" target="_blank"><div><div class="ss2">Sofort im Browser</div><div class="sn">Web App</div><div class="sv">Kein Download n&ouml;tig</div></div></a>
 <a class="sbtn noicon" href="https://apps.apple.com/de/app/dealbuddy/id6763754507" target="_blank" rel="noopener" id="ios-btn"><div><div class="ss2">Laden im</div><div class="sn">iOS</div><div class="sv">App Store</div></div></a>
-<a class="sbtn noicon" href="#" id="android-btn"><div><div class="ss2">Bald verf&uuml;gbar</div><div class="sn">Android</div><div class="sv">Google Play</div></div></a>
+<a class="sbtn noicon disabled" id="android-btn" aria-disabled="true"><div><div class="ss2">Bald verf&uuml;gbar</div><div class="sn">Android</div><div class="sv">Google Play</div></div></a>
 </div>
-<p class="cwarn r">&#x26A0;&#xFE0F; DealBuddy ist eine Tracking-App f&uuml;r private Wetten und Herausforderungen unter Freunden. Es findet kein Echtgeld-Gl&uuml;cksspiel statt und es gibt keine Auszahlungen oder geldwerten Gewinne. Echtgeld kann ausschlie&szlig;lich f&uuml;r optionale, virtuelle Zusatzinhalte wie Skins oder Battle-Pass-Fortschritt verwendet werden und ist nicht mit Eins&auml;tzen oder Ergebnissen verkn&uuml;pft. Die Nutzung ist strikt ab 18 Jahren gestattet. Eine Altersverifikation erfolgt bei App-Nutzung.</p>
+<p class="cwarn r">&#x26A0;&#xFE0F; DealBuddy ist eine Tracking-App f&uuml;r private Deals, Tipps und Challenges unter Freunden. Es findet kein Echtgeld-Gl&uuml;cksspiel statt und es gibt keine Auszahlungen oder geldwerten Gewinne. Echtgeld kann ausschlie&szlig;lich f&uuml;r optionale, virtuelle Zusatzinhalte wie Skins oder Battle-Pass-Fortschritt verwendet werden und ist nicht mit Eins&auml;tzen oder Ergebnissen verkn&uuml;pft. Die Nutzung ist strikt ab 18 Jahren gestattet. Eine Altersverifikation erfolgt bei App-Nutzung.</p>
 </section>
 
 <!-- FOOTER -->
