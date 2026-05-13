@@ -111,7 +111,9 @@ footer{border-top:1px solid var(--border);padding:48px 10%;display:flex;justify-
 .mo, .md { display:none; }
 .md.open { display:block !important; opacity:1; transform:none; pointer-events:auto; }
 .mo.show { display:block !important; }
-
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+}
 </style><link rel="stylesheet" href="cookie-banner.css"/></head><body><nav id="mainNav"><a href="index.html" class="nav-logo"><img src="images/logo.png" alt="DealBuddy"/><span class="nav-logo-text"></span></a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="download.html">Download</a></li><li><a href="support.html" class="active">Support</a></li><li><a href="download.html" class="nav-cta">App holen</a></li></ul>
 
 <button class="nb" id="menuBtn" aria-label="Menü öffnen">

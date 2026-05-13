@@ -252,6 +252,12 @@ nav{padding:14px 20px;}nav.s{padding:10px 20px;}
 body.menu-open{overflow:hidden;}
 }
 .mo[hidden]{display:none!important;}.md[hidden]{display:none!important;}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+  #pts{display:none !important;}
+  .cscene,.cwrap,.cglow,.cshine{animation:none !important;transform:none !important;}
+  .bdg,.badge{animation:none !important;}
+}
 </style>
 <link rel="stylesheet" href="cookie-banner.css"/>
 </head>
@@ -676,9 +682,15 @@ body.menu-open{overflow:hidden;}
 </footer>
 
 <script>
+// Reduce-motion guard
+const _rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)');
+const _reduceMotion=()=>!!(_rm&&_rm.matches);
+
 // Particles
 const c=document.getElementById('pts');
-for(let i=0;i<28;i++){const p=document.createElement('div');p.className='pt';const s=Math.random()*2.2+.4;p.style.cssText='left:'+Math.random()*100+'%;width:'+s+'px;height:'+s+'px;animation-duration:'+(Math.random()*18+12)+'s;animation-delay:'+(Math.random()*12)+'s;--d:'+(Math.random()-.5)*240+'px;';c.appendChild(p);}
+if(c&&!_reduceMotion()){
+  for(let i=0;i<28;i++){const p=document.createElement('div');p.className='pt';const s=Math.random()*2.2+.4;p.style.cssText='left:'+Math.random()*100+'%;width:'+s+'px;height:'+s+'px;animation-duration:'+(Math.random()*18+12)+'s;animation-delay:'+(Math.random()*12)+'s;--d:'+(Math.random()-.5)*240+'px;';c.appendChild(p);}
+}
 
 // Nav shrink
 const nav=document.getElementById('nav');
@@ -690,7 +702,7 @@ document.querySelectorAll('.r').forEach(function(el){io.observe(el);});
 
 // Card parallax
 const cs=document.querySelector('.cscene');
-if(cs){document.addEventListener('mousemove',function(e){const x=(e.clientX/innerWidth-.5)*14;const y=(e.clientY/innerHeight-.5)*-10;cs.style.transform='rotateY('+x+'deg) rotateX('+y+'deg)';});}
+if(cs&&!_reduceMotion()){document.addEventListener('mousemove',function(e){const x=(e.clientX/innerWidth-.5)*14;const y=(e.clientY/innerHeight-.5)*-10;cs.style.transform='rotateY('+x+'deg) rotateX('+y+'deg)';});}
 
 // Mobile Menu
 const menuBtn=document.getElementById('menuBtn');
