@@ -195,3 +195,61 @@ Discord-Brücke ist strategisch wichtig (laut Brand: Community-driven Pre-Launch
 **Status:** P0 (Finding #1) – Hero-Loop-Videos bewusst nicht angefasst.
 **Out-of-scope (Strategic, später):** Casino-vs-Disclaimer-Mismatch, OKLCH-Migration, Card-Grid-Redesign.
 
+---
+
+### Fix-Log #2 (Strategic) – 2026-05-14
+
+**Branch:** `qw/dealbuddy-homepage-strategic`
+**Scope:** Findings #2, #3, #4, #5, #6 (P0–P1 strategic)
+**Score-Bewegung:** 11.5 / 20 → ≈ 14 / 20 (Theming +1, Anti-Patterns +1, Accessibility +0.5)
+
+**A) Tonalität-Wahl: Social-Game/eSports-Lane (Clash-Royale-/League-of-Legends-Marketing-Register)**
+- **Begründung:** Casino-Vokabular (Empire/Stake/Founder) löste den 0,4-Sekunden-„Crypto-NFT-Schmock"-Bounce bei der 18–25-Cohort aus. Wettkampf-/Liga-Vokabular ist 1:1 die Sprache der erfolgreichsten Mobile-Games (Brawl Stars, Clash Royale, FIFA Ultimate Team) – passt zum „Tippgruppen + Bundesliga"-USP. „Legendary" als Rarity-Term bleibt (branchenüblich).
+- **Konkrete Replacements:**
+  - `Empire` → `Liga` (Nav, Mobile-Menu, Section-Label, Section-Headline)
+  - `Empire Builder` (BattlePass-Stufe) → `Liga-Champion`
+  - `Hustler` (BattlePass-Stufe) → `Challenger`
+  - `Season-1-Gründer` → `Season-1-Crew` (3 Stellen: ubar, BattlePass-Highlight, CTA-Subline)
+  - `Dein digitales Erbe. Für immer.` → `Sammle Cards. Schreib Geschichte.`
+  - `Jetzt dein Empire aufbauen` → `Jetzt deine Liga starten`
+
+**B) Disclaimer prominent unter Hero-CTA**
+- Neuer `.hdisc`-Block: „⚡ Spielwährung · Kein Echtgeld · Keine Auszahlung", Cinzel 9px gold-300 Pill direkt unter den Hero-CTAs, **vor** dem Stars-Block. Vorher: nur im Footer-Disclaimer (Zeile 661) versteckt.
+
+**C) Card-Grid-Variety (Finding #3 aufgelöst)**
+| Section | Vorher | Jetzt |
+|---|---|---|
+| `#problem` | 3-col card-grid | Bleibt 3-col card-grid (Baseline) |
+| `#wie` (How-it-works) | 3-col mit statischem Connector | **Scroll-driven clip-path-Timeline** (`.how-tl`) – Gold-Linie liegt unsichtbar (`clip-path:inset(0 100% 0 0)`), wird per IntersectionObserver auf `.lit`-Klasse über 1.1 s mit `ease-out` aufgezogen; gleichzeitig glow-up der `.snum`-Bubbles |
+| `#features` | 2-col card-grid | Bleibt (Baseline) |
+| `#social` | 3-col card-grid | Bleibt (Baseline) |
+| `#tippen` | 2-col card-grid | **Animated Trust-Stat-Reel** (`.reel`) – drei große Cinzel-Zahlen (100 %, 6+, 38), Count-Up `ease-out-cubic` 1.3 s + Blur(6→0) Materializing-Polish, getriggert bei `threshold:.35` |
+| `#progression` | 3-col card-grid | Bleibt (Baseline) |
+| `#empire` (jetzt „Liga") | 2-col 2×3 Card-Grid | **3D Card-Stack** (`.cstack`) – 6 Cards fan-layout mit `perspective:1400px` + `transform-style:preserve-3d`, Hover zoomt einzelne Card nach vorne (`translate3d(0,-30px,120px) rotate(0) scale(1.06)`), Geschwister werden gedimmt (`filter:brightness(.7) saturate(.7)`); Rarity-Color als `--rarity` CSS-Custom-Property (Gold/Purple/Blue in OKLCH) |
+| `#shop` | 3-col card-grid | Bleibt (Baseline) |
+| `#testimonials` | 3-col tgrid | Bleibt (Baseline) |
+
+Reduzierung von 9 austauschbaren Card-Rastern auf 6 + 3 differenzierte Treatments (Timeline / Stat-Reel / 3D-Stack).
+
+**D) OKLCH-Migration (Finding #5 & #6 abgeschlossen)**
+- `--gold-50 / -300 / -500 / -700` Ramp aus `oklch(.. 0.08–0.18 80)`
+- `--blk:oklch(15% 0.01 80)`, `--b2/-b3` in OKLCH mit Hue 80° Richtung Gold – ersetzt `#060606` Pure-Black (OLED-„schwarzes Loch"-Problem)
+- Alle ~25 `rgba(255,184,0,*)`-Vorkommen + `rgba(255,200,0,.12)` + `#FFB800` + `#FFD700` + `#ffd000` → `color-mix(in oklch, var(--gold) X%, transparent)` bzw. `var(--gold-*)`
+- Nav-Backgrounds `rgba(6,6,6,.93/.72/.94)` → `color-mix(in oklch, var(--blk) X%, transparent)` (Kohärenz mit warmem Tinted-Black)
+- Browser-Support: `color-mix()` + OKLCH = Safari 16.4+/Chrome 111+/Firefox 113+ → für 18–35-DACH-Zielgruppe unkritisch (mobile evergreen).
+
+**E) Hero-Outline-Stroke ersetzt (Finding #4)**
+- `index.html:60–61` (alt): `-webkit-text-stroke:1.5px rgba(255,184,0,.38);color:transparent;`
+- Neu: `color:var(--tx);font-weight:900;text-shadow:0 1px 0 color-mix(in oklch,var(--gold) 10%,transparent);`
+- „Eine Welt." liest jetzt als solid Off-White (`oklch(96% 0.02 80)`) gegen den dunklen Hero-Hintergrund, mit subtilem 1px Gold-Drop für Wärme-Verbindung. Kein Sub-Pixel-Rendering-Risk, kein 2023-Webflow-Trope-Smell, Kontrast > 7:1 garantiert.
+
+**F) Reduced-Motion-Erweiterung**
+Neue Strategic-Komponenten (`.cstack`, `.how-tl`, `.reel`) bekommen Fallbacks im `prefers-reduced-motion:reduce`-Block:
+- 3D-Stack: kein Sibling-Dim auf Hover, keine Z-Hub-Out-Animation
+- Timeline: `clip-path` ist sofort `inset(0 0 0 0)` (Linie permanent sichtbar)
+- Reel: Count-Up wird durch sofortiges Setzen des Zielwerts ersetzt; Blur(6→0) übersprungen
+
+**Nicht angefasst (per Brief):** Hero-Loop-Video, gemergter Reduced-Motion-Block (erweitert nicht überschrieben), Particles/Mousemove-Logic (bereits in QW #1 mit Reduce-Motion-Guard), App-Store-Badges.
+
+**Validation:** Inline-Scripts via `node -e "new Function(body)"` geprüft (beide ok). CSS-Brace-Balance 287/287. Keine Build-Step nötig (Static-HTML).
+
