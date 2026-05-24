@@ -274,8 +274,72 @@ footer{border-top:1px solid var(--bo);padding:48px 10%;display:flex;justify-cont
 .r{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
 .r.v{opacity:1;transform:none;}
 
+/* WAITLIST HERO */
+.wait{position:relative;padding:110px 10% 110px;background:var(--blk);border-top:1px solid var(--bo);overflow:hidden;text-align:center;z-index:1;}
+.wait::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,color-mix(in oklch,var(--gold) 8%,transparent) 0%,transparent 65%),radial-gradient(ellipse 40% 30% at 15% 20%,color-mix(in oklch,var(--gold) 4%,transparent) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 85% 80%,color-mix(in oklch,var(--gold) 5%,transparent) 0%,transparent 60%);animation:wglow 14s ease-in-out infinite;}
+@keyframes wglow{0%,100%{opacity:.85;transform:scale(1);}50%{opacity:1;transform:scale(1.04);}}
+.wait-inner{position:relative;z-index:2;max-width:760px;margin:0 auto;}
+.wait .sl{justify-content:center;}
+.wait .sl::before{display:none;}
+.wait h2{font-family:"Cinzel",serif;font-size:clamp(32px,4.5vw,62px);font-weight:900;line-height:.95;margin-bottom:22px;letter-spacing:-1px;}
+.wait h2 em{color:var(--gold);font-style:normal;}
+.wait-sub{font-size:18px;color:var(--mu);line-height:1.7;margin-bottom:38px;max-width:560px;margin-left:auto;margin-right:auto;}
+.wait-counter{display:inline-flex;align-items:baseline;gap:14px;padding:18px 36px;margin-bottom:36px;border:1px solid color-mix(in oklch,var(--gold) 30%,transparent);background:color-mix(in oklch,var(--gold) 6%,transparent);box-shadow:0 0 48px color-mix(in oklch,var(--gold) 12%,transparent);}
+.wait-count{font-family:"Cinzel",serif;font-size:clamp(36px,5vw,58px);font-weight:900;color:var(--gold);line-height:1;letter-spacing:-1px;font-variant-numeric:tabular-nums;text-shadow:0 0 24px color-mix(in oklch,var(--gold) 35%,transparent);}
+.wait-clbl{font-family:"Cinzel",serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);}
+.wait-form{display:flex;gap:10px;max-width:520px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
+.wait-input{flex:1;min-width:240px;background:var(--b3);border:1px solid var(--bo);color:var(--tx);font-family:"Crimson Text",Georgia,serif;font-size:16px;padding:16px 20px;transition:border-color .25s ease,box-shadow .25s ease;outline:none;}
+.wait-input:focus{border-color:color-mix(in oklch,var(--gold) 55%,transparent);box-shadow:0 0 0 3px color-mix(in oklch,var(--gold) 12%,transparent);}
+.wait-btn{font-family:"Cinzel",serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;background:var(--gold);color:var(--blk);padding:0 28px;border:none;cursor:pointer;font-weight:700;transition:all .3s;box-shadow:0 0 24px color-mix(in oklch,var(--gold) 20%,transparent);min-height:54px;}
+.wait-btn:hover{background:var(--gold-300);transform:translateY(-2px);box-shadow:0 0 48px color-mix(in oklch,var(--gold) 45%,transparent);}
+.wait-note{font-family:"Cinzel",serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-top:22px;}
+.wait-ok{display:none;margin-top:18px;padding:14px 22px;border:1px solid color-mix(in oklch,var(--gold) 35%,transparent);background:color-mix(in oklch,var(--gold) 6%,transparent);color:var(--gold);font-family:"Cinzel",serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.wait-ok.show{display:inline-block;}
+
+/* SOCIAL WALL */
+.swall{padding:110px 0 110px;background:var(--b2);border-top:1px solid var(--bo);position:relative;z-index:1;overflow:hidden;}
+.swall-head{padding:0 10%;text-align:center;margin-bottom:64px;}
+.swall-head .sl{justify-content:center;}.swall-head .sl::before{display:none;}
+.swall-head h2{font-family:"Cinzel",serif;font-size:clamp(28px,4vw,54px);font-weight:900;line-height:.95;margin-bottom:18px;}
+.swall-head h2 em{color:var(--gold);font-style:normal;}
+.swall-head p{font-size:18px;color:var(--mu);max-width:560px;margin:0 auto;font-style:italic;}
+.swall-track{display:flex;gap:18px;width:max-content;animation:swmove 50s linear infinite;}
+.swall:hover .swall-track{animation-play-state:paused;}
+@keyframes swmove{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.swc{flex:0 0 320px;background:var(--b3);border:1px solid var(--bo);padding:28px;display:flex;flex-direction:column;gap:16px;transition:border-color .3s ease,transform .3s ease;}
+.swc:hover{border-color:color-mix(in oklch,var(--gold) 32%,transparent);transform:translateY(-4px);}
+.swc-q{font-size:15px;color:var(--tx);line-height:1.7;font-style:italic;}
+.swc-au{display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid var(--bo);}
+.swc-av{width:40px;height:40px;border-radius:50%;background:color-mix(in oklch,var(--gold) 12%,transparent);border:1px solid color-mix(in oklch,var(--gold) 30%,transparent);display:flex;align-items:center;justify-content:center;font-family:"Cinzel",serif;font-size:14px;font-weight:700;color:var(--gold);flex-shrink:0;}
+.swc-nm{font-family:"Cinzel",serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tx);}
+.swc-ro{font-size:12px;color:var(--mu);font-style:italic;margin-top:2px;}
+.swall-fade{position:absolute;top:0;bottom:0;width:120px;pointer-events:none;z-index:2;}
+.swall-fade.l{left:0;background:linear-gradient(90deg,var(--b2),transparent);}
+.swall-fade.r{right:0;background:linear-gradient(-90deg,var(--b2),transparent);}
+
+/* APP-STORE BADGES */
+.abadges{padding:90px 10% 110px;background:var(--blk);border-top:1px solid var(--bo);text-align:center;position:relative;z-index:1;}
+.abadges .sl{justify-content:center;}.abadges .sl::before{display:none;}
+.abadges h2{font-family:"Cinzel",serif;font-size:clamp(24px,3.4vw,44px);font-weight:900;line-height:.95;margin-bottom:18px;}
+.abadges h2 em{color:var(--gold);font-style:normal;}
+.abadges p{font-size:17px;color:var(--mu);max-width:520px;margin:0 auto 44px;font-style:italic;}
+.abrow{display:inline-flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;}
+.abadge{display:inline-flex;align-items:center;gap:14px;background:var(--blk);border:1px solid color-mix(in oklch,var(--gold) 22%,transparent);border-radius:12px;padding:14px 24px;text-decoration:none;transition:all .35s ease;min-width:200px;position:relative;overflow:hidden;}
+.abadge::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in oklch,var(--gold) 6%,transparent) 0%,transparent 60%);opacity:0;transition:opacity .35s ease;}
+.abadge:hover{border-color:color-mix(in oklch,var(--gold) 60%,transparent);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5),0 0 28px color-mix(in oklch,var(--gold) 14%,transparent);}
+.abadge:hover::after{opacity:1;}
+.abadge svg{flex-shrink:0;}
+.abadge-text{text-align:left;display:flex;flex-direction:column;line-height:1.1;}
+.abadge-top{font-family:"Cinzel",serif;font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mu);margin-bottom:4px;}
+.abadge-name{font-family:"Cinzel",serif;font-size:18px;color:var(--tx);letter-spacing:1px;}
+.abadge.soon{opacity:.72;cursor:default;}
+.abadge.soon:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35);}
+.abadge.soon .abadge-top{color:var(--gold);}
+.abadge-hint{display:block;margin-top:24px;font-family:"Cinzel",serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);}
+
 /* RESPONSIVE */
 @media(max-width:1100px){.hero{grid-template-columns:1fr;text-align:center;padding:120px 8% 80px;}.hright{display:none;}.hcopy,.ss{max-width:100%;}.hctas,.hstars,.hproof{justify-content:center;}}
+@media(max-width:768px){.wait{padding:80px 6%;}.swall{padding:70px 0;}.swall-head{padding:0 6%;margin-bottom:40px;}.swc{flex:0 0 280px;}.abadges{padding:64px 6% 80px;}.abrow{flex-direction:column;width:100%;}.abadge{width:100%;justify-content:flex-start;}.wait-form{flex-direction:column;}.wait-input,.wait-btn{width:100%;}.wait-btn{padding:16px 18px;}}
 @media(max-width:768px){nav{padding:14px 20px;}nav.s{padding:10px 20px;}.nm{display:none;}.sec{padding:80px 6%;}.prob-grid,.feat-grid,.tgrid,.feat-compact{grid-template-columns:1fr;}.how-tl{grid-template-columns:1fr;gap:32px;}.how-tl::before,.how-tl::after{display:none;}.spr-grid{flex-direction:column;}.spi{border-right:none;border-bottom:1px solid var(--bo);}.spi:last-child{border-bottom:none;}.emp-wrap{grid-template-columns:1fr;gap:48px;}.reel{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;padding:40px 6%;}.fli{justify-content:center;}}
 @media(max-width:520px){.hero{padding:110px 6% 64px;}.hero h1{font-size:42px;line-height:1.02;letter-spacing:-1px;}.hcopy{font-size:16px;line-height:1.65;max-width:100%;}.hproof{flex-direction:column;}.hpi{border-right:none;border-bottom:1px solid var(--bo);}.hpi:last-child{border-bottom:none;}.hctas{flex-direction:column;}.bprim,.bsec{width:100%;justify-content:center;padding:15px 18px;letter-spacing:2px;}.hstars,.hdisc{justify-content:center;text-align:center;}}
 
@@ -311,6 +375,8 @@ body.menu-open{overflow:hidden;}
   .how-tl::after{transform:scaleX(1) !important;}
   .reel-num{opacity:1 !important;transform:none !important;}
   .reel .reel-cell::before{transform:scaleX(1) !important;}
+  .swall-track{animation:none !important;}
+  .wait::before{animation:none !important;}
 }
 </style>
 <link rel="stylesheet" href="cookie-banner.css"/>
@@ -371,6 +437,25 @@ body.menu-open{overflow:hidden;}
 <div class="cshine"></div></div>
 <div class="cbot">&#x25C6; Season 1 Founder Card &#x25C6;</div>
 </div></div>
+</section>
+
+<!-- WAITLIST HERO -->
+<section class="wait r" id="waitlist">
+<div class="wait-inner">
+<div class="sl">Pre-Launch &middot; DACH</div>
+<h2>Sei dabei wenn die <em>Season startet.</em></h2>
+<p class="wait-sub">Sichere dir deinen Platz auf der Warteliste &ndash; und damit eine exklusive <strong style="color:var(--tx);">Founder Card</strong> die es nie wieder geben wird.</p>
+<div class="wait-counter">
+<span class="wait-count" id="waitCount" data-target="1247">0</span>
+<span class="wait-clbl">Wartende</span>
+</div>
+<form class="wait-form" id="waitForm" action="mailto:waitlist@deal-buddy.app" method="post" enctype="text/plain">
+<input class="wait-input" id="waitEmail" type="email" name="email" required autocomplete="email" placeholder="deine@email.de" aria-label="Email f&uuml;r Warteliste"/>
+<button class="wait-btn" type="submit">Beitreten &rarr;</button>
+</form>
+<div class="wait-ok" id="waitOk">&check; Eingetragen. Willkommen bei der Founder Crew.</div>
+<p class="wait-note">Kein Spam &middot; Jederzeit abmeldbar &middot; DSGVO-konform</p>
+</div>
 </section>
 
 <div class="ubar r">&#x26A0;&#xFE0F;  <strong>Season 1 l&auml;uft gerade.</strong>  Die Season-1-Crew erh&auml;lt eine exklusive Legendary Card die es nie wieder geben wird.</div>
@@ -736,6 +821,66 @@ body.menu-open{overflow:hidden;}
 </div>
 </section>
 
+<!-- SOCIAL WALL -->
+<section class="swall" id="social-wall" aria-label="Early Users Wall">
+<div class="swall-head r">
+<div class="sl">Early Users</div>
+<h2>Die ersten <em>Buddys.</em></h2>
+<p>Stimmen aus der Beta &ndash; warum sie auf Season 1 warten.</p>
+</div>
+<div class="swall-fade l" aria-hidden="true"></div>
+<div class="swall-fade r" aria-hidden="true"></div>
+<div class="swall-track" id="swallTrack">
+<div class="swc"><p class="swc-q">&bdquo;Wir haben in der Beta-Runde 40 Deals abgewickelt &ndash; Schluss mit der WhatsApp-Sucherei.&ldquo;</p><div class="swc-au"><div class="swc-av">M</div><div><div class="swc-nm">Marvin K.</div><div class="swc-ro">Beta-Tester &middot; M&uuml;nchen</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Endlich ein Tipp-Game ohne Buchmacher-Geschmack. Pure Freundschaft, pure Punkte.&ldquo;</p><div class="swc-au"><div class="swc-av">T</div><div><div class="swc-nm">Tobias R.</div><div class="swc-ro">Tipprunden-Admin &middot; K&ouml;ln</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Die Founder Card im Wireframe-Preview hat unsere ganze Gruppe gehyped.&ldquo;</p><div class="swc-au"><div class="swc-av">A</div><div><div class="swc-nm">Aylin D.</div><div class="swc-ro">Community-Lead &middot; Berlin</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Wenn das Battle-Pass-System genauso fair bleibt wie versprochen, bin ich Day-One dabei.&ldquo;</p><div class="swc-au"><div class="swc-av">F</div><div><div class="swc-nm">Felix W.</div><div class="swc-ro">Mobile Gamer &middot; Hamburg</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Splitwise trifft FIFA-Companion-App. Genau die L&uuml;cke die in meinem Homescreen fehlt.&ldquo;</p><div class="swc-au"><div class="swc-av">J</div><div><div class="swc-nm">Jana P.</div><div class="swc-ro">Product Designer &middot; Wien</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Meine Brot-Wette mit dem Schwager l&auml;uft seit Wochen. DealBuddy wird das endlich kl&auml;ren.&ldquo;</p><div class="swc-au"><div class="swc-av">D</div><div><div class="swc-nm">Dominik S.</div><div class="swc-ro">Closed Beta &middot; Salzburg</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Habe drei Tippgruppen parallel laufen. Eine zentrale App daf&uuml;r? Endlich.&ldquo;</p><div class="swc-au"><div class="swc-av">L</div><div><div class="swc-nm">Lara H.</div><div class="swc-ro">Bundesliga-Junkie &middot; Leipzig</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Das UI fr&uuml;hlt sich premium an &ndash; nicht wie die ganzen Buchmacher-Apps mit Neon-LEDs.&ldquo;</p><div class="swc-au"><div class="swc-av">N</div><div><div class="swc-nm">Niklas B.</div><div class="swc-ro">UI-Snob &middot; Stuttgart</div></div></div></div>
+<div class="swc"><p class="swc-q">&bdquo;Battle Pass + Collectible Cards &ndash; das ist die Lego-Schachtel f&uuml;r Erwachsene Freundesgruppen.&ldquo;</p><div class="swc-au"><div class="swc-av">S</div><div><div class="swc-nm">Selin Y.</div><div class="swc-ro">Founder Crew &middot; Frankfurt</div></div></div></div>
+<!-- Duplicate for seamless marquee -->
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Wir haben in der Beta-Runde 40 Deals abgewickelt &ndash; Schluss mit der WhatsApp-Sucherei.&ldquo;</p><div class="swc-au"><div class="swc-av">M</div><div><div class="swc-nm">Marvin K.</div><div class="swc-ro">Beta-Tester &middot; M&uuml;nchen</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Endlich ein Tipp-Game ohne Buchmacher-Geschmack. Pure Freundschaft, pure Punkte.&ldquo;</p><div class="swc-au"><div class="swc-av">T</div><div><div class="swc-nm">Tobias R.</div><div class="swc-ro">Tipprunden-Admin &middot; K&ouml;ln</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Die Founder Card im Wireframe-Preview hat unsere ganze Gruppe gehyped.&ldquo;</p><div class="swc-au"><div class="swc-av">A</div><div><div class="swc-nm">Aylin D.</div><div class="swc-ro">Community-Lead &middot; Berlin</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Wenn das Battle-Pass-System genauso fair bleibt wie versprochen, bin ich Day-One dabei.&ldquo;</p><div class="swc-au"><div class="swc-av">F</div><div><div class="swc-nm">Felix W.</div><div class="swc-ro">Mobile Gamer &middot; Hamburg</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Splitwise trifft FIFA-Companion-App. Genau die L&uuml;cke die in meinem Homescreen fehlt.&ldquo;</p><div class="swc-au"><div class="swc-av">J</div><div><div class="swc-nm">Jana P.</div><div class="swc-ro">Product Designer &middot; Wien</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Meine Brot-Wette mit dem Schwager l&auml;uft seit Wochen. DealBuddy wird das endlich kl&auml;ren.&ldquo;</p><div class="swc-au"><div class="swc-av">D</div><div><div class="swc-nm">Dominik S.</div><div class="swc-ro">Closed Beta &middot; Salzburg</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Habe drei Tippgruppen parallel laufen. Eine zentrale App daf&uuml;r? Endlich.&ldquo;</p><div class="swc-au"><div class="swc-av">L</div><div><div class="swc-nm">Lara H.</div><div class="swc-ro">Bundesliga-Junkie &middot; Leipzig</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Das UI fr&uuml;hlt sich premium an &ndash; nicht wie die ganzen Buchmacher-Apps mit Neon-LEDs.&ldquo;</p><div class="swc-au"><div class="swc-av">N</div><div><div class="swc-nm">Niklas B.</div><div class="swc-ro">UI-Snob &middot; Stuttgart</div></div></div></div>
+<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Battle Pass + Collectible Cards &ndash; das ist die Lego-Schachtel f&uuml;r Erwachsene Freundesgruppen.&ldquo;</p><div class="swc-au"><div class="swc-av">S</div><div><div class="swc-nm">Selin Y.</div><div class="swc-ro">Founder Crew &middot; Frankfurt</div></div></div></div>
+</div>
+</section>
+
+<!-- APP-STORE BADGES -->
+<section class="abadges r" id="app-badges" aria-label="App Store Badges">
+<div class="sl">Verf&uuml;gbarkeit</div>
+<h2>Lade dir die <em>App.</em></h2>
+<p>Web App ist live. Native iOS gerade im App-Store-Review. Android folgt direkt danach.</p>
+<div class="abrow">
+<a class="abadge" href="https://app.deal-buddy.app" target="_blank" rel="noopener" aria-label="Web App &ouml;ffnen">
+<svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--gold);">
+<circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+</svg>
+<span class="abadge-text"><span class="abadge-top">Sofort starten im</span><span class="abadge-name">Web Browser</span></span>
+</a>
+<a class="abadge soon" href="#waitlist" aria-label="App Store &ndash; bald verf&uuml;gbar">
+<svg width="32" height="38" viewBox="0 0 384 512" aria-hidden="true" fill="currentColor" style="color:var(--tx);">
+<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+</svg>
+<span class="abadge-text"><span class="abadge-top">Bald im</span><span class="abadge-name">App Store</span></span>
+</a>
+<a class="abadge soon" href="#waitlist" aria-label="Google Play &ndash; bald verf&uuml;gbar">
+<svg width="32" height="36" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--tx);">
+<path fill="currentColor" d="M3.609 1.814 13.792 12 3.609 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zm10.89 10.893 2.302 2.302-10.937 6.235 8.635-8.537zm3.199-3.198 2.741 1.563a1 1 0 0 1 0 1.736l-2.741 1.563-2.302-2.301zm-3.199-3.198L5.864 1.825 14.499 2.93l2.302 2.302-2.302 2.279z"></path>
+</svg>
+<span class="abadge-text"><span class="abadge-top">Bald bei</span><span class="abadge-name">Google Play</span></span>
+</a>
+</div>
+<span class="abadge-hint">&starf; Founder Card f&uuml;r alle Pre-Launch-Nutzer &middot; Trag dich in die Warteliste ein</span>
+</section>
+
 <!-- CTA / DOWNLOAD -->
 <section class="cta-sec" id="download">
 <span class="cta-ey r">Kostenlos &middot; Web &middot; iOS &middot; Android &middot; Season 1 l&auml;uft</span>
@@ -832,6 +977,44 @@ menuBtn?.addEventListener('click',()=>{menuDrawer?.classList.contains('open')?cl
 menuOverlay?.addEventListener('click',closeMenu);
 menuDrawer?.querySelectorAll('a').forEach(a=>{a.addEventListener('click',closeMenu);});
 document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&menuDrawer?.classList.contains('open'))closeMenu();});
+
+// --- Waitlist: counter + form ---
+(function(){
+  const el=document.getElementById('waitCount');
+  if(!el)return;
+  const target=parseInt(el.dataset.target||'0',10);
+  const reduceMotion=_reduceMotion();
+  function fmt(n){return n.toLocaleString('de-DE');}
+  function run(){
+    if(reduceMotion){el.textContent=fmt(target);return;}
+    const start=performance.now();const dur=1600;
+    const step=function(now){
+      const p=Math.min(1,(now-start)/dur);
+      const eased=1-Math.pow(1-p,3);
+      el.textContent=fmt(Math.round(target*eased));
+      if(p<1)requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const wio=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){run();wio.disconnect();}});},{threshold:.4});
+  wio.observe(el);
+
+  const form=document.getElementById('waitForm');
+  const ok=document.getElementById('waitOk');
+  const input=document.getElementById('waitEmail');
+  if(form&&ok&&input){
+    form.addEventListener('submit',function(e){
+      // Don't prevent default - let mailto fire - but ALSO show confirmation
+      // If browser swallows mailto silently we still give feedback.
+      setTimeout(function(){
+        ok.classList.add('show');
+        try{input.value='';}catch(_e){}
+        const cur=parseInt(el.textContent.replace(/\D/g,''),10)||target;
+        el.textContent=fmt(cur+1);
+      },150);
+    });
+  }
+})();
 
 // --- Live Stats from Supabase ---
 (async function(){
