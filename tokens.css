@@ -1,0 +1,610 @@
+/* =====================================================================
+   DealBuddy · Token-System v1 (Nachtschicht 12./13.09.2026)
+   ---------------------------------------------------------------------
+   "Wetten mit Freunden. Der Verlierer liefert. Alle sehen zu."
+
+   Direkt einbindbar. Keine Abhängigkeiten außer zwei Google-Fonts.
+   Aufbau in drei Schichten:
+     1. Primitive   (--n-*, --s-*, --won-*, --lost-*, --open-*, --due-*)
+                    Rohwerte, themenunabhängig, werden NICHT direkt in
+                    Komponenten benutzt.
+     2. Semantik    (--bg-*, --fg-*, --border-*, --signal*, --state-*)
+                    Bedeutung statt Farbe. Wechselt mit dem Thema.
+     3. Komponente  (--btn-*, --card-*, --nav-*, --avatar-*)
+                    Feste Maße und Zuordnungen für die Bausteine.
+
+   Themen:
+     :root                                   helles Thema, vollständig
+     @media (prefers-color-scheme: dark)
+       :root:not([data-theme="light"])       Systemdunkel, wenn nicht
+                                             ausdrücklich hell gewählt
+     :root[data-theme="dark"]                ausdrücklich dunkel
+     [data-theme="light"] / [data-theme="dark"]
+                                             Bereichs-Override für ein
+                                             Teilstück (z. B. Vorschau,
+                                             oder eine immer dunkle
+                                             Video-Bühne im hellen Thema)
+
+   Jede Farbe steht vollständig in :root. Die Dunkel-Blöcke überschreiben
+   nur. Nichts existiert ausschließlich in einem Media-Block.
+
+   Warum diese Farben (Kurzfassung, Details an den Tokens):
+   - Neutrale mit warmer Tönung (Farbton 58 bis 75, Chroma 0,004 bis
+     0,012): Papier statt Bildschirmweiß, Anthrazit statt OLED-Loch.
+     Warm, weil die Signalfarbe warm ist. So bleibt die Fläche ein Raum,
+     kein Vakuum, in dem Akzente schweben (Kritikpunkt des Audits).
+   - EINE Signalfarbe: "Flamme", ein sattes Orange (Farbton 47). Orange
+     ist Mut, Aufforderung, Feuer unter dem Hintern. Es ist nicht Gold
+     (Farbton 80, gedämpft, Casino), nicht Rot (Verlust, Fehler), nicht
+     Blau (SaaS, Messenger), nicht Lila/Cyan (Gaming, Krypto). Im
+     deutschen Jugendmarkt ist warmes Orange die Farbe von Jodel und
+     Strava, also sozial und sportlich codiert.
+   - Auf der Signalfläche steht DUNKLE Tinte, nicht Weiß. Weiß auf
+     Orange schafft in keiner Helligkeit sauber AA. Dunkel auf Orange
+     liegt bei über 6:1, sieht nach Aufkleber aus statt nach Warnhinweis
+     und ist in beiden Themen identisch.
+   - Zustände folgen der Ampel, die jeder Deutsche lesen kann:
+     gewonnen = Grün, überfällig = Gelb (die gelbe Karte), verloren = Rot
+     (kühl, weinrot, deutlich vom warmen Orange getrennt), offen =
+     kühles Schiefergrau (noch nichts passiert, bewusst farblos).
+   ===================================================================== */
+
+/* Schriften: lokal aus /fonts/dealbuddy.css (kein Google-Import, siehe dort). Sonst 1:1 nachtschicht/design/tokens.css. */
+
+/* =====================================================================
+   1. PRIMITIVE  (themenunabhängig, alle in OKLCH)
+   ===================================================================== */
+:root {
+  /* Neutrale "Papier/Anthrazit": Farbton wandert von 75 (hell, gelblich
+     wie Papier) zu 58 (dunkel, Richtung Signalfarbe). Chroma minimal,
+     damit es nie braun wird. */
+  --n-0:    oklch(100% 0 0);
+  --n-50:   oklch(98.2% 0.004 75);
+  --n-100:  oklch(96.3% 0.006 75);
+  --n-150:  oklch(93.6% 0.007 75);
+  --n-200:  oklch(90.2% 0.008 74);
+  --n-300:  oklch(83.4% 0.010 72);
+  --n-400:  oklch(70.5% 0.012 70);
+  --n-500:  oklch(58.0% 0.012 66);
+  --n-600:  oklch(46.5% 0.012 62);
+  --n-700:  oklch(36.5% 0.012 60);
+  --n-800:  oklch(27.5% 0.012 58);
+  --n-850:  oklch(23.0% 0.011 58);
+  --n-900:  oklch(19.0% 0.010 58);
+  --n-950:  oklch(15.0% 0.009 58);
+  --n-1000: oklch(11.0% 0.008 58);
+
+  /* Signal "Flamme": Farbton 47, Chroma sinkt zu den Enden, damit die
+     Rampe nicht ausbrennt. 500 ist die Füllung, 700 die Textvariante. */
+  --s-100: oklch(95.5% 0.040 62);
+  --s-200: oklch(90.5% 0.085 58);
+  --s-300: oklch(83.5% 0.135 54);
+  --s-400: oklch(76.5% 0.170 50);
+  --s-500: oklch(70.0% 0.190 47);
+  --s-600: oklch(63.0% 0.190 44);
+  --s-700: oklch(55.0% 0.180 42);
+  --s-800: oklch(46.0% 0.150 40);
+  --s-900: oklch(36.0% 0.110 38);
+
+  /* Gewonnen: Grün, Farbton 150. Nicht das WhatsApp-Grün (145, kälter),
+     leicht ins Gras gezogen, damit es zum warmen Papier passt. */
+  --won-100: oklch(95.0% 0.045 150);
+  --won-300: oklch(84.0% 0.120 150);
+  --won-500: oklch(64.0% 0.160 150);
+  --won-700: oklch(48.0% 0.140 150);
+  --won-900: oklch(34.0% 0.090 150);
+
+  /* Verloren: Rot, Farbton 18 (weinrot, kühl). 30 Grad Abstand zum
+     Signal-Orange, dazu 15 Punkte weniger Helligkeit: nie verwechselbar. */
+  --lost-100: oklch(95.0% 0.035 18);
+  --lost-300: oklch(83.0% 0.100 18);
+  --lost-500: oklch(58.0% 0.200 18);
+  --lost-700: oklch(49.0% 0.185 18);
+  --lost-900: oklch(35.0% 0.120 18);
+
+  /* Offen: Schiefer, Farbton 250, Chroma bewusst niedrig. Es ist noch
+     nichts passiert, also bekommt es fast keine Farbe. Kühl, damit es
+     sich von allem Warmen absetzt. */
+  --open-100: oklch(94.5% 0.014 250);
+  --open-300: oklch(84.0% 0.035 250);
+  --open-500: oklch(60.0% 0.075 250);
+  --open-700: oklch(48.0% 0.065 250);
+  --open-900: oklch(34.0% 0.045 250);
+
+  /* Überfällig: Gelb, Farbton 88 ("gelbe Karte"). Klar gelb, nicht
+     Gold (Gold wäre Farbton 80 mit halbem Chroma und weniger Licht).
+     Dunkle Tinte auf der Füllung, wie beim Signal. */
+  --due-100: oklch(95.5% 0.070 92);
+  --due-300: oklch(88.0% 0.140 90);
+  --due-500: oklch(82.0% 0.170 88);
+  --due-700: oklch(52.0% 0.120 78);
+  --due-900: oklch(38.0% 0.085 72);
+
+  /* Avatar-Töne: sechs gedämpfte Farben für Initialen. Absichtlich
+     nicht das Signal-Orange und nicht die Zustandsfarben, damit ein
+     Gesicht nie wie ein Status aussieht. */
+  --av-1-bg: oklch(90% 0.05 250);  --av-1-fg: oklch(38% 0.09 250);
+  --av-2-bg: oklch(90% 0.06 160);  --av-2-fg: oklch(36% 0.09 160);
+  --av-3-bg: oklch(90% 0.06 330);  --av-3-fg: oklch(38% 0.11 330);
+  --av-4-bg: oklch(90% 0.05 200);  --av-4-fg: oklch(36% 0.08 200);
+  --av-5-bg: oklch(91% 0.06 100);  --av-5-fg: oklch(38% 0.08 90);
+  --av-6-bg: oklch(90% 0.05 290);  --av-6-fg: oklch(38% 0.10 290);
+}
+
+/* =====================================================================
+   2. SEMANTIK · HELLES THEMA (Standard)
+   ===================================================================== */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Flächen */
+  --bg-canvas:     var(--n-100);   /* App-Hintergrund, warmes Papier         */
+  --bg-surface:    var(--n-0);     /* Karten, Listen                          */
+  --bg-surface-2:  var(--n-150);   /* eingelassene Felder, Chips, Skeleton    */
+  --bg-elevated:   var(--n-0);     /* Sheets, Menüs, Toasts                   */
+  --bg-inverse:    var(--n-900);   /* dunkle Pille im hellen Thema            */
+  --bg-stage:      var(--n-1000);  /* Video-Bühne, IMMER dunkel               */
+  --bg-scrim:      oklch(11% 0.008 58 / 0.55);   /* hinter Sheets            */
+  --bg-glass:      oklch(100% 0 0 / 0.78);       /* Navigationsbalken        */
+
+  /* Text */
+  --fg-primary:    var(--n-900);
+  --fg-secondary:  var(--n-600);
+  --fg-muted:      var(--n-500);   /* Meta-Zeilen, 4,6:1 auf Weiß             */
+  --fg-inverse:    var(--n-50);
+  --fg-on-stage:   var(--n-50);
+
+  /* Linien */
+  --border-subtle:  var(--n-150);
+  --border-default: var(--n-200);
+  --border-strong:  var(--n-300);
+  --border-glass:   oklch(11% 0.008 58 / 0.08);
+
+  /* Signal "Flamme" */
+  --signal:         var(--s-500);  /* Füllung: Knopf, aktives Tab, FAB, VS    */
+  --signal-hover:   var(--s-600);
+  --signal-active:  var(--s-700);
+  --signal-ink:     var(--n-950);  /* Tinte AUF der Signalfläche, 6,4:1        */
+  --signal-text:    var(--s-700);  /* Signal als Text/Icon auf Fläche, 4,6:1   */
+  --signal-soft:    var(--s-100);  /* Tönung für Hintergründe                  */
+  --signal-ring:    oklch(70% 0.19 47 / 0.35);
+
+  /* Zustände: -fg (Text), -bg (Tönung), -solid (Füllung), -ink (auf Füllung) */
+  --state-won-fg:      var(--won-700);
+  --state-won-bg:      var(--won-100);
+  --state-won-solid:   var(--won-500);
+  --state-won-ink:     var(--n-950);
+
+  --state-lost-fg:     var(--lost-700);
+  --state-lost-bg:     var(--lost-100);
+  --state-lost-solid:  var(--lost-500);
+  --state-lost-ink:    var(--n-0);
+
+  --state-open-fg:     var(--open-700);
+  --state-open-bg:     var(--open-100);
+  --state-open-solid:  var(--open-500);
+  --state-open-ink:    var(--n-0);
+
+  --state-due-fg:      var(--due-700);
+  --state-due-bg:      var(--due-100);
+  --state-due-solid:   var(--due-500);
+  --state-due-ink:     var(--n-950);
+
+  /* Laufend = Signal, weil "läuft" die einzige Phase ist, in der die App
+     etwas von dir will (zuschauen, abstimmen). */
+  --state-live-fg:     var(--signal-text);
+  --state-live-bg:     var(--signal-soft);
+  --state-live-solid:  var(--signal);
+  --state-live-ink:    var(--signal-ink);
+
+  /* Schatten: hell arbeitet mit Schatten, dunkel mit Linien. */
+  --shadow-1: 0 1px 2px oklch(19% 0.01 58 / 0.06);
+  --shadow-2: 0 2px 6px oklch(19% 0.01 58 / 0.06), 0 8px 20px -6px oklch(19% 0.01 58 / 0.10);
+  --shadow-3: 0 4px 12px oklch(19% 0.01 58 / 0.08), 0 20px 40px -12px oklch(19% 0.01 58 / 0.20);
+  --shadow-nav: 0 10px 30px -10px oklch(19% 0.01 58 / 0.25);
+  --shadow-signal: 0 8px 20px -8px oklch(70% 0.19 47 / 0.55);
+
+  /* Komponentenbindungen, die mit dem Thema wechseln */
+  --card-bg:       var(--bg-surface);
+  --card-border:   var(--border-subtle);
+  --card-shadow:   var(--shadow-1);
+  --nav-bg:        var(--bg-glass);
+  --nav-border:    var(--border-glass);
+  --nav-ink:       var(--fg-secondary);
+  --nav-ink-active: var(--signal-text);
+  --input-bg:      var(--n-0);
+  --input-border:  var(--border-default);
+  --skeleton:      var(--n-150);
+}
+
+/* Systemdunkel, solange nicht ausdrücklich hell gewählt wurde */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+  
+    --bg-canvas:     var(--n-950);   /* Anthrazit, kein OLED-Schwarz            */
+    --bg-surface:    var(--n-900);
+    --bg-surface-2:  var(--n-850);
+    --bg-elevated:   var(--n-800);
+    --bg-inverse:    var(--n-50);
+    --bg-stage:      var(--n-1000);
+    --bg-scrim:      oklch(11% 0.008 58 / 0.70);
+    --bg-glass:      oklch(19% 0.01 58 / 0.74);
+  
+    --fg-primary:    var(--n-50);
+    --fg-secondary:  var(--n-300);
+    --fg-muted:      var(--n-400);   /* 5,1:1 auf n-900                          */
+    --fg-inverse:    var(--n-900);
+    --fg-on-stage:   var(--n-50);
+  
+    --border-subtle:  oklch(100% 0 0 / 0.07);
+    --border-default: oklch(100% 0 0 / 0.12);
+    --border-strong:  oklch(100% 0 0 / 0.24);
+    --border-glass:   oklch(100% 0 0 / 0.10);
+  
+    --signal:         var(--s-500);  /* identische Füllung: Marke bleibt gleich */
+    --signal-hover:   var(--s-400);
+    --signal-active:  var(--s-300);
+    --signal-ink:     var(--n-950);
+    --signal-text:    var(--s-400);  /* 7,2:1 auf n-900                          */
+    --signal-soft:    oklch(70% 0.19 47 / 0.14);
+    --signal-ring:    oklch(76% 0.17 50 / 0.45);
+  
+    --state-won-fg:      var(--won-300);
+    --state-won-bg:      oklch(64% 0.16 150 / 0.16);
+    --state-won-solid:   var(--won-500);
+    --state-won-ink:     var(--n-950);
+  
+    --state-lost-fg:     var(--lost-300);
+    --state-lost-bg:     oklch(58% 0.20 18 / 0.18);
+    --state-lost-solid:  var(--lost-500);
+    --state-lost-ink:    var(--n-0);
+  
+    --state-open-fg:     var(--open-300);
+    --state-open-bg:     oklch(60% 0.075 250 / 0.18);
+    --state-open-solid:  var(--open-500);
+    --state-open-ink:    var(--n-0);
+  
+    --state-due-fg:      var(--due-300);
+    --state-due-bg:      oklch(82% 0.17 88 / 0.16);
+    --state-due-solid:   var(--due-500);
+    --state-due-ink:     var(--n-950);
+  
+    --state-live-fg:     var(--signal-text);
+    --state-live-bg:     var(--signal-soft);
+    --state-live-solid:  var(--signal);
+    --state-live-ink:    var(--signal-ink);
+  
+    --shadow-1: 0 1px 2px oklch(0% 0 0 / 0.30);
+    --shadow-2: 0 2px 6px oklch(0% 0 0 / 0.30), 0 8px 20px -6px oklch(0% 0 0 / 0.40);
+    --shadow-3: 0 4px 12px oklch(0% 0 0 / 0.35), 0 20px 40px -12px oklch(0% 0 0 / 0.55);
+    --shadow-nav: 0 10px 30px -10px oklch(0% 0 0 / 0.60);
+    --shadow-signal: 0 8px 20px -8px oklch(70% 0.19 47 / 0.45);
+  
+    --card-bg:       var(--bg-surface);
+    --card-border:   var(--border-subtle);
+    --card-shadow:   none;
+    --nav-bg:        var(--bg-glass);
+    --nav-border:    var(--border-glass);
+    --nav-ink:       var(--fg-secondary);
+    --nav-ink-active: var(--signal-text);
+    --input-bg:      var(--n-850);
+    --input-border:  var(--border-default);
+    --skeleton:      var(--n-850);
+  }
+}
+
+/* Ausdrücklich dunkel: gewinnt in beide Richtungen. Zusätzlich als
+   Bereichs-Override für Teilstücke (Vorschau, immer dunkle Bühne). */
+:root[data-theme="dark"],
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-canvas:     var(--n-950);   /* Anthrazit, kein OLED-Schwarz            */
+  --bg-surface:    var(--n-900);
+  --bg-surface-2:  var(--n-850);
+  --bg-elevated:   var(--n-800);
+  --bg-inverse:    var(--n-50);
+  --bg-stage:      var(--n-1000);
+  --bg-scrim:      oklch(11% 0.008 58 / 0.70);
+  --bg-glass:      oklch(19% 0.01 58 / 0.74);
+
+  --fg-primary:    var(--n-50);
+  --fg-secondary:  var(--n-300);
+  --fg-muted:      var(--n-400);   /* 5,1:1 auf n-900                          */
+  --fg-inverse:    var(--n-900);
+  --fg-on-stage:   var(--n-50);
+
+  --border-subtle:  oklch(100% 0 0 / 0.07);
+  --border-default: oklch(100% 0 0 / 0.12);
+  --border-strong:  oklch(100% 0 0 / 0.24);
+  --border-glass:   oklch(100% 0 0 / 0.10);
+
+  --signal:         var(--s-500);  /* identische Füllung: Marke bleibt gleich */
+  --signal-hover:   var(--s-400);
+  --signal-active:  var(--s-300);
+  --signal-ink:     var(--n-950);
+  --signal-text:    var(--s-400);  /* 7,2:1 auf n-900                          */
+  --signal-soft:    oklch(70% 0.19 47 / 0.14);
+  --signal-ring:    oklch(76% 0.17 50 / 0.45);
+
+  --state-won-fg:      var(--won-300);
+  --state-won-bg:      oklch(64% 0.16 150 / 0.16);
+  --state-won-solid:   var(--won-500);
+  --state-won-ink:     var(--n-950);
+
+  --state-lost-fg:     var(--lost-300);
+  --state-lost-bg:     oklch(58% 0.20 18 / 0.18);
+  --state-lost-solid:  var(--lost-500);
+  --state-lost-ink:    var(--n-0);
+
+  --state-open-fg:     var(--open-300);
+  --state-open-bg:     oklch(60% 0.075 250 / 0.18);
+  --state-open-solid:  var(--open-500);
+  --state-open-ink:    var(--n-0);
+
+  --state-due-fg:      var(--due-300);
+  --state-due-bg:      oklch(82% 0.17 88 / 0.16);
+  --state-due-solid:   var(--due-500);
+  --state-due-ink:     var(--n-950);
+
+  --state-live-fg:     var(--signal-text);
+  --state-live-bg:     var(--signal-soft);
+  --state-live-solid:  var(--signal);
+  --state-live-ink:    var(--signal-ink);
+
+  --shadow-1: 0 1px 2px oklch(0% 0 0 / 0.30);
+  --shadow-2: 0 2px 6px oklch(0% 0 0 / 0.30), 0 8px 20px -6px oklch(0% 0 0 / 0.40);
+  --shadow-3: 0 4px 12px oklch(0% 0 0 / 0.35), 0 20px 40px -12px oklch(0% 0 0 / 0.55);
+  --shadow-nav: 0 10px 30px -10px oklch(0% 0 0 / 0.60);
+  --shadow-signal: 0 8px 20px -8px oklch(70% 0.19 47 / 0.45);
+
+  --card-bg:       var(--bg-surface);
+  --card-border:   var(--border-subtle);
+  --card-shadow:   none;
+  --nav-bg:        var(--bg-glass);
+  --nav-border:    var(--border-glass);
+  --nav-ink:       var(--fg-secondary);
+  --nav-ink-active: var(--signal-text);
+  --input-bg:      var(--n-850);
+  --input-border:  var(--border-default);
+  --skeleton:      var(--n-850);
+}
+
+/* =====================================================================
+   3. TYPOGRAFIE
+   ---------------------------------------------------------------------
+   Bricolage Grotesque (Überschriften, Zahlen): ein Grotesk mit Kanten
+   und optischer Größe. In 28 px und darüber wird sie eng und laut, in
+   12 px bleibt sie sachlich. Sie hat Charakter, ohne Stadion (Bebas,
+   Oswald) oder Krypta (Cinzel) zu sein. Tabellenziffern für Countdown
+   und Ranglisten.
+   Instrument Sans (Fließtext): ruhig, humanistisch, gute Umlaute, echte
+   Kursive für Zitate im Chat-Ton. Kein Inter, kein Space Grotesk.
+   Basis 16 px, nicht 14: das Ding wird mit dem Daumen auf 390 px gelesen.
+   Versalien nur für Etiketten unter 12 px (Zustands-Chips, Nav-Labels),
+   nie für Überschriften. Kein "COMPETE. WIN. REIGN."
+   ===================================================================== */
+:root {
+  --font-display: "Bricolage Grotesque", "Avenir Next Condensed", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace;   /* Einladungscodes */
+
+  /* Fließtext (Instrument Sans) */
+  --text-2xs: 0.6875rem;  /* 11 px, nur Versal-Etiketten                 */
+  --text-xs:  0.75rem;    /* 12 px, Meta, Zeitstempel                    */
+  --text-sm:  0.875rem;   /* 14 px, Sekundärtext, Listen                 */
+  --text-md:  1rem;       /* 16 px, Standard                             */
+  --text-lg:  1.125rem;   /* 18 px, hervorgehobener Fließtext, Einsatz   */
+  --text-xl:  1.25rem;    /* 20 px, Karten-Titel im Fließtext-Register   */
+
+  /* Überschriften (Bricolage Grotesque) */
+  --display-xs: 1.375rem; /* 22 px, Karten-Titel                          */
+  --display-sm: 1.625rem; /* 26 px, Abschnittstitel                       */
+  --display-md: 2rem;     /* 32 px, Seitentitel                           */
+  --display-lg: 2.5rem;   /* 40 px, Hero auf der öffentlichen Seite       */
+  --display-xl: 3.25rem;  /* 52 px, "VS", Ergebnis-Artefakt               */
+
+  /* Zahlen (Bricolage, tabular) */
+  --numeral-sm: 1.25rem;  /* 20 px, Rangliste                             */
+  --numeral-md: 2rem;     /* 32 px, Countdown in der Karte                */
+  --numeral-lg: 2.75rem;  /* 44 px, Countdown auf der Challenge-Seite     */
+  --numeral-xl: 4rem;     /* 64 px, Ergebnis-Artefakt                     */
+
+  --leading-none:    1;
+  --leading-tight:   1.08;  /* Display ab 32 px                            */
+  --leading-snug:    1.2;   /* Display bis 26 px                           */
+  --leading-normal:  1.5;   /* Fließtext                                   */
+  --leading-relaxed: 1.6;   /* längere Absätze, Regeln, Rechtstexte        */
+
+  --tracking-display-lg: -0.025em; /* ab 32 px                             */
+  --tracking-display:    -0.015em; /* 22 bis 26 px                         */
+  --tracking-numeral:    -0.02em;
+  --tracking-body:        0;
+  --tracking-label:       0.06em;  /* nur Versal-Etiketten                  */
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-black:    800;   /* nur Display: VS, Hero                        */
+
+  /* Fertige Textstile als Kurzschreibweise für `font:` */
+  --type-display-xl: var(--weight-black) var(--display-xl) / var(--leading-none) var(--font-display);
+  --type-display-lg: var(--weight-bold) var(--display-lg) / var(--leading-tight) var(--font-display);
+  --type-display-md: var(--weight-bold) var(--display-md) / var(--leading-tight) var(--font-display);
+  --type-display-sm: var(--weight-bold) var(--display-sm) / var(--leading-snug) var(--font-display);
+  --type-display-xs: var(--weight-semibold) var(--display-xs) / var(--leading-snug) var(--font-display);
+  --type-numeral-lg: var(--weight-bold) var(--numeral-lg) / var(--leading-none) var(--font-display);
+  --type-numeral-md: var(--weight-bold) var(--numeral-md) / var(--leading-none) var(--font-display);
+  --type-numeral-sm: var(--weight-semibold) var(--numeral-sm) / var(--leading-none) var(--font-display);
+  --type-body-lg:    var(--weight-regular) var(--text-lg) / var(--leading-normal) var(--font-body);
+  --type-body:       var(--weight-regular) var(--text-md) / var(--leading-normal) var(--font-body);
+  --type-body-sm:    var(--weight-regular) var(--text-sm) / var(--leading-normal) var(--font-body);
+  --type-meta:       var(--weight-medium) var(--text-xs) / var(--leading-normal) var(--font-body);
+  --type-label:      var(--weight-semibold) var(--text-2xs) / var(--leading-none) var(--font-body);
+  --type-button:     var(--weight-semibold) var(--text-md) / var(--leading-none) var(--font-body);
+}
+
+/* =====================================================================
+   4. ABSTÄNDE, RADIEN, MASSE
+   ---------------------------------------------------------------------
+   4-px-Raster. Karten haben 20 px Radius und 16 px Innenabstand, Knöpfe
+   sind Pillen. Das ist die Formsprache von Social-Apps, nicht von
+   Verwaltungssoftware (8 px Radius, Tabellen) und nicht vom Casino
+   (Goldrahmen, Glow).
+   ===================================================================== */
+:root {
+  --space-0:  0;
+  --space-05: 0.125rem;  /*  2 px */
+  --space-1:  0.25rem;   /*  4 px */
+  --space-15: 0.375rem;  /*  6 px */
+  --space-2:  0.5rem;    /*  8 px */
+  --space-3:  0.75rem;   /* 12 px */
+  --space-4:  1rem;      /* 16 px */
+  --space-5:  1.25rem;   /* 20 px */
+  --space-6:  1.5rem;    /* 24 px */
+  --space-8:  2rem;      /* 32 px */
+  --space-10: 2.5rem;    /* 40 px */
+  --space-12: 3rem;      /* 48 px */
+  --space-16: 4rem;      /* 64 px */
+
+  --gutter:      var(--space-4);     /* Seitenrand auf dem Handy, 16 px     */
+  --card-pad:    var(--space-4);
+  --stack-gap:   var(--space-3);     /* Abstand zwischen Karten im Feed     */
+  --content-max: 30rem;              /* 480 px, eine Spalte, immer          */
+
+  --radius-xs:   0.375rem;  /*  6 px, Skeleton-Zeilen                      */
+  --radius-sm:   0.625rem;  /* 10 px, Eingabefelder                        */
+  --radius-md:   0.875rem;  /* 14 px, Video-Miniaturen, innere Flächen     */
+  --radius-lg:   1.25rem;   /* 20 px, Karten                               */
+  --radius-xl:   1.75rem;   /* 28 px, Sheets (oben)                        */
+  --radius-full: 999px;     /* Pillen, Avatare, Chips                      */
+
+  --radius-card:   var(--radius-lg);
+  --radius-button: var(--radius-full);
+  --radius-chip:   var(--radius-full);
+  --radius-sheet:  var(--radius-xl);
+  --radius-media:  var(--radius-md);
+
+  /* Touch-Ziele: nichts Tippbares unter 44 px. */
+  --touch-min:   2.75rem;   /* 44 px, Mindestmaß                          */
+  --touch-comfy: 3rem;      /* 48 px, Listen-Zeilen                       */
+  --btn-h:       3.25rem;   /* 52 px, primärer Knopf                      */
+  --btn-h-sm:    2.75rem;   /* 44 px, sekundäre/kleine Knöpfe             */
+  --chip-h:      1.75rem;   /* 28 px, nur Anzeige, nie tippbar            */
+  --nav-h:       4rem;      /* 64 px, unterer Balken ohne Safe-Area        */
+  --fab-size:    3.75rem;   /* 60 px, Fordern-Knopf in der Mitte           */
+  --avatar-xs:   1.5rem;    /* 24 px, Abstimmungs-Stapel                   */
+  --avatar-sm:   2rem;      /* 32 px, Kommentar, Rangliste                 */
+  --avatar-md:   2.75rem;   /* 44 px, Listen, Schuldschein                 */
+  --avatar-lg:   4rem;      /* 64 px, Duell-Kopf in der Karte              */
+  --avatar-xl:   5.5rem;    /* 88 px, Duell-Kopf auf der Challenge-Seite   */
+  --icon-sm:     1.125rem;  /* 18 px */
+  --icon-md:     1.5rem;    /* 24 px */
+  --icon-lg:     2rem;      /* 32 px */
+  --hairline:    1px;
+
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* =====================================================================
+   5. BEWEGUNG, EBENEN, BRUCHPUNKTE
+   ---------------------------------------------------------------------
+   Kurz und trocken. Nur transform und opacity werden animiert, kein
+   blur, kein box-shadow. Ein einziger Puls ist erlaubt: der Live-Punkt
+   an laufenden Challenges. Kein Partikelhimmel, kein Schimmer, kein
+   Schweben.
+   ===================================================================== */
+:root {
+  --dur-fast:   120ms;   /* Druck-Feedback, Chip-Wechsel                   */
+  --dur-base:   200ms;   /* Hover, Farbwechsel, Tab-Wechsel                */
+  --dur-slow:   320ms;   /* Sheet auf/zu, Karten-Einblendung               */
+  --dur-reveal: 480ms;   /* Ergebnis-Enthüllung, Abstimmungsbalken         */
+  --dur-pulse:  1600ms;  /* Live-Punkt                                     */
+
+  --ease-out:    cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);   /* Press-Release, Sheet */
+
+  --press-scale: 0.97;   /* :active auf Karten und Knöpfen                 */
+
+  --z-base:    0;
+  --z-raised:  1;     /* Karte über Canvas                                 */
+  --z-sticky:  20;    /* Kopfzeile, Filter                                 */
+  --z-overlay: 90;    /* Scrim                                             */
+  --z-nav:     100;   /* unterer Balken                                    */
+  --z-sheet:   200;   /* Teilen-Blatt, Aktionen                            */
+  --z-toast:   300;
+
+  /* Bruchpunkte. Custom Properties funktionieren nicht in @media, die
+     Werte stehen hier als Referenz und gelten wörtlich:
+       390 px  kleinstes unterstütztes Layout (iPhone 12 mini bis 15)
+       480 px  Inhaltsspalte erreicht Maximalbreite
+       768 px  Tablet: Inhaltsspalte zentriert, Nav bleibt unten
+      1024 px  Desktop: Nav wird zur linken Leiste, Spalte bleibt 480 px */
+  --bp-sm: 390px;
+  --bp-md: 480px;
+  --bp-lg: 768px;
+  --bp-xl: 1024px;
+}
+
+/* =====================================================================
+   6. GRUNDVERHALTEN
+   ===================================================================== */
+html {
+  font-family: var(--font-body);
+  font-size: 100%;
+  line-height: var(--leading-normal);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg-canvas);
+  color: var(--fg-primary);
+  font: var(--type-body);
+}
+
+:focus-visible {
+  outline: 3px solid var(--signal-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--signal-soft);
+  color: var(--fg-primary);
+}
+
+/* Ziffern in Display-Schrift sind immer Tabellenziffern, damit
+   Countdown und Rangliste nicht zappeln. */
+.numeral, [data-numeral] {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: var(--tracking-numeral);
+}
+
+/* Bewegung reduzieren: alles auf Null, Puls aus. Sichtbare Zustände
+   bleiben erhalten (ein Countdown zählt weiter, er springt nur). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --dur-reveal: 0ms;
+    --dur-pulse: 0ms;
+    --press-scale: 1;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /creator/
+Disallow: /card
 
 Sitemap: https://www.deal-buddy.app/sitemap.xml

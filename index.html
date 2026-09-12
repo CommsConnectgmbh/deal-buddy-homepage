@@ -1,1045 +1,354 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>DealBuddy – Dein Wort. Dein Status.</title>
-<meta content="Fordere Freunde zum 1v1-Deal heraus, lade den Beweis hoch, löse fair auf. Jeder Deal verbindlich dokumentiert – was im Gruppenchat für immer verloren geht. Kein Buchmacher, kein Echtgeld. Kostenlos." name="description"/>
-<meta property="og:title" content="DealBuddy – Dein Wort. Dein Status."/>
-<meta property="og:description" content="Proof-basierte 1v1-Deals unter Freunden: Beweis hochladen, fair auflösen, verbindlich dokumentiert. Kostenlos."/>
-<meta property="og:image" content="https://www.deal-buddy.app/images/og-image.png"/>
-<meta property="og:type" content="website"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="DealBuddy – Dein Wort. Dein Status."/>
-<meta name="twitter:description" content="Proof-basierte 1v1-Deals unter Freunden: Beweis hochladen, fair auflösen, verbindlich dokumentiert. Kostenlos."/>
-<meta name="twitter:image" content="https://www.deal-buddy.app/images/og-image.png"/>
-<meta property="og:url" content="https://www.deal-buddy.app/"/>
-<meta property="og:site_name" content="DealBuddy"/>
-<meta property="og:locale" content="de_DE"/>
-<link rel="canonical" href="https://www.deal-buddy.app/"/>
-<meta name="robots" content="index, follow"/>
-<meta name="author" content="Comms Connect GmbH"/>
-<meta name="keywords" content="1v1 Deals, Proof Deals, Beweis hochladen, verbindliche Deals unter Freunden, Freundschaftschallenges, Deal Tracker, faire Auflösung, Social Tippspiel, Tippen mit Freunden"/>
-<link href="favicon.ico" rel="icon"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DealBuddy: Wetten mit Freunden. Der Verlierer liefert.</title>
+<meta name="description" content="Fordere jemanden aus deiner Gruppe heraus. Der Verlierer muss etwas tun, filmt es, und alle sehen zu. Im Browser oder als iPhone-App.">
+<link rel="canonical" href="https://www.deal-buddy.app/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Comms Connect GmbH">
+<meta name="theme-color" content="#f5f3f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1a18" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DealBuddy">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://www.deal-buddy.app/">
+<meta property="og:title" content="Wetten mit Freunden. Der Verlierer liefert. Alle sehen zu.">
+<meta property="og:description" content="Fordere jemanden aus deiner Gruppe heraus. Der Verlierer muss etwas tun, filmt es, und alle sehen zu.">
+<meta property="og:image" content="https://www.deal-buddy.app/images/og-2026-09.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DealBuddy: Wetten mit Freunden. Der Verlierer liefert. Alle sehen zu.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wetten mit Freunden. Der Verlierer liefert. Alle sehen zu.">
+<meta name="twitter:description" content="Fordere jemanden aus deiner Gruppe heraus. Der Verlierer muss etwas tun, filmt es, und alle sehen zu.">
+<meta name="twitter:image" content="https://www.deal-buddy.app/images/og-2026-09.png">
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="images/favicon_32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"DealBuddy","description":"Proof-basierte 1v1-Deals unter Freunden: Fordere heraus, lade den Beweis hoch und löse jeden Deal fair und verbindlich auf. Kein Buchmacher, kein Echtgeld.","applicationCategory":"SocialNetworkingApplication","operatingSystem":"Web, iOS, Android","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"author":{"@type":"Organization","name":"Comms Connect GmbH","url":"https://www.deal-buddy.app"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","ratingCount":"1","bestRating":"5"}}
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "DealBuddy",
+  "url": "https://www.deal-buddy.app/",
+  "description": "Wetten mit Freunden. Der Verlierer liefert. Alle sehen zu. Fordere jemanden aus deiner Gruppe heraus. Der Verlierer muss etwas tun, filmt es, und das Video geht in die Gruppe.",
+  "applicationCategory": "SocialNetworkingApplication",
+  "operatingSystem": "iOS, Web",
+  "inLanguage": "de",
+  "installUrl": "https://apps.apple.com/de/app/dealbuddy/id6763754507",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": { "@type": "Organization", "name": "Comms Connect GmbH", "url": "https://www.deal-buddy.app/impressum.html" }
+}
 </script>
-<link href="apple-touch-icon.png" rel="apple-touch-icon"/>
 
-<!-- Schriften lokal, siehe /fonts/fonts.css. Vorher fonts.googleapis.com: uebertrug bei jedem Aufruf die Besucher-IP an Google in die USA, ohne Einwilligung. --><link rel="stylesheet" href="/fonts/fonts.css"/>
+<!-- Schriften lokal (kein Google-Import, siehe fonts/dealbuddy.css), dann das Token-System aus nachtschicht/design -->
+<link rel="stylesheet" href="fonts/dealbuddy.css">
+<link rel="stylesheet" href="tokens.css">
 <style>
-:root{
-  /* OKLCH gold ramp (replaces 7 leicht differente Gold-Hex/RGBA) */
-  --gold-50:oklch(95% 0.08 80);
-  --gold-300:oklch(86% 0.14 80);
-  --gold:oklch(78% 0.16 80);
-  --gold-500:oklch(78% 0.16 80);
-  --gold-700:oklch(60% 0.18 80);
-  /* OLED-Schwarz mit subtler Wärme Richtung Gold-Hue */
-  --blk:oklch(15% 0.01 80);
-  --b2:oklch(18% 0.012 80);
-  --b3:oklch(20% 0.013 80);
-  /* Glow & accents (durchgehend abgeleitet aus --gold) */
-  --gd:color-mix(in oklch, var(--gold) 12%, transparent);
-  --gg:color-mix(in oklch, var(--gold) 38%, transparent);
-  --tx:oklch(96% 0.02 80);
-  --mu:color-mix(in oklch, var(--tx) 48%, transparent);
-  --bo:color-mix(in oklch, var(--gold) 10%, transparent);
+/* =====================================================================
+   Startseite · Layout
+   Alle Farben, Maße und Schriften kommen aus tokens.css. Hier steht
+   nur, wie die Bausteine auf der Seite liegen.
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; min-height: 100dvh; }
+img, svg { display: block; max-width: 100%; }
+h1, h2, h3, p, ol, ul, figure { margin: 0; }
+a { color: inherit; }
+
+.wrap { width: 100%; max-width: 70rem; margin-inline: auto; padding-inline: var(--gutter); }
+@media (min-width: 768px) { .wrap { padding-inline: var(--space-8); } }
+
+/* --- Kopfzeile: nur die Wortmarke --- */
+.top { display: flex; align-items: center; justify-content: space-between; min-height: var(--nav-h); }
+.mark { display: inline-flex; align-items: center; gap: var(--space-2); text-decoration: none; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-xl); letter-spacing: var(--tracking-display); }
+.mark svg { width: 26px; height: 26px; color: var(--signal); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.top__app { font: var(--type-body-sm); font-weight: var(--weight-semibold); color: var(--signal-text); text-decoration: none; min-height: var(--touch-min); display: inline-flex; align-items: center; padding-inline: var(--space-2); }
+
+/* --- Hero --- */
+.hero { display: grid; gap: var(--space-8); padding-block: var(--space-6) var(--space-12); align-items: center; }
+.hero__copy { display: grid; gap: var(--space-5); }
+.hero h1 { font: var(--type-display-lg); letter-spacing: var(--tracking-display-lg); font-size: clamp(2.125rem, 9vw, 3.25rem); }
+.hero h1 span { display: block; }
+.hero__lead { font: var(--type-body-lg); color: var(--fg-secondary); max-width: 32rem; }
+.hero__lead strong { color: var(--fg-primary); font-weight: var(--weight-semibold); }
+.hero__cta { display: grid; gap: var(--space-3); justify-items: start; }
+.hero__fine { font: var(--type-meta); color: var(--fg-muted); }
+@media (min-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--space-12); padding-block: var(--space-12) var(--space-16); }
 }
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{background:var(--blk);color:var(--tx);font-family:"Crimson Text",Georgia,serif;font-size:18px;overflow-x:hidden;}
-#pts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.pt{position:absolute;border-radius:50%;background:var(--gold);animation:pf linear infinite;opacity:0;}
-@keyframes pf{0%{transform:translateY(105vh) translateX(0);opacity:0;}8%{opacity:.45;}92%{opacity:.18;}100%{transform:translateY(-5vh) translateX(var(--d));opacity:0;}}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:18px 56px;background:color-mix(in oklch,var(--blk) 93%,transparent);backdrop-filter:blur(28px);border-bottom:1px solid var(--bo);transition:padding .3s;}
-nav.s{padding:11px 56px;}
-.nlo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nlo img{width:50px;height:auto;object-fit:contain;filter:drop-shadow(0 0 8px var(--gg));}
-.nlt{font-family:"Cinzel",serif;font-size:19px;font-weight:700;color:var(--gold);letter-spacing:2px;}
-.nm{display:flex;align-items:center;gap:32px;list-style:none;}
-.nm a{font-family:"Cinzel",serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s;}
-.nm a:hover{color:var(--gold);}
-.nc{color:var(--gold)!important;border:1px solid var(--gold)!important;padding:9px 22px;border-radius:2px;transition:all .3s!important;}
-.nc:hover{background:var(--gold)!important;color:var(--blk)!important;}
+/* Die Bühne, auf der ein Baustein aus dem Produkt liegt */
+.stage { background: var(--bg-surface-2); border-radius: var(--radius-xl); padding: var(--space-3); display: grid; justify-items: center; }
+.stage > * { width: 100%; max-width: 358px; }
+@media (min-width: 900px) { .stage { padding: var(--space-8); } }
 
-/* HERO */
-.hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;padding:100px 10% 80px;gap:60px;overflow:hidden;}
-.hbg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 100% 80% at 75% 50%,color-mix(in oklch,var(--gold) 5.5%,transparent) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 5% 85%,color-mix(in oklch,var(--gold) 3%,transparent) 0%,transparent 55%);}
-.hgrid{position:absolute;inset:0;z-index:0;opacity:.018;background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);background-size:72px 72px;}
-.hleft{position:relative;z-index:2;animation:hi 1s ease-out both;}
-@keyframes hi{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:none;}}
-.hbadge{display:inline-flex;align-items:center;gap:10px;font-family:"Cinzel",serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gd);padding:8px 18px;margin-bottom:32px;background:color-mix(in oklch,var(--gold) 4%,transparent);}
-.hbd{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:bl 2s infinite;}
-@keyframes bl{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.55);}}
-.hero h1{font-family:"Cinzel",serif;font-size:clamp(40px,5.5vw,86px);font-weight:900;line-height:.88;margin-bottom:28px;letter-spacing:-2px;}
-.hero h1 .gd{color:var(--gold);}
-.hero h1 .ou{color:var(--tx);font-weight:900;text-shadow:0 1px 0 color-mix(in oklch, var(--gold) 10%, transparent);}
-.hcopy{font-size:clamp(17px,1.5vw,21px);color:var(--mu);line-height:1.82;margin-bottom:36px;max-width:520px;}
-.hcopy strong{color:var(--tx);font-style:normal;}
-.hproof{display:flex;align-items:center;gap:0;margin-bottom:40px;border:1px solid var(--bo);}
-.hpi{flex:1;padding:14px 18px;text-align:center;border-right:1px solid var(--bo);}
-.hpi:last-child{border-right:none;}
-.hpi-val{font-family:"Cinzel",serif;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:3px;}
-.hpi-lbl{font-family:"Cinzel",serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);}
-.hctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px;}
-.bprim{font-family:"Cinzel",serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;background:var(--gold);color:var(--blk);padding:16px 36px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-weight:700;transition:all .3s;box-shadow:0 0 28px color-mix(in oklch,var(--gold) 22%,transparent);}
-.bprim:hover{background:var(--gold-300);box-shadow:0 0 56px color-mix(in oklch,var(--gold) 50%,transparent);transform:translateY(-2px);}
-.bsec{font-family:"Cinzel",serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--tx);padding:16px 36px;border:1px solid rgba(240,236,228,.15);text-decoration:none;display:inline-block;transition:all .3s;}
-.bsec:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
-.hdisc{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:8px 14px;border:1px solid color-mix(in oklch,var(--gold) 22%,transparent);background:color-mix(in oklch,var(--gold) 5%,transparent);font-family:"Cinzel",serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-300);border-radius:2px;}
-.hstars{display:flex;align-items:center;gap:10px;font-family:"Cinzel",serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);}
-.hstars span{color:var(--gold);font-size:14px;letter-spacing:2px;}
-.hright{position:relative;z-index:2;display:flex;justify-content:center;align-items:center;animation:ci 1.3s ease-out .2s both;}
-@keyframes ci{from{opacity:0;transform:translateX(40px) rotateY(15deg);}to{opacity:1;transform:none;}}
-.cscene{perspective:1200px;}
-.cwrap{position:relative;width:290px;animation:cf 7s ease-in-out infinite;filter:drop-shadow(0 0 50px color-mix(in oklch,var(--gold) 44%,transparent)) drop-shadow(0 0 100px color-mix(in oklch,var(--gold) 14%,transparent));}
-@keyframes cf{0%,100%{transform:rotateY(-4deg) rotateX(2deg) translateY(0);}50%{transform:rotateY(5deg) rotateX(-3deg) translateY(-18px);}}
-.cwrap img{width:100%;border-radius:18px;border:2px solid color-mix(in oklch,var(--gold) 55%,transparent);}
-.cshine{position:absolute;inset:0;border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 45%,color-mix(in oklch,var(--gold) 4%,transparent) 100%);pointer-events:none;}
-.cglow{position:absolute;inset:-24px;border-radius:36px;background:radial-gradient(ellipse 80% 60% at 50% 50%,color-mix(in oklch,var(--gold) 11%,transparent) 0%,transparent 70%);z-index:-1;animation:cg 7s ease-in-out infinite;}
-@keyframes cg{0%,100%{opacity:.8;}50%{opacity:1;}}
-.ctop{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-family:"Cinzel",serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);white-space:nowrap;text-shadow:0 0 18px color-mix(in oklch,var(--gold) 90%,transparent);}
-.cbot{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-family:"Cinzel",serif;font-size:8px;letter-spacing:5px;text-transform:uppercase;color:color-mix(in oklch,var(--gold) 55%,transparent);white-space:nowrap;}
+/* --- Abschnitte --- */
+.sec { padding-block: var(--space-10); border-top: var(--hairline) solid var(--border-subtle); }
+.sec__head { display: grid; gap: var(--space-1); margin-bottom: var(--space-6); }
+.sec__n { font: var(--type-label); color: var(--signal-text); letter-spacing: var(--tracking-label); text-transform: uppercase; }
+.sec__t { font: var(--type-display-sm); letter-spacing: var(--tracking-display); }
+@media (min-width: 900px) { .sec { padding-block: var(--space-16); } .sec__t { font-size: var(--display-md); letter-spacing: var(--tracking-display-lg); } }
 
-/* URGENCY BAR */
-.ubar{background:linear-gradient(90deg,color-mix(in oklch,var(--gold) 7%,transparent),color-mix(in oklch,var(--gold) 12%,transparent),color-mix(in oklch,var(--gold) 7%,transparent));border-top:1px solid color-mix(in oklch,var(--gold) 20%,transparent);border-bottom:1px solid color-mix(in oklch,var(--gold) 20%,transparent);padding:14px 10%;text-align:center;font-family:"Cinzel",serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);position:relative;z-index:1;}
-.ubar strong{color:var(--tx);}
+/* --- Wie es läuft: drei Zeilen --- */
+.steps { list-style: none; padding: 0; display: grid; gap: var(--space-4); }
+.steps li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4); align-items: start; }
+.steps__n { font: var(--type-numeral-md); font-variant-numeric: tabular-nums; letter-spacing: var(--tracking-numeral); color: var(--signal-text); width: 2ch; }
+.steps h3 { font: var(--type-display-xs); letter-spacing: var(--tracking-display); }
+.steps p { font: var(--type-body); color: var(--fg-secondary); margin-top: var(--space-1); }
+@media (min-width: 768px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); } }
 
-/* TRUST BAR */
-.trust{padding:56px 10%;background:var(--b2);border-bottom:1px solid var(--bo);position:relative;z-index:1;}
-.trust-inner{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;align-items:center;}
-.trust-item{display:flex;align-items:center;gap:14px;}
-.trust-ico{width:44px;height:44px;border-radius:50%;border:1px solid color-mix(in oklch,var(--gold) 25%,transparent);background:color-mix(in oklch,var(--gold) 6%,transparent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.trust-val{font-family:"Cinzel",serif;font-size:22px;font-weight:900;color:var(--gold);line-height:1;}
-.trust-lbl{font-family:"Cinzel",serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-top:2px;}
-@media(max-width:768px){.trust-inner{gap:32px;}.trust-item{flex-direction:column;text-align:center;}}
-@media(max-width:520px){.trust{padding:40px 6%;}.trust-inner{gap:24px;}}
-
-/* SECTIONS */
-.sec{padding:120px 10%;border-top:1px solid var(--bo);position:relative;z-index:1;}
-.sec-alt{background:var(--b2);}
-.sl{font-family:"Cinzel",serif;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
-.sl::before{content:'';width:40px;height:1px;background:var(--gold);}
-.sh{font-family:"Cinzel",serif;font-size:clamp(28px,4vw,58px);font-weight:900;line-height:.95;margin-bottom:24px;}
-.ss{font-size:19px;color:var(--mu);line-height:1.82;max-width:600px;font-style:italic;}
-
-/* PROBLEM GRID */
-.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px;}
-.pc{background:var(--b3);padding:44px 36px;border:1px solid var(--bo);transition:all .4s;position:relative;overflow:hidden;}
-.pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s;}
-.pc:hover::after{transform:scaleX(1);}
-.pc:hover{background:color-mix(in oklch,var(--gold) 2%,transparent);transform:translateY(-5px);}
-.pc-ico{font-size:36px;margin-bottom:20px;display:block;}
-.pc-q{font-family:"Cinzel",serif;font-size:15px;color:var(--tx);margin-bottom:14px;line-height:1.4;}
-.pc-a{font-size:16px;color:var(--mu);line-height:1.85;margin-bottom:18px;}
-.pc-fix{display:flex;align-items:center;gap:8px;font-family:"Cinzel",serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);padding-top:16px;border-top:1px solid var(--bo);}
-
-/* HOW IT WORKS – scroll-driven clip-path Timeline */
-.how-tl{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:72px;position:relative;contain:layout style;}
-.how-tl::before{content:'';position:absolute;top:36px;left:14%;right:14%;height:2px;background:color-mix(in oklch,var(--gold) 12%,transparent);border-radius:2px;}
-.how-tl::after{content:'';position:absolute;top:36px;left:14%;right:14%;height:2px;background:linear-gradient(90deg,var(--gold-500),var(--gold-300),var(--gold-500));border-radius:2px;transform:scaleX(0);transform-origin:left center;transition:transform 1.1s cubic-bezier(.2,.7,.2,1);box-shadow:0 0 18px color-mix(in oklch,var(--gold) 35%,transparent);}
-.how-tl.lit::after{transform:scaleX(1);}
-.step{padding:0 16px;text-align:center;position:relative;z-index:1;}
-.snum{width:72px;height:72px;border-radius:50%;border:1px solid color-mix(in oklch,var(--gold) 30%,transparent);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-family:"Cinzel",serif;font-size:22px;font-weight:700;color:var(--gold);background:var(--blk);position:relative;z-index:2;transition:all .4s;}
-.how-tl.lit .step .snum{background:color-mix(in oklch,var(--gold) 12%,transparent);border-color:var(--gold);box-shadow:0 0 32px color-mix(in oklch,var(--gold) 35%,transparent);}
-.step:hover .snum{background:color-mix(in oklch,var(--gold) 16%,transparent);border-color:var(--gold);box-shadow:0 0 36px color-mix(in oklch,var(--gold) 38%,transparent);}
-.stitle{font-family:"Cinzel",serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--tx);margin-bottom:14px;}
-.stext{font-size:16px;color:var(--mu);line-height:1.85;}
-.stag{display:inline-block;margin-top:14px;font-family:"Cinzel",serif;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gd);padding:4px 10px;}
-
-/* FEATURE GRID */
-.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:72px;}
-.fc{background:var(--b3);border:1px solid var(--bo);padding:48px;transition:all .35s;position:relative;overflow:hidden;}
-.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s;}
-.fc:hover::before{transform:scaleX(1);}
-.fc:hover{border-color:color-mix(in oklch,var(--gold) 22%,transparent);box-shadow:0 28px 72px rgba(0,0,0,.55);transform:translateY(-6px);}
-.fc-ico{font-size:42px;margin-bottom:8px;display:block;}
-.fc-tag{display:inline-block;margin-bottom:14px;font-family:"Cinzel",serif;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gd);padding:3px 9px;}
-.fc-ti{font-family:"Cinzel",serif;font-size:17px;letter-spacing:1px;color:var(--tx);margin-bottom:14px;text-transform:uppercase;}
-.fc-tx{font-size:16px;color:var(--mu);line-height:1.9;}
-.fc-hl{display:flex;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--bo);}
-.fc-hlt{font-size:14px;color:rgba(255,255,255,.32);line-height:1.7;font-style:italic;}
-
-/* FEATURES COMPACT - for new features section */
-.feat-compact{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px;}
-.fcc{background:var(--b3);border:1px solid var(--bo);padding:36px 32px;transition:all .35s;position:relative;overflow:hidden;text-align:center;}
-.fcc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s;}
-.fcc:hover::before{transform:scaleX(1);}
-.fcc:hover{border-color:color-mix(in oklch,var(--gold) 22%,transparent);transform:translateY(-5px);box-shadow:0 18px 48px rgba(0,0,0,.45);}
-.fcc-ico{font-size:48px;margin-bottom:16px;display:block;}
-.fcc-ti{font-family:"Cinzel",serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--tx);margin-bottom:10px;}
-.fcc-tx{font-size:15px;color:var(--mu);line-height:1.8;}
-.fcc-tag{display:inline-block;margin-top:16px;font-family:"Cinzel",serif;font-size:7px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gd);padding:3px 8px;}
-
-/* TIPP REEL (animated count-up stat reel) */
-.reel{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px;contain:layout style;}
-.reel-cell{position:relative;padding:44px 32px;background:linear-gradient(180deg,var(--b3),var(--b2));border:1px solid color-mix(in oklch,var(--gold) 14%,transparent);overflow:hidden;text-align:left;transition:border-color .35s ease,transform .35s ease;}
-.reel-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform 1s cubic-bezier(.2,.7,.2,1);}
-.reel.lit .reel-cell::before{transform:scaleX(1);}
-.reel-cell:nth-child(2)::before{transition-delay:.15s;}
-.reel-cell:nth-child(3)::before{transition-delay:.3s;}
-.reel-cell:hover{border-color:color-mix(in oklch,var(--gold) 40%,transparent);transform:translateY(-4px);}
-.reel-num{font-family:"Cinzel",serif;font-size:clamp(48px,7vw,96px);font-weight:900;line-height:1;color:var(--gold);text-shadow:0 0 36px color-mix(in oklch,var(--gold) 28%,transparent);margin-bottom:18px;letter-spacing:-2px;font-variant-numeric:tabular-nums;opacity:0;transform:translateY(4px);transition:opacity .6s ease,transform .6s ease;}
-.reel.lit .reel-num{opacity:1;transform:translateY(0);}
-.reel-lbl{font-family:"Cinzel",serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--tx);line-height:1.5;}
-.reel-lbl span{display:block;margin-top:8px;font-family:"Crimson Text",Georgia,serif;font-size:14px;letter-spacing:0;text-transform:none;color:var(--mu);font-style:italic;}
-
-/* STATS */
-.spr-grid{display:flex;gap:0;border:1px solid var(--bo);margin-top:64px;}
-.spi{flex:1;padding:44px 28px;text-align:center;border-right:1px solid var(--bo);}
-.spi:last-child{border-right:none;}
-.spi-val{font-family:"Cinzel",serif;font-size:clamp(28px,3.5vw,52px);font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px;}
-.spi-lbl{font-family:"Cinzel",serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);}
-
-/* LIGA / 3D CARD STACK */
-.emp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:72px;}
-.rl{color:var(--gold);}.re{color:oklch(68% 0.20 305);}.rr{color:oklch(68% 0.16 260);}
-.rl-bg{--rarity:var(--gold);}
-.re-bg{--rarity:oklch(68% 0.20 305);}
-.rr-bg{--rarity:oklch(68% 0.16 260);}
-
-.cstack{position:relative;height:420px;contain:layout style;}
-.csl{position:absolute;top:50%;left:50%;width:200px;height:280px;margin:-140px 0 0 -100px;border-radius:14px;background:linear-gradient(160deg,var(--b3),var(--b2));border:1px solid color-mix(in oklch,var(--rarity,var(--gold)) 32%,transparent);box-shadow:0 18px 40px rgba(0,0,0,.55),0 0 36px color-mix(in oklch,var(--rarity,var(--gold)) 18%,transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease,border-color .35s ease,opacity .35s ease;cursor:default;}
-.csl::before{content:'';position:absolute;inset:0;border-radius:14px;background:linear-gradient(135deg,color-mix(in oklch,#fff 8%,transparent) 0%,transparent 45%,color-mix(in oklch,var(--rarity,var(--gold)) 8%,transparent) 100%);pointer-events:none;}
-.csl-ico{font-size:54px;margin-bottom:18px;}
-.csl-nm{font-family:"Cinzel",serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--tx);margin-bottom:8px;text-align:center;}
-.csl-r{font-family:"Cinzel",serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;}
-/* Fan-Layout: 6 Cards um die Mitte (2D, compositor-friendly) */
-.csl-1{transform:translate(-150px,12px) rotate(-14deg);}
-.csl-2{transform:translate(-80px,-8px) rotate(-8deg);}
-.csl-3{transform:translate(-20px,-14px) rotate(-2deg);}
-.csl-4{transform:translate(40px,-14px) rotate(2deg);z-index:2;}
-.csl-5{transform:translate(100px,-8px) rotate(8deg);}
-.csl-6{transform:translate(170px,12px) rotate(14deg);}
-.cstack:hover .csl{opacity:.55;}
-.cstack .csl:hover{opacity:1;transform:translate(0,-8px) rotate(0) scale(1.02);box-shadow:0 28px 64px rgba(0,0,0,.7),0 0 60px color-mix(in oklch,var(--rarity,var(--gold)) 40%,transparent);border-color:color-mix(in oklch,var(--rarity,var(--gold)) 70%,transparent);z-index:10;}
-@media(max-width:900px){.cstack{height:360px;}.csl{width:160px;height:220px;margin:-110px 0 0 -80px;}.csl-1{transform:translate(-110px,8px) rotate(-12deg);}.csl-2{transform:translate(-58px,-6px) rotate(-7deg);}.csl-6{transform:translate(125px,8px) rotate(12deg);}.csl-5{transform:translate(73px,-6px) rotate(7deg);}}
-
-/* TESTIMONIALS */
-.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px;}
-.tc{background:var(--b3);border:1px solid var(--bo);padding:36px;position:relative;transition:all .3s;}
-.tc:hover{border-color:color-mix(in oklch,var(--gold) 20%,transparent);transform:translateY(-3px);}
-.tc::before{content:'\201C';font-family:"Cinzel",serif;font-size:90px;color:color-mix(in oklch,var(--gold) 6%,transparent);position:absolute;top:10px;left:20px;line-height:1;pointer-events:none;}
-.tc-tx{font-size:17px;color:var(--mu);line-height:1.88;font-style:italic;margin-bottom:24px;position:relative;z-index:1;}
-.tc-au{display:flex;align-items:center;gap:12px;}
-.tc-av{width:42px;height:42px;border-radius:50%;background:color-mix(in oklch,var(--gold) 8%,transparent);border:1px solid color-mix(in oklch,var(--gold) 20%,transparent);display:flex;align-items:center;justify-content:center;font-family:"Cinzel",serif;font-size:16px;font-weight:700;color:var(--gold);}
-.tc-nm{font-family:"Cinzel",serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tx);}
-.tc-su{font-size:13px;color:rgba(255,255,255,.25);}
-
-/* CTA */
-.cta-sec{padding:140px 10%;text-align:center;position:relative;z-index:1;overflow:hidden;border-top:1px solid var(--bo);}
-.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,color-mix(in oklch,var(--gold) 6.5%,transparent) 0%,transparent 65%);}
-.cta-ey{font-family:"Cinzel",serif;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:block;}
-.cta-h{font-family:"Cinzel",serif;font-size:clamp(36px,6vw,84px);font-weight:900;line-height:.88;margin-bottom:24px;}
-.cta-h em{color:var(--gold);font-style:normal;}
-.cta-su{font-size:20px;color:var(--mu);font-style:italic;max-width:540px;margin:0 auto 56px;line-height:1.75;}
-.cta-su strong{color:var(--tx);font-style:normal;}
-.srow{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:44px;}
-.sbtn{display:flex;align-items:center;gap:16px;background:var(--b3);border:1px solid color-mix(in oklch,var(--gold) 20%,transparent);border-radius:14px;padding:20px 36px;text-decoration:none;min-width:230px;transition:all .3s;position:relative;overflow:hidden;}
-.sbtn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in oklch,var(--gold) 6%,transparent),transparent);opacity:0;transition:opacity .3s;}
-.sbtn:hover{border-color:color-mix(in oklch,var(--gold) 65%,transparent);transform:translateY(-5px);box-shadow:0 24px 56px rgba(0,0,0,.5),0 0 28px color-mix(in oklch,var(--gold) 12%,transparent);}
-.sbtn:hover::after{opacity:1;}
-.ss2{font-family:"Cinzel",serif;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.3);margin-bottom:5px;text-transform:uppercase;}
-.sn{font-family:"Cinzel",serif;font-size:22px;color:var(--tx);letter-spacing:1px;}
-.sv{font-size:12px;color:rgba(255,255,255,.22);margin-top:2px;}
-.sbtn.noicon{justify-content:center;gap:0;text-align:center;}
-.sbtn.noicon .ss2,.sbtn.noicon .sn,.sbtn.noicon .sv{text-align:center;}
-.sbtn.pwa-btn{border-color:color-mix(in oklch,var(--gold) 40%,transparent);background:color-mix(in oklch,var(--gold) 6%,transparent);}
-.sbtn.pwa-btn .sn{color:var(--gold);}
-.sbtn.disabled{cursor:default;opacity:.55;pointer-events:none;}
-.sbtn.disabled:hover{transform:none;box-shadow:none;border-color:color-mix(in oklch,var(--gold) 20%,transparent);}
-.cwarn{font-family:"Cinzel",serif;font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:1px;}
-.cwarn a{color:rgba(255,255,255,.18);text-decoration:none;}
-
-/* FOOTER */
-.dc-cta{display:flex;align-items:center;gap:20px;margin:72px auto 0;max-width:780px;padding:24px 28px;border:1px solid #5865F2;border-radius:18px;background:linear-gradient(135deg,rgba(88,101,242,.18),rgba(88,101,242,.05));text-decoration:none;color:inherit;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;}
-.dc-cta:hover{transform:translateY(-2px);border-color:#7289da;box-shadow:0 12px 40px rgba(88,101,242,.28);}
-.dc-cta .dc-ico{font-size:38px;flex-shrink:0;}
-.dc-cta .dc-body{flex:1;min-width:0;}
-.dc-cta .dc-ti{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;}
-.dc-cta .dc-sub{font-size:14px;color:var(--tx2,#aaa);line-height:1.4;}
-.dc-cta .dc-arrow{font-size:24px;color:#5865F2;flex-shrink:0;}
-@media (max-width:640px){.dc-cta{padding:20px;gap:14px;}.dc-cta .dc-ico{font-size:30px;}.dc-cta .dc-ti{font-size:16px;}.dc-cta .dc-sub{font-size:13px;}}
-footer{border-top:1px solid var(--bo);padding:48px 10%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;background:var(--b2);}
-.flo{font-family:"Cinzel",serif;font-size:18px;color:var(--gold);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
-.flo img{width:100px;height:auto;border:none;box-shadow:none;filter:none;}
-.fco{font-family:"Cinzel",serif;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.15);}
-.fli{display:flex;gap:24px;flex-wrap:wrap;}
-.fli a{font-family:"Cinzel",serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;}
-.fli a:hover{color:var(--gold);}
-
-/* REVEAL ANIMATION */
-.r{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
-.r.v{opacity:1;transform:none;}
-
-/* WAITLIST HERO */
-.wait{position:relative;padding:110px 10% 110px;background:var(--blk);border-top:1px solid var(--bo);overflow:hidden;text-align:center;z-index:1;}
-.wait::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,color-mix(in oklch,var(--gold) 8%,transparent) 0%,transparent 65%),radial-gradient(ellipse 40% 30% at 15% 20%,color-mix(in oklch,var(--gold) 4%,transparent) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 85% 80%,color-mix(in oklch,var(--gold) 5%,transparent) 0%,transparent 60%);animation:wglow 14s ease-in-out infinite;}
-@keyframes wglow{0%,100%{opacity:.85;transform:scale(1);}50%{opacity:1;transform:scale(1.04);}}
-.wait-inner{position:relative;z-index:2;max-width:760px;margin:0 auto;}
-.wait .sl{justify-content:center;}
-.wait .sl::before{display:none;}
-.wait h2{font-family:"Cinzel",serif;font-size:clamp(32px,4.5vw,62px);font-weight:900;line-height:.95;margin-bottom:22px;letter-spacing:-1px;}
-.wait h2 em{color:var(--gold);font-style:normal;}
-.wait-sub{font-size:18px;color:var(--mu);line-height:1.7;margin-bottom:38px;max-width:560px;margin-left:auto;margin-right:auto;}
-.wait-counter{display:inline-flex;align-items:baseline;gap:14px;padding:18px 36px;margin-bottom:36px;border:1px solid color-mix(in oklch,var(--gold) 30%,transparent);background:color-mix(in oklch,var(--gold) 6%,transparent);box-shadow:0 0 48px color-mix(in oklch,var(--gold) 12%,transparent);}
-.wait-count{font-family:"Cinzel",serif;font-size:clamp(36px,5vw,58px);font-weight:900;color:var(--gold);line-height:1;letter-spacing:-1px;font-variant-numeric:tabular-nums;text-shadow:0 0 24px color-mix(in oklch,var(--gold) 35%,transparent);}
-.wait-clbl{font-family:"Cinzel",serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);}
-.wait-form{display:flex;gap:10px;max-width:520px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
-.wait-input{flex:1;min-width:240px;background:var(--b3);border:1px solid var(--bo);color:var(--tx);font-family:"Crimson Text",Georgia,serif;font-size:16px;padding:16px 20px;transition:border-color .25s ease,box-shadow .25s ease;outline:none;}
-.wait-input:focus{border-color:color-mix(in oklch,var(--gold) 55%,transparent);box-shadow:0 0 0 3px color-mix(in oklch,var(--gold) 12%,transparent);}
-.wait-btn{font-family:"Cinzel",serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;background:var(--gold);color:var(--blk);padding:0 28px;border:none;cursor:pointer;font-weight:700;transition:all .3s;box-shadow:0 0 24px color-mix(in oklch,var(--gold) 20%,transparent);min-height:54px;}
-.wait-btn:hover{background:var(--gold-300);transform:translateY(-2px);box-shadow:0 0 48px color-mix(in oklch,var(--gold) 45%,transparent);}
-.wait-note{font-family:"Cinzel",serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-top:22px;}
-.wait-ok{display:none;margin-top:18px;padding:14px 22px;border:1px solid color-mix(in oklch,var(--gold) 35%,transparent);background:color-mix(in oklch,var(--gold) 6%,transparent);color:var(--gold);font-family:"Cinzel",serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
-.wait-ok.show{display:inline-block;}
-
-/* SOCIAL WALL */
-.swall{padding:110px 0 110px;background:var(--b2);border-top:1px solid var(--bo);position:relative;z-index:1;overflow:hidden;}
-.swall-head{padding:0 10%;text-align:center;margin-bottom:64px;}
-.swall-head .sl{justify-content:center;}.swall-head .sl::before{display:none;}
-.swall-head h2{font-family:"Cinzel",serif;font-size:clamp(28px,4vw,54px);font-weight:900;line-height:.95;margin-bottom:18px;}
-.swall-head h2 em{color:var(--gold);font-style:normal;}
-.swall-head p{font-size:18px;color:var(--mu);max-width:560px;margin:0 auto;font-style:italic;}
-.swall-track{display:flex;gap:18px;width:max-content;animation:swmove 50s linear infinite;}
-.swall:hover .swall-track{animation-play-state:paused;}
-@keyframes swmove{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.swc{flex:0 0 320px;background:var(--b3);border:1px solid var(--bo);padding:28px;display:flex;flex-direction:column;gap:16px;transition:border-color .3s ease,transform .3s ease;}
-.swc:hover{border-color:color-mix(in oklch,var(--gold) 32%,transparent);transform:translateY(-4px);}
-.swc-q{font-size:15px;color:var(--tx);line-height:1.7;font-style:italic;}
-.swc-au{display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid var(--bo);}
-.swc-av{width:40px;height:40px;border-radius:50%;background:color-mix(in oklch,var(--gold) 12%,transparent);border:1px solid color-mix(in oklch,var(--gold) 30%,transparent);display:flex;align-items:center;justify-content:center;font-family:"Cinzel",serif;font-size:14px;font-weight:700;color:var(--gold);flex-shrink:0;}
-.swc-nm{font-family:"Cinzel",serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tx);}
-.swc-ro{font-size:12px;color:var(--mu);font-style:italic;margin-top:2px;}
-.swall-fade{position:absolute;top:0;bottom:0;width:120px;pointer-events:none;z-index:2;}
-.swall-fade.l{left:0;background:linear-gradient(90deg,var(--b2),transparent);}
-.swall-fade.r{right:0;background:linear-gradient(-90deg,var(--b2),transparent);}
-
-/* APP-STORE BADGES */
-.abadges{padding:90px 10% 110px;background:var(--blk);border-top:1px solid var(--bo);text-align:center;position:relative;z-index:1;}
-.abadges .sl{justify-content:center;}.abadges .sl::before{display:none;}
-.abadges h2{font-family:"Cinzel",serif;font-size:clamp(24px,3.4vw,44px);font-weight:900;line-height:.95;margin-bottom:18px;}
-.abadges h2 em{color:var(--gold);font-style:normal;}
-.abadges p{font-size:17px;color:var(--mu);max-width:520px;margin:0 auto 44px;font-style:italic;}
-.abrow{display:inline-flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;}
-.abadge{display:inline-flex;align-items:center;gap:14px;background:var(--blk);border:1px solid color-mix(in oklch,var(--gold) 22%,transparent);border-radius:12px;padding:14px 24px;text-decoration:none;transition:all .35s ease;min-width:200px;position:relative;overflow:hidden;}
-.abadge::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in oklch,var(--gold) 6%,transparent) 0%,transparent 60%);opacity:0;transition:opacity .35s ease;}
-.abadge:hover{border-color:color-mix(in oklch,var(--gold) 60%,transparent);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5),0 0 28px color-mix(in oklch,var(--gold) 14%,transparent);}
-.abadge:hover::after{opacity:1;}
-.abadge svg{flex-shrink:0;}
-.abadge-text{text-align:left;display:flex;flex-direction:column;line-height:1.1;}
-.abadge-top{font-family:"Cinzel",serif;font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mu);margin-bottom:4px;}
-.abadge-name{font-family:"Cinzel",serif;font-size:18px;color:var(--tx);letter-spacing:1px;}
-.abadge.soon{opacity:.72;cursor:default;}
-.abadge.soon:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35);}
-.abadge.soon .abadge-top{color:var(--gold);}
-.abadge-hint{display:block;margin-top:24px;font-family:"Cinzel",serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);}
-
-/* RESPONSIVE */
-@media(max-width:1100px){.hero{grid-template-columns:1fr;text-align:center;padding:120px 8% 80px;}.hright{display:none;}.hcopy,.ss{max-width:100%;}.hctas,.hstars,.hproof{justify-content:center;}}
-@media(max-width:768px){.wait{padding:80px 6%;}.swall{padding:70px 0;}.swall-head{padding:0 6%;margin-bottom:40px;}.swc{flex:0 0 280px;}.abadges{padding:64px 6% 80px;}.abrow{flex-direction:column;width:100%;}.abadge{width:100%;justify-content:flex-start;}.wait-form{flex-direction:column;}.wait-input,.wait-btn{width:100%;}.wait-btn{padding:16px 18px;}}
-@media(max-width:768px){nav{padding:14px 20px;}nav.s{padding:10px 20px;}.nm{display:none;}.sec{padding:80px 6%;}.prob-grid,.feat-grid,.tgrid,.feat-compact{grid-template-columns:1fr;}.how-tl{grid-template-columns:1fr;gap:32px;}.how-tl::before,.how-tl::after{display:none;}.spr-grid{flex-direction:column;}.spi{border-right:none;border-bottom:1px solid var(--bo);}.spi:last-child{border-bottom:none;}.emp-wrap{grid-template-columns:1fr;gap:48px;}.reel{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;padding:40px 6%;}.fli{justify-content:center;}}
-@media(max-width:520px){.hero{padding:110px 6% 64px;}.hero h1{font-size:42px;line-height:1.02;letter-spacing:-1px;}.hcopy{font-size:16px;line-height:1.65;max-width:100%;}.hproof{flex-direction:column;}.hpi{border-right:none;border-bottom:1px solid var(--bo);}.hpi:last-child{border-bottom:none;}.hctas{flex-direction:column;}.bprim,.bsec{width:100%;justify-content:center;padding:15px 18px;letter-spacing:2px;}.hstars,.hdisc{justify-content:center;text-align:center;}}
-
-/* MOBILE MENU */
-.nb{display:none;}
-.mo{display:none;}
-.md{display:none;}
-@media(max-width:900px){
-.mo{display:block;}.md{display:block;}
-nav{padding:14px 20px;}nav.s{padding:10px 20px;}
-.nm{display:none;}
-.nb{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid color-mix(in oklch,var(--gold) 22%,transparent);background:color-mix(in oklch,var(--blk) 72%,transparent);backdrop-filter:blur(18px);cursor:pointer;}
-.nb svg{width:22px;height:22px;fill:var(--gold);}
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:240;}
-.md{position:fixed;top:72px;left:14px;right:14px;z-index:250;border:1px solid color-mix(in oklch,var(--gold) 22%,transparent);background:color-mix(in oklch,var(--blk) 94%,transparent);backdrop-filter:blur(22px);box-shadow:0 28px 72px rgba(0,0,0,.65);transform:translateY(-12px);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;}
-.md.open{opacity:1;transform:none;pointer-events:auto;}
-.md a{display:flex;align-items:center;justify-content:space-between;padding:16px;text-decoration:none;font-family:"Cinzel",serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--tx);border-bottom:1px solid color-mix(in oklch,var(--gold) 10%,transparent);}
-.md a:last-child{border-bottom:none;}
-.md a span{color:rgba(255,255,255,.25);font-size:12px;letter-spacing:0;text-transform:none;}
-.md a:hover{color:var(--gold);}
-.md .cta{background:color-mix(in oklch,var(--gold) 8%,transparent);color:var(--gold);}
-body.menu-open{overflow:hidden;}
+/* --- Beispiel: Challenge und Einlösung --- */
+.example { display: grid; gap: var(--space-4); justify-items: center; }
+.example > * { width: 100%; max-width: 358px; }
+.example__arrow { display: grid; place-items: center; color: var(--fg-muted); }
+.example__arrow svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+@media (min-width: 900px) {
+  .example { grid-template-columns: 358px auto 358px; align-items: start; justify-content: center; gap: var(--space-6); }
+  .example__arrow { align-self: center; }
+  .example__arrow svg { transform: rotate(-90deg); }
 }
-.mo[hidden]{display:none!important;}.md[hidden]{display:none!important;}
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
-  #pts{display:none !important;}
-  .cscene,.cwrap,.cglow,.cshine{animation:none !important;transform:none !important;}
-  .bdg,.badge{animation:none !important;}
-  /* Strategic-Block fallbacks: 3D-stack flach, timeline sofort sichtbar, reel-numbers static */
-  .cstack:hover .csl{filter:none !important;}
-  .cstack .csl:hover{transform:none !important;}
-  .how-tl::after{transform:scaleX(1) !important;}
-  .reel-num{opacity:1 !important;transform:none !important;}
-  .reel .reel-cell::before{transform:scaleX(1) !important;}
-  .swall-track{animation:none !important;}
-  .wait::before{animation:none !important;}
+
+/* --- Store --- */
+.store { text-align: center; display: grid; gap: var(--space-6); justify-items: center; }
+.store__t { font: var(--type-display-sm); letter-spacing: var(--tracking-display); }
+.store__d { font: var(--type-body); color: var(--fg-secondary); margin-top: var(--space-2); }
+.store__row { display: grid; gap: var(--space-3); width: 100%; max-width: 22rem; }
+.store__row .btn svg { width: 22px; height: 22px; }
+@media (min-width: 640px) { .store__row { grid-template-columns: 1fr 1fr; max-width: 30rem; } }
+@media (min-width: 900px) { .store__t { font-size: var(--display-md); letter-spacing: var(--tracking-display-lg); } }
+
+/* --- Fußzeile --- */
+.foot { border-top: var(--hairline) solid var(--border-subtle); padding-block: var(--space-8) calc(var(--space-8) + var(--safe-bottom)); display: grid; gap: var(--space-4); font: var(--type-body-sm); color: var(--fg-muted); }
+.foot__links { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); list-style: none; padding: 0; }
+.foot__links a { display: inline-flex; align-items: center; min-height: var(--touch-min); padding-inline: var(--space-2); margin-inline: calc(-1 * var(--space-2)) 0; color: var(--fg-secondary); text-decoration: none; font-weight: var(--weight-semibold); }
+.foot__links a:hover { color: var(--fg-primary); }
+@media (min-width: 768px) { .foot { grid-template-columns: 1fr auto; align-items: center; } }
+
+/* =====================================================================
+   Bausteine (Referenzimplementierung aus nachtschicht/design/vorschau.html,
+   auf das reduziert, was die Startseite zeigt)
+   ===================================================================== */
+.ic { width: var(--icon-md); height: var(--icon-md); flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.ic--sm { width: var(--icon-sm); height: var(--icon-sm); }
+
+.av {
+  --_s: var(--avatar-md);
+  width: var(--_s); height: var(--_s); border-radius: var(--radius-full); flex: none;
+  display: inline-grid; place-items: center; overflow: hidden;
+  background: var(--_bg, var(--bg-surface-2)); color: var(--_fg, var(--fg-secondary));
+  font-family: var(--font-display); font-weight: var(--weight-bold); font-size: calc(var(--_s) * 0.38); letter-spacing: -0.02em;
 }
+.av--lg { --_s: var(--avatar-lg); }
+.av-1 { --_bg: var(--av-1-bg); --_fg: var(--av-1-fg); } .av-2 { --_bg: var(--av-2-bg); --_fg: var(--av-2-fg); }
+.av-3 { --_bg: var(--av-3-bg); --_fg: var(--av-3-fg); } .av-4 { --_bg: var(--av-4-bg); --_fg: var(--av-4-fg); }
+.av-5 { --_bg: var(--av-5-bg); --_fg: var(--av-5-fg); } .av-6 { --_bg: var(--av-6-bg); --_fg: var(--av-6-fg); }
+.av--won { box-shadow: 0 0 0 3px var(--card-bg), 0 0 0 6px var(--state-won-solid); }
+.av--lost { filter: grayscale(1); opacity: 0.7; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: var(--space-15); height: var(--chip-h); padding: 0 var(--space-3);
+  border-radius: var(--radius-chip); font: var(--type-label); text-transform: uppercase; letter-spacing: var(--tracking-label); white-space: nowrap;
+}
+.chip--live { background: var(--state-live-bg); color: var(--state-live-fg); }
+.chip--won  { background: var(--state-won-bg);  color: var(--state-won-fg); }
+.chip--lost { background: var(--state-lost-bg); color: var(--state-lost-fg); }
+.chip--neutral { background: var(--bg-surface-2); color: var(--fg-secondary); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.dot--pulse { animation: pulse var(--dur-pulse) var(--ease-in-out) infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.6); opacity: 0.45; } }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: var(--btn-h); padding: 0 var(--space-6); border: 0; border-radius: var(--radius-button);
+  font: var(--type-button); cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: transform var(--dur-fast) var(--ease-spring), background-color var(--dur-base) var(--ease-out);
+  -webkit-user-select: none; user-select: none;
+}
+.btn:active { transform: scale(var(--press-scale)); }
+.btn--primary { background: var(--signal); color: var(--signal-ink); box-shadow: var(--shadow-signal); }
+.btn--primary:hover { background: var(--signal-hover); }
+.btn--secondary { background: var(--bg-surface-2); color: var(--fg-primary); }
+.btn--ghost { background: transparent; color: var(--signal-text); }
+.btn--inverse { background: var(--bg-inverse); color: var(--fg-inverse); }
+.btn--sm { min-height: var(--btn-h-sm); padding: 0 var(--space-4); font-size: var(--text-sm); }
+.btn--block { width: 100%; }
+.hero .btn--primary { padding-inline: var(--space-8); }
+
+.card {
+  background: var(--card-bg); border: var(--hairline) solid var(--card-border); border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow); padding: var(--card-pad); position: relative; min-width: 0;
+}
+.card__head { display: flex; align-items: center; gap: var(--space-2); min-height: var(--chip-h); }
+.card__group { font: var(--type-meta); color: var(--fg-secondary); font-weight: var(--weight-semibold); white-space: nowrap; }
+.card__meta { font: var(--type-meta); color: var(--fg-muted); white-space: nowrap; }
+.card__head .chip { margin-left: auto; }
+.card__title { font: var(--type-display-xs); letter-spacing: var(--tracking-display); margin: var(--space-4) 0 var(--space-1); text-wrap: balance; }
+.card__stake { font: var(--type-body-sm); color: var(--fg-secondary); }
+.card__stake strong { color: var(--fg-primary); font-weight: var(--weight-semibold); }
+.card__foot { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-4); padding-top: var(--space-3); border-top: var(--hairline) solid var(--border-subtle); }
+.card__foot .btn { margin-left: auto; flex: none; }
+.card__foot .cd, .card__foot .chip { flex: none; }
+.watchers { display: flex; align-items: center; gap: var(--space-2); font: var(--type-meta); color: var(--fg-muted); flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.duel { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-3); margin-top: var(--space-4); }
+.duel__side { display: grid; justify-items: center; gap: var(--space-2); text-align: center; min-width: 0; }
+.duel__name { font: var(--type-body-sm); font-weight: var(--weight-semibold); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.duel__role { font: var(--type-meta); color: var(--fg-muted); margin-top: -4px; }
+.duel__vs {
+  width: 40px; height: 40px; border-radius: var(--radius-full); display: grid; place-items: center;
+  background: var(--signal); color: var(--signal-ink);
+  font-family: var(--font-display); font-weight: var(--weight-black); font-size: 14px; letter-spacing: -0.02em;
+  box-shadow: 0 0 0 4px var(--card-bg);
+}
+.duel--result .duel__vs { background: var(--bg-surface-2); color: var(--fg-muted); box-shadow: none; }
+.duel__tag { margin-top: -2px; }
+
+.cd { font: var(--type-numeral-sm); font-variant-numeric: tabular-nums; letter-spacing: var(--tracking-numeral); color: var(--fg-primary); white-space: nowrap; }
+.cd small { font: var(--type-meta); color: var(--fg-muted); font-weight: var(--weight-semibold); margin-left: 2px; }
+
+.redeem { padding: 0; overflow: clip; border-width: 0; box-shadow: var(--shadow-2); }
+.redeem__band { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); font: var(--type-label); text-transform: uppercase; letter-spacing: var(--tracking-label); }
+.redeem--done .redeem__band { background: var(--state-won-solid); color: var(--state-won-ink); }
+.redeem__body { padding: var(--space-4); display: grid; gap: var(--space-3); }
+.redeem__who { display: flex; align-items: center; gap: var(--space-3); }
+.redeem__lead { font: var(--type-body); color: var(--fg-secondary); }
+.redeem__lead strong { color: var(--fg-primary); font-weight: var(--weight-semibold); }
+.redeem__task { font: var(--type-display-sm); letter-spacing: var(--tracking-display); text-wrap: balance; }
+.redeem__task::before { content: "\201E"; } .redeem__task::after { content: "\201C"; }
+.redeem__thumb { display: grid; grid-template-columns: 72px 1fr; gap: var(--space-3); align-items: center; }
+.redeem__cta { display: grid; gap: var(--space-2); margin-top: var(--space-1); }
+.redeem__stats { font: var(--type-body-sm); color: var(--fg-secondary); }
+.redeem__stats b { display: block; font: var(--type-body); font-weight: var(--weight-semibold); color: var(--fg-primary); }
+
+/* Video-Miniatur: die Bühne ist immer dunkel, auch im hellen Thema */
+.proof__media { position: relative; aspect-ratio: 3 / 4; border-radius: var(--radius-media); background: var(--bg-stage); color: var(--fg-on-stage); display: grid; place-items: center; isolation: isolate; overflow: clip; }
+.proof__poster { position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(60% 45% at 30% 30%, oklch(40% 0.08 47 / 0.55), transparent 70%),
+    radial-gradient(50% 40% at 75% 75%, oklch(35% 0.05 250 / 0.6), transparent 70%),
+    linear-gradient(180deg, oklch(20% 0.01 58), oklch(11% 0.008 58)); }
+.proof__play { width: 44px; height: 44px; border-radius: 50%; background: oklch(100% 0 0 / 0.16); color: #fff; display: grid; place-items: center; box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.3); }
+.proof__play svg { width: 18px; height: 18px; }
+.proof__dur { position: absolute; right: 6px; bottom: 6px; font: var(--type-label); font-variant-numeric: tabular-nums; padding: 3px 6px; border-radius: var(--radius-xs); background: oklch(0% 0 0 / 0.5); color: #fff; }
 </style>
-<link rel="stylesheet" href="cookie-banner.css"/>
 </head>
 <body>
-<div id="pts"></div>
 
-<!-- NAV -->
-<nav id="nav">
-<a class="nlo" href="index.html"><img alt="DealBuddy" src="images/logo.png"/><span class="nlt"></span></a>
-<ul class="nm">
-<li><a href="#features">Features</a></li>
-<li><a href="#social">Und mehr</a></li>
-<li><a href="#empire">Liga</a></li>
-<li><a href="#tippen">Tippen</a></li>
-<li><a href="https://discord.gg/gJkzFzZdS2" target="_blank" rel="noopener">Discord</a></li>
-<li><a class="nc" href="#download">Jetzt starten &rarr;</a></li>
-</ul>
-<button class="nb" id="menuBtn" aria-label="Men&uuml; &ouml;ffnen" aria-expanded="false">
-<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"></path></svg>
-</button>
-</nav>
-
-<div class="mo" id="menuOverlay" hidden></div>
-<div class="md" id="menuDrawer" aria-hidden="true">
-<a href="#features">Features <span>Deal &amp; Beweis</span></a>
-<a href="#social">Und mehr <span>Blitz, Cards &amp; mehr</span></a>
-<a href="#empire">Liga <span>Cards &amp; Rarities</span></a>
-<a href="#tippen">Tippen <span>Fu&szlig;ball &amp; mehr</span></a>
-<a href="https://discord.gg/gJkzFzZdS2" target="_blank" rel="noopener">Discord <span>Community &amp; Support</span></a>
-<a class="cta" href="#download">Jetzt starten <span>Web, iOS &amp; Android</span></a>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-<div class="hbg"></div><div class="hgrid"></div>
-<div class="hleft">
-<div class="hbadge"><span class="hbd"></span>Season 1 &middot; 2026 &middot; Kostenlos</div>
-<h1>Dein Wort.<br/><span class="gd">Dein Status.</span></h1>
-<p class="hcopy">Fordere einen Freund zum 1v1-Deal heraus, lade den Beweis hoch und l&ouml;se fair auf. <strong>Jeder Deal verbindlich dokumentiert &ndash; was im Gruppenchat f&uuml;r immer verloren geht.</strong></p>
-<div class="hproof">
-<div class="hpi"><div class="hpi-val">1v1</div><div class="hpi-lbl">Proof-Deals</div></div>
-<div class="hpi"><div class="hpi-val">&#x1F4F8;</div><div class="hpi-lbl">Beweis-Upload</div></div>
-<div class="hpi"><div class="hpi-val">0 &euro;</div><div class="hpi-lbl">Kostenlos</div></div>
-<div class="hpi"><div class="hpi-val">DSGVO</div><div class="hpi-lbl">Konform</div></div>
-</div>
-<div class="hctas">
-<a class="bprim" href="#download">Jetzt kostenlos starten</a>
-<a class="bsec" href="#wie">So funktioniert's</a>
-</div>
-<div class="hdisc">&#x26A1; Spielw&auml;hrung &middot; Kein Echtgeld &middot; Keine Auszahlung</div>
-<div class="hstars"><span>&starf;&starf;&starf;&starf;&starf;</span><span>Web App &middot; iOS &middot; Android &middot; Kostenlos</span></div>
-</div>
-<div class="hright"><div class="cscene">
-<div class="ctop">&starf; &starf; &starf; &starf; &starf;   Legendary   &starf; &starf; &starf; &starf; &starf;</div>
-<div class="cwrap"><div class="cglow"></div>
-<img alt="Legendary Deal Card" src="images/hero-card.png"/>
-<div class="cshine"></div></div>
-<div class="cbot">&#x25C6; Season 1 Founder Card &#x25C6;</div>
-</div></div>
-</section>
-
-<!-- WAITLIST HERO -->
-<section class="wait r" id="waitlist">
-<div class="wait-inner">
-<div class="sl">Pre-Launch &middot; DACH</div>
-<h2>Sei dabei wenn die <em>Season startet.</em></h2>
-<p class="wait-sub">Sichere dir deinen Platz auf der Warteliste &ndash; und damit eine exklusive <strong style="color:var(--tx);">Founder Card</strong> die es nie wieder geben wird.</p>
-<div class="wait-counter">
-<span class="wait-count" id="waitCount" data-target="1247">0</span>
-<span class="wait-clbl">Wartende</span>
-</div>
-<form class="wait-form" id="waitForm" action="mailto:waitlist@deal-buddy.app" method="post" enctype="text/plain">
-<input class="wait-input" id="waitEmail" type="email" name="email" required autocomplete="email" placeholder="deine@email.de" aria-label="Email f&uuml;r Warteliste"/>
-<button class="wait-btn" type="submit">Beitreten &rarr;</button>
-</form>
-<div class="wait-ok" id="waitOk">&check; Eingetragen. Willkommen bei der Founder Crew.</div>
-<p class="wait-note">Kein Spam &middot; Jederzeit abmeldbar &middot; DSGVO-konform</p>
-</div>
-</section>
-
-<div class="ubar r">&#x26A0;&#xFE0F;  <strong>Season 1 l&auml;uft gerade.</strong>  Die Season-1-Crew erh&auml;lt eine exklusive Legendary Card die es nie wieder geben wird.</div>
-
-<!-- PROMO VIDEO -->
-<section class="sec promo-vid r" id="video" style="padding:90px 10% 90px;text-align:center;">
-<div class="sl" style="justify-content:center;">See it in action</div>
-<h2 class="sh" style="margin-bottom:16px;">Compete. Prove. <span class="gd">Dominate.</span></h2>
-<p class="ss" style="max-width:640px;margin:0 auto 40px;font-style:normal;">Private Challenges tracken, Rivalen schlagen, Legendary Cards freischalten &ndash; alles in einer App.</p>
-<div style="position:relative;max-width:380px;margin:0 auto;border-radius:28px;overflow:hidden;border:1px solid var(--bo);box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 60px color-mix(in oklch,var(--gold) 12%,transparent);">
-<video id="promoVid" src="videos/dealbuddy-promo.mp4" poster="images/hero-card.png" autoplay muted loop playsinline preload="metadata" style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover;background:#000;cursor:pointer;" aria-label="DealBuddy Promo Video"></video>
-<button id="promoMute" type="button" aria-label="Ton einschalten" style="position:absolute;bottom:14px;right:14px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.3);background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);color:var(--gold);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s;">&#x1F507;</button>
-</div>
-<script>(function(){var v=document.getElementById('promoVid'),b=document.getElementById('promoMute');function upd(){b.innerHTML=v.muted?'&#x1F507;':'&#x1F50A;';b.setAttribute('aria-label',v.muted?'Ton einschalten':'Ton ausschalten');}function tog(){v.muted=!v.muted;if(!v.muted){v.currentTime=0;v.play();}upd();}b.addEventListener('click',function(e){e.stopPropagation();tog();});v.addEventListener('click',tog);})();</script>
-<div style="margin-top:36px;"><a class="bprim" href="#download">Jetzt kostenlos starten</a></div>
-</section>
-
-<!-- TRUST BAR -->
-<section class="trust r">
-<div class="trust-inner" id="trustBar">
-<!-- Live stats (hidden until threshold) -->
-<div class="trust-item" id="trust-players" style="display:none;">
-<div class="trust-ico">&#x2713;</div>
-<div><div class="trust-val" id="tv-players">–</div><div class="trust-lbl">Trusted Players</div></div>
-</div>
-<div class="trust-item" id="trust-deals" style="display:none;">
-<div class="trust-ico">&#x1F91D;</div>
-<div><div class="trust-val" id="tv-deals">–</div><div class="trust-lbl">Deals erstellt</div></div>
-</div>
-<div class="trust-item" id="trust-fair" style="display:none;">
-<div class="trust-ico">&#x1F525;</div>
-<div><div class="trust-val" id="tv-fair">–</div><div class="trust-lbl">Fair abgeschlossen</div></div>
-</div>
-<!-- Always visible -->
-<div class="trust-item">
-<div class="trust-ico">&#x1F6E1;</div>
-<div><div class="trust-val">DSGVO</div><div class="trust-lbl">Gepr&uuml;ft &amp; konform</div></div>
-</div>
-<div class="trust-item">
-<div class="trust-ico">&#x26D4;</div>
-<div><div class="trust-val">0 &euro;</div><div class="trust-lbl">Kein Echtgeld-Gambling</div></div>
-</div>
-<div class="trust-item">
-<div class="trust-ico">&#x2714;</div>
-<div><div class="trust-val">18+</div><div class="trust-lbl">Altersfreigabe</div></div>
-</div>
-</div>
-</section>
-
-<!-- PROBLEM -->
-<section class="sec sec-alt" id="problem">
-<div class="sl r">Das Problem</div>
-<h2 class="sh r">Freundschaftschallenges<br/>sterben im Chat-Verlauf.</h2>
-<p class="ss r">Jeder kennt das. Man macht eine Challenge aus &ndash; und zwei Wochen sp&auml;ter erinnert sich niemand mehr wer gewonnen hat. Kein Beweis. Kein Spa&szlig;. Keine Konsequenz.</p>
-<div class="prob-grid">
-<div class="pc r">
-<span class="pc-ico">&#x1F4AC;</span>
-<div class="pc-q">&bdquo;Haben wir das wirklich so ausgemacht?&ldquo;</div>
-<p class="pc-a">Challenges verschwinden in WhatsApp-Gruppen. Niemand kann beweisen was vereinbart wurde. Was als Spa&szlig; begann, endet im Streit.</p>
-<div class="pc-fix">&check;  DealBuddy dokumentiert jeden Deal</div>
-</div>
-<div class="pc r" style="transition-delay:0.12s">
-<span class="pc-ico">&#x1F4B8;</span>
-<div class="pc-q">&bdquo;Wer schuldet wem noch was?&ldquo;</div>
-<p class="pc-a">Pizza, Bier, Liegest&uuml;tze &ndash; die offenen Challenges h&auml;ufen sich an und werden nie eingel&ouml;st. Fairness geht verloren.</p>
-<div class="pc-fix">&check;  Ergebnis-Tracker nach dem Splitwise-Prinzip</div>
-</div>
-<div class="pc r" style="transition-delay:0.24s">
-<span class="pc-ico">&#x1F614;</span>
-<div class="pc-q">&bdquo;Lohnt sich das &uuml;berhaupt?&ldquo;</div>
-<p class="pc-a">Ohne echte Belohnung keine Motivation. Ohne Motivation sterben Challenges. Der Spa&szlig; bleibt auf der Strecke.</p>
-<div class="pc-fix">&check;  Coins, Cards, Battle Pass &amp; Leaderboards</div>
-</div>
-</div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="sec" id="wie">
-<div class="sl r">So einfach</div>
-<h2 class="sh r">3 Schritte.<br/>Eine Legende.</h2>
-<p class="ss r">Kein Buchmacher. Kein Echtgeld-Gl&uuml;cksspiel. Keine Auszahlungen. Nur du, deine Freunde und Deals die f&uuml;r immer z&auml;hlen.</p>
-<div class="how-tl r" id="howTimeline">
-<div class="step">
-<div class="snum">01</div>
-<div class="stitle">Deal erstellen</div>
-<p class="stext">Erstelle eine Challenge: Bedingung, Gegner und den Deal. Pizza, Bier, Liegest&uuml;tze oder die ewige Ehre. In 30 Sekunden erledigt.</p>
-<span class="stag">30 Sekunden</span>
-</div>
-<div class="step">
-<div class="snum">02</div>
-<div class="stitle">Ergebnis eintragen</div>
-<p class="stext">Das Ereignis tritt ein. Gewinner wird eingetragen. Transparent, mit Zeitstempel, f&uuml;r immer dokumentiert. Kein Streit m&ouml;glich.</p>
-<span class="stag">Fair &amp; final</span>
-</div>
-<div class="step">
-<div class="snum">03</div>
-<div class="stitle">Zur Legende werden</div>
-<p class="stext">Gewinne Challenges, steige im Battle Pass auf, sammle Buddy Coins und schalte kosmetische Belohnungen frei. Dein Profil erz&auml;hlt deine Geschichte.</p>
-<span class="stag">Kein Ende in Sicht</span>
-</div>
-</div>
-</section>
-
-<!-- CORE FEATURES -->
-<section class="sec sec-alt" id="features">
-<div class="sl r">Der Kern</div>
-<h2 class="sh r">Ein Deal. Ein Beweis.<br/>Faire Aufl&ouml;sung.</h2>
-<p class="ss r">Fordere jeden aus deiner Kontaktliste heraus, halte den Deal verbindlich fest und l&ouml;se ihn mit Beweis fair auf. Das kann kein Gruppenchat und kein Buchmacher.</p>
-<div class="feat-grid">
-<div class="fc r">
-<span class="fc-ico">&#x1F91D;</span>
-<span class="fc-tag">Kern-Feature</span>
-<div class="fc-ti">1v1 Deals</div>
-<p class="fc-tx">Erstelle Freundschaftschallenges mit jedem in deiner Kontaktliste. W&auml;hle den Deal frei: Ehre, Sport oder eine Runde Bier. DealBuddy h&auml;lt alles fest &ndash; wer gechallenget hat, was auf dem Spiel stand, wer gewonnen hat.</p>
-<div class="fc-hl"><span style="font-size:15px;flex-shrink:0;">&diams;</span><span class="fc-hlt">Kein Geld flie&szlig;t &uuml;ber DealBuddy. 100% privat und direkt zwischen Freunden.</span></div>
-</div>
-<div class="fc r" style="transition-delay:0.12s">
-<span class="fc-ico">&#x1F4F8;</span>
-<span class="fc-tag">Proof &middot; Kamera-Beweis</span>
-<div class="fc-ti">Beweis &amp; faire Aufl&ouml;sung</div>
-<p class="fc-tx">Ergebnis eintragen, Beweis hochladen &ndash; Foto oder Video direkt an den Deal geh&auml;ngt. Mit Zeitstempel, transparent, f&uuml;r immer dokumentiert. Kein &bdquo;Haben wir das so ausgemacht?&ldquo; mehr, kein Streit.</p>
-<div class="fc-hl"><span style="font-size:15px;flex-shrink:0;">&diams;</span><span class="fc-hlt">Der Beweis h&auml;ngt am Deal. Fair, final, nicht wegdiskutierbar.</span></div>
-</div>
-</div>
-
-<div class="fc r" style="background:linear-gradient(135deg,var(--b3),color-mix(in oklch,var(--gold) 4%,transparent));border-color:color-mix(in oklch,var(--gold) 20%,transparent);">
-<span class="fc-ico">&#x1F6E1;</span>
-<span class="fc-tag">Vertrauen &middot; Kern-Mechanik</span>
-<div class="fc-ti">Social Score</div>
-<p class="fc-tx">Jeder Spieler hat einen Reliability Score &ndash; dein digitaler Ruf. Er zeigt ob du Challenges fair abschlie&szlig;t, Deals einl&ouml;st und zuverl&auml;ssig bist. Gr&uuml;n, Gelb oder Rot &ndash; dein Score spricht f&uuml;r dich bevor du es tust. Andere Spieler sehen deinen Score und entscheiden ob sie mit dir spielen wollen.</p>
-<div class="fc-hl"><span style="font-size:15px;flex-shrink:0;">&diams;</span><span class="fc-hlt">Automatisch berechnet aus deinem Verhalten. Nicht manipulierbar. Fair Play wird belohnt.</span></div>
-</div>
-
-<div class="spr-grid r">
-<div class="spi"><div class="spi-val">0 &euro;</div><div class="spi-lbl">Vollst&auml;ndig kostenlos</div></div>
-<div class="spi"><div class="spi-val">&#x1F4F8;</div><div class="spi-lbl">Beweis pro Deal</div></div>
-<div class="spi"><div class="spi-val">&infin;</div><div class="spi-lbl">M&ouml;gliche Deals</div></div>
-<div class="spi"><div class="spi-val">DSGVO</div><div class="spi-lbl">Kein Tracking</div></div>
-</div>
-</section>
-
-<!-- SOCIAL & ENTDECKEN -->
-<section class="sec" id="social">
-<div class="sl r">Und mehr</div>
-<h2 class="sh r">Der Deal ist der Kern.<br/>Der Rest ist das <span class="gd">Spielfeld.</span></h2>
-<p class="ss r">Alles rund um den Deal &ndash; komplett optional, komplett kostenlos: Blitz-Videos, Community, Coins, Battle Pass, Fu&szlig;ball-Tippen und ein Shop voller Cosmetics.</p>
-<div class="feat-compact">
-
-<div class="fcc r">
-<span class="fcc-ico">&#x26A1;</span>
-<div class="fcc-ti">Blitz</div>
-<p class="fcc-tx">Kurze Deal-Videos im Feed. Swipe durch die besten Deals deiner Freunde und der Community. Teile deine epischsten Momente.</p>
-<span class="fcc-tag">Video Feed</span>
-</div>
-
-<div class="fcc r">
-<span class="fcc-ico">&#x1FA99;</span>
-<div class="fcc-ti">Buddy Coins</div>
-<p class="fcc-tx">Virtuelle Coins f&uuml;r gewonnene Deals. Schalte Skins, Frames und Battle-Pass-Belohnungen frei. Rein kosmetisch, kein Pay-to-Win.</p>
-<span class="fcc-tag">Economy</span>
-</div>
-
-<div class="fcc r">
-<span class="fcc-ico">&#x2694;&#xFE0F;</span>
-<div class="fcc-ti">Battle Pass</div>
-<p class="fcc-tx">100 Tiers, 5 Meilensteine, jede Season neue Belohnungen. Season 1 l&auml;uft &ndash; die Founder-Crew erh&auml;lt eine exklusive Legendary Card.</p>
-<span class="fcc-tag">Season 1</span>
-</div>
-
-<div class="fcc r" style="transition-delay:0.1s">
-<span class="fcc-ico">&#x1F4AC;</span>
-<div class="fcc-ti">Community</div>
-<p class="fcc-tx">Forum, Diskussionen und Posts. Teile deine Erfahrungen, feiere Siege und finde neue Gegner. Kategorien f&uuml;r jeden Geschmack.</p>
-<span class="fcc-tag">Forum &amp; Posts</span>
-</div>
-
-<div class="fcc r" style="transition-delay:0.2s">
-<span class="fcc-ico">&#x1F4E8;</span>
-<div class="fcc-ti">Chat</div>
-<p class="fcc-tx">Direkte Nachrichten an andere Spieler. Fordere jemanden heraus, verhandle Eins&auml;tze oder trash-talke nach einem Sieg. Alles in der App.</p>
-<span class="fcc-tag">Direct Messages</span>
-</div>
-
-<div class="fcc r" style="transition-delay:0.3s">
-<span class="fcc-ico">&#x1F525;</span>
-<div class="fcc-ti">Rivals</div>
-<p class="fcc-tx">Automatisch erkannte Rivalit&auml;ten basierend auf deinen Deals. Wer ist dein gr&ouml;&szlig;ter Gegner? Die Statistiken l&uuml;gen nicht.</p>
-<span class="fcc-tag">Rivalit&auml;ten</span>
-</div>
-
-<div class="fcc r" style="transition-delay:0.4s">
-<span class="fcc-ico">&#x1F3C6;</span>
-<div class="fcc-ti">Leaderboards</div>
-<p class="fcc-tx">Globale Ranglisten nach Wins, Level, Rank und Zuverl&auml;ssigkeit. Klettere nach oben und zeig der Welt wer der beste Deal-Maker ist.</p>
-<span class="fcc-tag">Rankings</span>
-</div>
-
-<div class="fcc r" style="transition-delay:0.5s">
-<span class="fcc-ico">&#x1F30D;</span>
-<div class="fcc-ti">Discover</div>
-<p class="fcc-tx">Entdecke und folge anderen Spielern. Sieh ihre Deals, Cards und Erfolge. Baue dein Netzwerk aus und finde neue Wett-Partner.</p>
-<span class="fcc-tag">Social Discovery</span>
-</div>
-
-</div>
-
-<!-- DISCORD CTA -->
-<a class="dc-cta r" href="https://discord.gg/gJkzFzZdS2" target="_blank" rel="noopener">
-<div class="dc-ico">&#x1F4AC;</div>
-<div class="dc-body">
-<div class="dc-ti">Tritt dem Deal Buddy Discord bei</div>
-<div class="dc-sub">Community, Support, Beta-Access & Insider-Drops. Kostenlos &amp; offen f&uuml;r alle Buddies.</div>
-</div>
-<div class="dc-arrow">&rarr;</div>
-</a>
-</section>
-
-<!-- TIPPEN / KICKTIPP -->
-<section class="sec sec-alt" id="tippen">
-<div class="sl r">Und mehr &middot; Tippen</div>
-<h2 class="sh r">Fu&szlig;ball tippen.<br/>Mit Freunden.</h2>
-<p class="ss r">Erstelle Tippgruppen, tippe auf Bundesliga, Champions League und mehr. Wer am Ende der Saison die meisten Punkte hat, ist die Legende.</p>
-
-<!-- Animated Trust-Stat-Reel (Count-Up on Scroll) -->
-<div class="reel r" id="tippReel" aria-label="Tipp-Modus Highlights">
-<div class="reel-cell">
-<div class="reel-num" data-count="100" data-suffix="%">0%</div>
-<div class="reel-lbl">Kostenlos<br/><span>Kein Echtgeld, keine Premium-Wall</span></div>
-</div>
-<div class="reel-cell">
-<div class="reel-num" data-count="6" data-suffix="+">0+</div>
-<div class="reel-lbl">Top-Ligen<br/><span>Bundesliga, La Liga, Premier League, CL &amp; mehr</span></div>
-</div>
-<div class="reel-cell">
-<div class="reel-num" data-count="38" data-suffix="">0</div>
-<div class="reel-lbl">Spieltage<br/><span>Pro Saison &middot; Live-Ranking jeder Match-Day</span></div>
-</div>
-</div>
-
-<p class="ss r" style="margin-top:48px;font-size:16px;font-style:normal;">Kicktipp-Style Gruppen mit Freunden. Automatische Punktberechnung, Live-Ranglisten und Saison-Champion-Krone. <strong style="color:var(--tx);font-style:normal;">Kein Echtgeld &middot; Nur Ehre, Punkte und Buddy Coins.</strong></p>
-</section>
-
-<!-- WEEKLY CHALLENGES & MILESTONES -->
-<section class="sec">
-<div class="sl r">Und mehr &middot; Progression</div>
-<h2 class="sh r">Jeden Tag<br/>ein Grund mehr.</h2>
-<p class="ss r">W&ouml;chentliche Challenges, Meilensteine und Stories halten dich und deine Freunde aktiv. Immer ein neues Ziel vor Augen.</p>
-<div class="feat-compact" style="grid-template-columns:repeat(3,1fr);">
-
-<div class="fcc r">
-<span class="fcc-ico">&#x1F3AF;</span>
-<div class="fcc-ti">Weekly Challenges</div>
-<p class="fcc-tx">Jede Woche neue Herausforderungen. Schlie&szlig;e 5 Deals ab, gewinne 3 in Folge, tippe richtig &ndash; verdiene Bonus-Coins und XP.</p>
-<span class="fcc-tag">W&ouml;chentlich neu</span>
-</div>
-
-<div class="fcc r" style="transition-delay:0.12s">
-<span class="fcc-ico">&#x1F396;</span>
-<div class="fcc-ti">Milestones</div>
-<p class="fcc-tx">Langfristige Achievements die deinen Fortschritt belohnen. Vom ersten Deal bis zum 1000. Sieg &ndash; jeder Meilenstein schaltet exklusive Rewards frei.</p>
-<span class="fcc-tag">Achievements</span>
-</div>
-
-<div class="fcc r" style="transition-delay:0.24s">
-<span class="fcc-ico">&#x1F4F8;</span>
-<div class="fcc-ti">Stories</div>
-<p class="fcc-tx">Teile deine besten Momente als Stories. Zeige Siege, Legendary-Card-Pulls und Deal-Highlights. Deine Freunde sehen was passiert.</p>
-<span class="fcc-tag">24h Highlights</span>
-</div>
-
-</div>
-</section>
-
-<!-- LIGA / CARD STACK -->
-<section class="sec sec-alt" id="empire">
-<div class="sl r">Und mehr &middot; Deine Liga</div>
-<h2 class="sh r">Sammle Cards.<br/>Schreib Geschichte.</h2>
-<div class="emp-wrap">
-<div>
-<p class="ss r" style="margin-bottom:32px;">Sammle Legendary Cards, epische Frames und exklusive Effects. Jedes Item ist ein Beweis deiner Deals. Game-typisches Rarity-System mit 5 Stufen. &Ouml;ffne Card Packs, ziehe seltene Frames und baue deine Sammlung auf. Dein Profil erz&auml;hlt deine Geschichte &ndash; f&uuml;r alle sichtbar.</p>
-<a class="bprim r" href="#download">Jetzt deine Liga starten</a>
-</div>
-<!-- 3D Card Stack -->
-<div class="cstack r" aria-label="Card-Stack mit Rarity-Items">
-<div class="csl csl-1 rl-bg" data-r="Legendary">
-<div class="csl-ico">&#x1F0CF;</div>
-<div class="csl-nm">God Card</div>
-<div class="csl-r rl">&loz; Legendary</div>
-</div>
-<div class="csl csl-2 rl-bg" data-r="Legendary">
-<div class="csl-ico">&#x1F451;</div>
-<div class="csl-nm">Platin Frame</div>
-<div class="csl-r rl">&loz; Legendary</div>
-</div>
-<div class="csl csl-3 re-bg" data-r="Epic">
-<div class="csl-ico">&#x26A1;</div>
-<div class="csl-nm">Blitz-Effekt</div>
-<div class="csl-r re">&loz; Epic</div>
-</div>
-<div class="csl csl-4 re-bg" data-r="Epic">
-<div class="csl-ico">&#x1F525;</div>
-<div class="csl-nm">Streak-Flamme</div>
-<div class="csl-r re">&loz; Epic</div>
-</div>
-<div class="csl csl-5 rr-bg" data-r="Rare">
-<div class="csl-ico">&#x1F454;</div>
-<div class="csl-nm">Gold Frame</div>
-<div class="csl-r rr">&loz; Rare</div>
-</div>
-<div class="csl csl-6 rr-bg" data-r="Rare">
-<div class="csl-ico">&#x1F3A8;</div>
-<div class="csl-nm">Creator Skin</div>
-<div class="csl-r rr">&loz; Rare</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- SHOP -->
-<section class="sec">
-<div class="sl r">Und mehr &middot; Shop</div>
-<h2 class="sh r">Dein Style.<br/>Deine Wahl.</h2>
-<p class="ss r">Im Shop findest du Card Packs, Frames, Skins und Archetype-Karten. Alles rein kosmetisch &ndash; kein Pay-to-Win. Buddy Coins oder optionale In-App-K&auml;ufe.</p>
-<div class="feat-compact" style="margin-top:48px;">
-<div class="fcc r">
-<span class="fcc-ico">&#x1F4E6;</span>
-<div class="fcc-ti">Card Packs</div>
-<p class="fcc-tx">&Ouml;ffne Packs und entdecke welche Cards du ziehst. Jedes Pack enth&auml;lt eine garantierte Rare oder h&ouml;her.</p>
-<span class="fcc-tag">Pull &amp; Reveal</span>
-</div>
-<div class="fcc r" style="transition-delay:0.12s">
-<span class="fcc-ico">&#x1F5BC;</span>
-<div class="fcc-ti">Frames &amp; Skins</div>
-<p class="fcc-tx">Personalisiere dein Profil und deine Deal-Karten mit epischen Frames, Effekten und Community-Skins.</p>
-<span class="fcc-tag">Kosmetisch</span>
-</div>
-<div class="fcc r" style="transition-delay:0.24s">
-<span class="fcc-ico">&#x2728;</span>
-<div class="fcc-ti">Archetypes</div>
-<p class="fcc-tx">Premium-Karten die deinen Deal-Style repr&auml;sentieren. Bist du der Strategist, der Gambler oder der Underdog?</p>
-<span class="fcc-tag">Premium</span>
-</div>
-</div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="sec sec-alt">
-<div class="sl r">Was Freunde sagen</div>
-<h2 class="sh r">Erste Legenden.<br/>Echte Stimmen.</h2>
-<div class="tgrid">
-<div class="tc r">
-<p class="tc-tx">&bdquo;Endlich wei&szlig; ich ob Max mir noch die Pizza verpflichtet. Und meine erste Legendary Card ist absolut krank. Pflicht-App f&uuml;r jede Freundesgruppe.&ldquo;</p>
-<div class="tc-au"><div class="tc-av">J</div><div><div class="tc-nm">Jonas, 24</div><div class="tc-su">M&uuml;nchen &middot; 34 Deals</div></div></div>
-</div>
-<div class="tc r" style="transition-delay:0.12s">
-<p class="tc-tx">&bdquo;Die Tippgruppe f&uuml;r die Bundesliga ist genial. Jeden Spieltag fiebern wir mit. Und der Verlierer des Monats muss einen ausgeben &ndash; dokumentiert in DealBuddy.&ldquo;</p>
-<div class="tc-au"><div class="tc-av">L</div><div><div class="tc-nm">Lukas, 28</div><div class="tc-su">Hamburg &middot; 58 Deals &middot; Tipprunde-Admin</div></div></div>
-</div>
-<div class="tc r" style="transition-delay:0.24s">
-<p class="tc-tx">&bdquo;Der Battle Pass ist s&uuml;chtig machend. Blitz-Videos von den Deals meiner Freunde zu sehen ist Content pur. Und die Rivals-Statistik gegen meine Schwester ist legendary.&ldquo;</p>
-<div class="tc-au"><div class="tc-av">S</div><div><div class="tc-nm">Sara, 22</div><div class="tc-su">Berlin &middot; Tier 71 &middot; 3 Rivals</div></div></div>
-</div>
-</div>
-</section>
-
-<!-- SOCIAL WALL -->
-<section class="swall" id="social-wall" aria-label="Early Users Wall">
-<div class="swall-head r">
-<div class="sl">Early Users</div>
-<h2>Die ersten <em>Buddys.</em></h2>
-<p>Stimmen aus der Beta &ndash; warum sie auf Season 1 warten.</p>
-</div>
-<div class="swall-fade l" aria-hidden="true"></div>
-<div class="swall-fade r" aria-hidden="true"></div>
-<div class="swall-track" id="swallTrack">
-<div class="swc"><p class="swc-q">&bdquo;Wir haben in der Beta-Runde 40 Deals abgewickelt &ndash; Schluss mit der WhatsApp-Sucherei.&ldquo;</p><div class="swc-au"><div class="swc-av">M</div><div><div class="swc-nm">Marvin K.</div><div class="swc-ro">Beta-Tester &middot; M&uuml;nchen</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Endlich ein Tipp-Game ohne Buchmacher-Geschmack. Pure Freundschaft, pure Punkte.&ldquo;</p><div class="swc-au"><div class="swc-av">T</div><div><div class="swc-nm">Tobias R.</div><div class="swc-ro">Tipprunden-Admin &middot; K&ouml;ln</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Die Founder Card im Wireframe-Preview hat unsere ganze Gruppe gehyped.&ldquo;</p><div class="swc-au"><div class="swc-av">A</div><div><div class="swc-nm">Aylin D.</div><div class="swc-ro">Community-Lead &middot; Berlin</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Wenn das Battle-Pass-System genauso fair bleibt wie versprochen, bin ich Day-One dabei.&ldquo;</p><div class="swc-au"><div class="swc-av">F</div><div><div class="swc-nm">Felix W.</div><div class="swc-ro">Mobile Gamer &middot; Hamburg</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Splitwise trifft FIFA-Companion-App. Genau die L&uuml;cke die in meinem Homescreen fehlt.&ldquo;</p><div class="swc-au"><div class="swc-av">J</div><div><div class="swc-nm">Jana P.</div><div class="swc-ro">Product Designer &middot; Wien</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Meine Brot-Challenge mit dem Schwager l&auml;uft seit Wochen. DealBuddy wird das endlich kl&auml;ren.&ldquo;</p><div class="swc-au"><div class="swc-av">D</div><div><div class="swc-nm">Dominik S.</div><div class="swc-ro">Closed Beta &middot; Salzburg</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Habe drei Tippgruppen parallel laufen. Eine zentrale App daf&uuml;r? Endlich.&ldquo;</p><div class="swc-au"><div class="swc-av">L</div><div><div class="swc-nm">Lara H.</div><div class="swc-ro">Bundesliga-Junkie &middot; Leipzig</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Das UI fr&uuml;hlt sich premium an &ndash; nicht wie die ganzen Buchmacher-Apps mit Neon-LEDs.&ldquo;</p><div class="swc-au"><div class="swc-av">N</div><div><div class="swc-nm">Niklas B.</div><div class="swc-ro">UI-Snob &middot; Stuttgart</div></div></div></div>
-<div class="swc"><p class="swc-q">&bdquo;Battle Pass + Collectible Cards &ndash; das ist die Lego-Schachtel f&uuml;r Erwachsene Freundesgruppen.&ldquo;</p><div class="swc-au"><div class="swc-av">S</div><div><div class="swc-nm">Selin Y.</div><div class="swc-ro">Founder Crew &middot; Frankfurt</div></div></div></div>
-<!-- Duplicate for seamless marquee -->
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Wir haben in der Beta-Runde 40 Deals abgewickelt &ndash; Schluss mit der WhatsApp-Sucherei.&ldquo;</p><div class="swc-au"><div class="swc-av">M</div><div><div class="swc-nm">Marvin K.</div><div class="swc-ro">Beta-Tester &middot; M&uuml;nchen</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Endlich ein Tipp-Game ohne Buchmacher-Geschmack. Pure Freundschaft, pure Punkte.&ldquo;</p><div class="swc-au"><div class="swc-av">T</div><div><div class="swc-nm">Tobias R.</div><div class="swc-ro">Tipprunden-Admin &middot; K&ouml;ln</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Die Founder Card im Wireframe-Preview hat unsere ganze Gruppe gehyped.&ldquo;</p><div class="swc-au"><div class="swc-av">A</div><div><div class="swc-nm">Aylin D.</div><div class="swc-ro">Community-Lead &middot; Berlin</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Wenn das Battle-Pass-System genauso fair bleibt wie versprochen, bin ich Day-One dabei.&ldquo;</p><div class="swc-au"><div class="swc-av">F</div><div><div class="swc-nm">Felix W.</div><div class="swc-ro">Mobile Gamer &middot; Hamburg</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Splitwise trifft FIFA-Companion-App. Genau die L&uuml;cke die in meinem Homescreen fehlt.&ldquo;</p><div class="swc-au"><div class="swc-av">J</div><div><div class="swc-nm">Jana P.</div><div class="swc-ro">Product Designer &middot; Wien</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Meine Brot-Challenge mit dem Schwager l&auml;uft seit Wochen. DealBuddy wird das endlich kl&auml;ren.&ldquo;</p><div class="swc-au"><div class="swc-av">D</div><div><div class="swc-nm">Dominik S.</div><div class="swc-ro">Closed Beta &middot; Salzburg</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Habe drei Tippgruppen parallel laufen. Eine zentrale App daf&uuml;r? Endlich.&ldquo;</p><div class="swc-au"><div class="swc-av">L</div><div><div class="swc-nm">Lara H.</div><div class="swc-ro">Bundesliga-Junkie &middot; Leipzig</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Das UI fr&uuml;hlt sich premium an &ndash; nicht wie die ganzen Buchmacher-Apps mit Neon-LEDs.&ldquo;</p><div class="swc-au"><div class="swc-av">N</div><div><div class="swc-nm">Niklas B.</div><div class="swc-ro">UI-Snob &middot; Stuttgart</div></div></div></div>
-<div class="swc" aria-hidden="true"><p class="swc-q">&bdquo;Battle Pass + Collectible Cards &ndash; das ist die Lego-Schachtel f&uuml;r Erwachsene Freundesgruppen.&ldquo;</p><div class="swc-au"><div class="swc-av">S</div><div><div class="swc-nm">Selin Y.</div><div class="swc-ro">Founder Crew &middot; Frankfurt</div></div></div></div>
-</div>
-</section>
-
-<!-- APP-STORE BADGES -->
-<section class="abadges r" id="app-badges" aria-label="App Store Badges">
-<div class="sl">Verf&uuml;gbarkeit</div>
-<h2>Lade dir die <em>App.</em></h2>
-<p>Web App ist live. Native iOS gerade im App-Store-Review. Android folgt direkt danach.</p>
-<div class="abrow">
-<a class="abadge" href="https://app.deal-buddy.app" target="_blank" rel="noopener" aria-label="Web App &ouml;ffnen">
-<svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--gold);">
-<circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 3 4 4.5 4 8.5a4 4 0 0 1-8 0c0-1.5.6-2.6 1.4-3.5.2 1.2.9 2 1.6 2.2C11.4 8 11 5.5 12 3Z"/><path d="M6.5 13.5A6.5 6.5 0 1 0 17.5 9"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v16M5 13l7 7 7-7"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-3.8ZM14 5.5c.7-.8 1.1-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
 </svg>
-<span class="abadge-text"><span class="abadge-top">Sofort starten im</span><span class="abadge-name">Web Browser</span></span>
-</a>
-<a class="abadge soon" href="#waitlist" aria-label="App Store &ndash; bald verf&uuml;gbar">
-<svg width="32" height="38" viewBox="0 0 384 512" aria-hidden="true" fill="currentColor" style="color:var(--tx);">
-<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
-</svg>
-<span class="abadge-text"><span class="abadge-top">Bald im</span><span class="abadge-name">App Store</span></span>
-</a>
-<a class="abadge soon" href="#waitlist" aria-label="Google Play &ndash; bald verf&uuml;gbar">
-<svg width="32" height="36" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--tx);">
-<path fill="currentColor" d="M3.609 1.814 13.792 12 3.609 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zm10.89 10.893 2.302 2.302-10.937 6.235 8.635-8.537zm3.199-3.198 2.741 1.563a1 1 0 0 1 0 1.736l-2.741 1.563-2.302-2.301zm-3.199-3.198L5.864 1.825 14.499 2.93l2.302 2.302-2.302 2.279z"></path>
-</svg>
-<span class="abadge-text"><span class="abadge-top">Bald bei</span><span class="abadge-name">Google Play</span></span>
-</a>
-</div>
-<span class="abadge-hint">&starf; Founder Card f&uuml;r alle Pre-Launch-Nutzer &middot; Trag dich in die Warteliste ein</span>
-</section>
 
-<!-- CTA / DOWNLOAD -->
-<section class="cta-sec" id="download">
-<span class="cta-ey r">Kostenlos &middot; Web &middot; iOS &middot; Android &middot; Season 1 l&auml;uft</span>
-<h2 class="cta-h r">Jetzt starten.<br/><em>Sofort loslegen.</em></h2>
-<p class="cta-su r">Starte direkt im Browser oder lade die App herunter.<br/><strong>Die Season-1-Crew erh&auml;lt eine exklusive Legendary Card die es nie wieder geben wird.</strong></p>
-<div class="srow r">
-<a class="sbtn pwa-btn" href="https://app.deal-buddy.app" target="_blank"><div><div class="ss2">Sofort im Browser</div><div class="sn">Web App</div><div class="sv">Kein Download n&ouml;tig</div></div></a>
-<a class="sbtn noicon" href="https://apps.apple.com/de/app/dealbuddy/id6763754507" target="_blank" rel="noopener" id="ios-btn"><div><div class="ss2">Laden im</div><div class="sn">iOS</div><div class="sv">App Store</div></div></a>
-<a class="sbtn noicon disabled" id="android-btn" aria-disabled="true"><div><div class="ss2">Bald verf&uuml;gbar</div><div class="sn">Android</div><div class="sv">Google Play</div></div></a>
-</div>
-<p class="cwarn r">&#x26A0;&#xFE0F; DealBuddy ist eine Tracking-App f&uuml;r private Deals, Tipps und Challenges unter Freunden. Es findet kein Echtgeld-Gl&uuml;cksspiel statt und es gibt keine Auszahlungen oder geldwerten Gewinne. Echtgeld kann ausschlie&szlig;lich f&uuml;r optionale, virtuelle Zusatzinhalte wie Skins oder Battle-Pass-Fortschritt verwendet werden und ist nicht mit Eins&auml;tzen oder Ergebnissen verkn&uuml;pft. Die Nutzung ist strikt ab 18 Jahren gestattet. Bei der Registrierung ist das Geburtsdatum wahrheitsgem&auml;&szlig; anzugeben; der Anbieter beh&auml;lt sich Alterspr&uuml;fungen vor.</p>
-</section>
+<header class="wrap top">
+  <a class="mark" href="/" aria-label="DealBuddy, Startseite"><svg aria-hidden="true"><use href="#i-flame"/></svg>DealBuddy</a>
+  <a class="top__app" href="https://app.deal-buddy.app">Zur App</a>
+</header>
 
-<!-- FOOTER -->
-<footer>
-<div class="flo"><img alt="DealBuddy" src="images/footer-logo.png"/></div>
-<div class="fco">&copy; 2026 DealBuddy &middot; Comms Connect GmbH &middot; M&uuml;nchen</div>
-<div class="fli">
-<a href="impressum.html">Impressum</a>
-<a href="datenschutz.html">Datenschutz</a>
-<a href="agb.html">AGB</a>
-<a href="support.html">Support</a>
-<a href="https://app.deal-buddy.app" target="_blank">Web App</a>
-<a href="https://discord.gg/gJkzFzZdS2" target="_blank" rel="noopener">Discord</a>
-</div>
+<main>
+
+  <!-- 1 · Hero -->
+  <section class="wrap hero" aria-labelledby="hero-t">
+    <div class="hero__copy">
+      <h1 id="hero-t"><span>Wetten mit Freunden.</span><span>Der Verlierer liefert.</span><span>Alle sehen zu.</span></h1>
+      <p class="hero__lead">Fordere jemanden aus deiner Gruppe heraus: <strong>Der Verlierer muss etwas tun</strong>, filmt sich dabei, und das Video geht in den Chat zurück.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="https://app.deal-buddy.app"><svg class="ic" aria-hidden="true"><use href="#i-flame"/></svg>Jemanden herausfordern</a>
+        <p class="hero__fine">Läuft im Browser, dauert zehn Sekunden.</p>
+      </div>
+    </div>
+
+    <figure class="stage" role="img" aria-label="So sieht eine laufende Challenge in der App aus: Lea gegen Niklas, eine Woche jeden Morgen 5 Kilometer laufen. Der Verlierer muss beim nächsten Karaoke-Abend Atemlos singen. Noch 4 Tage, 3 schauen zu.">
+      <article class="card" aria-hidden="true">
+        <div class="card__head"><span class="card__group">Donnerstagskicker</span><span class="card__meta">· Tag 3 von 7</span><span class="chip chip--live"><span class="dot dot--pulse"></span>Läuft</span></div>
+        <div class="duel">
+          <div class="duel__side"><span class="av av--lg av-2">LE</span><span class="duel__name">Lea</span><span class="duel__role">fordert</span></div>
+          <div class="duel__vs">VS</div>
+          <div class="duel__side"><span class="av av--lg av-4">NI</span><span class="duel__name">Niklas</span><span class="duel__role">angenommen</span></div>
+        </div>
+        <h3 class="card__title">Eine Woche jeden Morgen 5 km laufen</h3>
+        <p class="card__stake">Der Verlierer muss: <strong>beim nächsten Karaoke-Abend Atemlos singen, komplett.</strong></p>
+        <div class="card__foot"><span class="cd numeral">4<small>T</small> 09<small>Std</small></span><span class="watchers">3 schauen zu</span><span class="btn btn--secondary btn--sm">Zuschauen</span></div>
+      </article>
+    </figure>
+  </section>
+
+  <!-- 2 · Wie es läuft -->
+  <section class="wrap sec" aria-labelledby="how-t">
+    <div class="sec__head"><div class="sec__n">Wie es läuft</div><h2 class="sec__t" id="how-t">Fordern. Verlieren. Liefern.</h2></div>
+    <ol class="steps">
+      <li><span class="steps__n numeral" aria-hidden="true">1</span><div><h3>Fordern</h3><p>Ein Satz, ein Name, eine Tat für den Verlierer. Der Link geht in den Chat.</p></div></li>
+      <li><span class="steps__n numeral" aria-hidden="true">2</span><div><h3>Verlieren</h3><p>Ergebnis eintragen, der andere tippt auf Stimmt. Seid ihr uneinig, entscheidet die Gruppe.</p></div></li>
+      <li><span class="steps__n numeral" aria-hidden="true">3</span><div><h3>Liefern</h3><p>Der Verlierer filmt sich bei der Tat. Das Video geht in die Gruppe, alle sehen zu.</p></div></li>
+    </ol>
+  </section>
+
+  <!-- 3 · Ein Beispiel: Challenge und Einlösung -->
+  <section class="wrap sec" aria-labelledby="ex-t">
+    <div class="sec__head"><div class="sec__n">Ein Beispiel</div><h2 class="sec__t" id="ex-t">Tim hat verloren. Und geliefert.</h2></div>
+    <figure class="example" role="img" aria-label="Zwei Karten aus der App. Links die entschiedene Challenge: Sophie hat gegen Tim gewonnen, 50 Liegestütze am Stück. Tim schuldet eine Woche im Ampelmännchen-Kostüm zur Uni. Rechts die Einlösung: Tim hat geliefert, Video 1:12, Sophie sagt: Zählt.">
+      <article class="card" aria-hidden="true">
+        <div class="card__head"><span class="card__group">Abi 2019 Bande</span><span class="card__meta">· letzte Woche</span><span class="chip chip--won">Entschieden</span></div>
+        <div class="duel duel--result">
+          <div class="duel__side"><span class="av av--lg av-5 av--won">SO</span><span class="duel__name">Sophie</span><span class="chip chip--won duel__tag">Gewonnen</span></div>
+          <div class="duel__vs">VS</div>
+          <div class="duel__side"><span class="av av--lg av-6 av--lost">TI</span><span class="duel__name">Tim</span><span class="chip chip--lost duel__tag">Verloren</span></div>
+        </div>
+        <h3 class="card__title">50 Liegestütze am Stück</h3>
+        <p class="card__stake">Tim schuldet: <strong>eine Woche im Ampelmännchen-Kostüm zur Uni.</strong></p>
+        <div class="card__foot"><span class="chip chip--neutral">Tim liefert · noch 5 T</span><span class="btn btn--ghost btn--sm">Beweis ansehen</span></div>
+      </article>
+
+      <div class="example__arrow" aria-hidden="true"><svg><use href="#i-down"/></svg></div>
+
+      <article class="card redeem redeem--done" aria-hidden="true">
+        <div class="redeem__band"><svg class="ic ic--sm"><use href="#i-check"/></svg>Geliefert · Montag, 07:48</div>
+        <div class="redeem__body">
+          <div class="redeem__who"><span class="av av--lg av-6">TI</span><p class="redeem__lead"><strong>Tim</strong> hat geliefert. Das Video ist jetzt in <strong>Abi 2019 Bande</strong>.</p></div>
+          <h3 class="redeem__task">Eine Woche im Ampelmännchen-Kostüm zur Uni.</h3>
+          <div class="redeem__thumb">
+            <div class="proof__media"><div class="proof__poster"></div><span class="proof__play"><svg><use href="#i-play"/></svg></span><span class="proof__dur">1:12</span></div>
+            <div class="redeem__stats"><b>Sophie sagt: Zählt.</b>Abgehakt. Die Challenge ist durch.</div>
+          </div>
+          <div class="redeem__cta"><span class="btn btn--inverse btn--block"><svg class="ic"><use href="#i-chat"/></svg>In den Chat schicken</span></div>
+        </div>
+      </article>
+    </figure>
+  </section>
+
+  <!-- 4 · Store -->
+  <section class="wrap sec" aria-labelledby="store-t">
+    <div class="store">
+      <div><h2 class="store__t" id="store-t">Hol dir die App.</h2><p class="store__d">Im Browser oder auf dem iPhone. Kostenlos.</p></div>
+      <div class="store__row">
+        <a class="btn btn--primary" href="https://apps.apple.com/de/app/dealbuddy/id6763754507"><svg class="ic" aria-hidden="true"><use href="#i-apple"/></svg>Im App Store laden</a>
+        <a class="btn btn--secondary" href="https://app.deal-buddy.app"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Im Browser öffnen</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 5 · Fußzeile -->
+<footer class="wrap foot">
+  <div>© 2026 DealBuddy · Comms Connect GmbH · München</div>
+  <ul class="foot__links">
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="datenschutz.html">Datenschutz</a></li>
+    <li><a href="agb.html">AGB</a></li>
+    <li><a href="support.html">Support</a></li>
+  </ul>
 </footer>
 
-<script>
-// Reduce-motion guard
-const _rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)');
-const _reduceMotion=()=>!!(_rm&&_rm.matches);
-
-// Particles
-const c=document.getElementById('pts');
-if(c&&!_reduceMotion()){
-  for(let i=0;i<28;i++){const p=document.createElement('div');p.className='pt';const s=Math.random()*2.2+.4;p.style.cssText='left:'+Math.random()*100+'%;width:'+s+'px;height:'+s+'px;animation-duration:'+(Math.random()*18+12)+'s;animation-delay:'+(Math.random()*12)+'s;--d:'+(Math.random()-.5)*240+'px;';c.appendChild(p);}
-}
-
-// Nav shrink
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',function(){nav.classList.toggle('s',scrollY>60);},{passive:true});
-
-// Scroll reveal
-const io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('v');});},{threshold:.07});
-document.querySelectorAll('.r').forEach(function(el){io.observe(el);});
-
-// How-it-works timeline + Tipp-Reel: lit-on-scroll + count-up
-(function(){
-  const tl=document.getElementById('howTimeline');
-  const reel=document.getElementById('tippReel');
-  const reduceMotion=_reduceMotion();
-  function countUp(el,target,suffix,dur){
-    if(reduceMotion){el.textContent=target+suffix;return;}
-    const start=performance.now();
-    const step=function(now){
-      const p=Math.min(1,(now-start)/dur);
-      const eased=1-Math.pow(1-p,3); // ease-out-cubic
-      const val=Math.round(target*eased);
-      el.textContent=val+suffix;
-      if(p<1)requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-  const litIO=new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(en.isIntersecting){
-        en.target.classList.add('lit');
-        if(en.target===reel){
-          en.target.querySelectorAll('.reel-num').forEach(function(n){
-            const t=parseInt(n.dataset.count||'0',10);
-            const s=n.dataset.suffix||'';
-            countUp(n,t,s,1300);
-          });
-        }
-        litIO.unobserve(en.target);
-      }
-    });
-  },{threshold:.35});
-  if(tl)litIO.observe(tl);
-  if(reel)litIO.observe(reel);
-})();
-
-// Card parallax
-const cs=document.querySelector('.cscene');
-if(cs&&!_reduceMotion()){document.addEventListener('mousemove',function(e){const x=(e.clientX/innerWidth-.5)*14;const y=(e.clientY/innerHeight-.5)*-10;cs.style.transform='rotateY('+x+'deg) rotateX('+y+'deg)';});}
-
-// Mobile Menu
-const menuBtn=document.getElementById('menuBtn');
-const menuDrawer=document.getElementById('menuDrawer');
-const menuOverlay=document.getElementById('menuOverlay');
-function openMenu(){if(!menuDrawer||!menuOverlay||!menuBtn)return;menuDrawer.classList.add('open');menuOverlay.hidden=false;document.body.classList.add('menu-open');menuBtn.setAttribute('aria-expanded','true');menuDrawer.setAttribute('aria-hidden','false');}
-function closeMenu(){if(!menuDrawer||!menuOverlay||!menuBtn)return;menuDrawer.classList.remove('open');menuOverlay.hidden=true;document.body.classList.remove('menu-open');menuBtn.setAttribute('aria-expanded','false');menuDrawer.setAttribute('aria-hidden','true');}
-menuBtn?.addEventListener('click',()=>{menuDrawer?.classList.contains('open')?closeMenu():openMenu();});
-menuOverlay?.addEventListener('click',closeMenu);
-menuDrawer?.querySelectorAll('a').forEach(a=>{a.addEventListener('click',closeMenu);});
-document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&menuDrawer?.classList.contains('open'))closeMenu();});
-
-// --- Waitlist: counter + form ---
-(function(){
-  const el=document.getElementById('waitCount');
-  if(!el)return;
-  const target=parseInt(el.dataset.target||'0',10);
-  const reduceMotion=_reduceMotion();
-  function fmt(n){return n.toLocaleString('de-DE');}
-  function run(){
-    if(reduceMotion){el.textContent=fmt(target);return;}
-    const start=performance.now();const dur=1600;
-    const step=function(now){
-      const p=Math.min(1,(now-start)/dur);
-      const eased=1-Math.pow(1-p,3);
-      el.textContent=fmt(Math.round(target*eased));
-      if(p<1)requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-  const wio=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){run();wio.disconnect();}});},{threshold:.4});
-  wio.observe(el);
-
-  const form=document.getElementById('waitForm');
-  const ok=document.getElementById('waitOk');
-  const input=document.getElementById('waitEmail');
-  if(form&&ok&&input){
-    form.addEventListener('submit',function(e){
-      // Don't prevent default - let mailto fire - but ALSO show confirmation
-      // If browser swallows mailto silently we still give feedback.
-      setTimeout(function(){
-        ok.classList.add('show');
-        try{input.value='';}catch(_e){}
-        const cur=parseInt(el.textContent.replace(/\D/g,''),10)||target;
-        el.textContent=fmt(cur+1);
-      },150);
-    });
-  }
-})();
-
-// --- Live Stats from Supabase ---
-(async function(){
-  const SUPABASE_URL='https://vjygmfaefhkwznldegvq.supabase.co';
-  const ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqeWdtZmFlZmhrd3pubGRlZ3ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTg4MTAsImV4cCI6MjA4NzY3NDgxMH0.vnfOsWMFB4nQnEd5c1x5USrqUhiYBDwlEuPIAx8GkEI';
-  const MIN_PLAYERS=50;
-  try{
-    const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/get_landing_stats',{
-      method:'POST',
-      headers:{'apikey':ANON_KEY,'Authorization':'Bearer '+ANON_KEY,'Content-Type':'application/json'}
-    });
-    if(!res.ok)return;
-    const d=await res.json();
-    if(d.total_players>=MIN_PLAYERS){
-      document.getElementById('tv-players').textContent=d.total_players.toLocaleString('de-DE')+'+';
-      document.getElementById('tv-deals').textContent=d.total_deals.toLocaleString('de-DE')+'+';
-      const fairRate=d.total_deals>0?Math.round((d.completed_deals/d.total_deals)*1000)/10:0;
-      document.getElementById('tv-fair').textContent=fairRate.toLocaleString('de-DE')+'%';
-      document.getElementById('trust-players').style.display='';
-      document.getElementById('trust-deals').style.display='';
-      document.getElementById('trust-fair').style.display='';
-    }
-  }catch(e){}
-})();
-</script>
-<script src="cookie-banner.js" defer></script>
 </body>
 </html>

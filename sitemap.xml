@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.deal-buddy.app/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -13,31 +13,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.deal-buddy.app/tippspiel-app</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.deal-buddy.app/fussball-tippspiel-kostenlos</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.deal-buddy.app/tippspiel-mit-freunden</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.deal-buddy.app/bundesliga-tippspiel</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.deal-buddy.app/impressum.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.deal-buddy.app/datenschutz.html</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -48,4 +30,8 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <!-- Die vier Tippspiel-Seiten (tippspiel-app, tippspiel-mit-freunden,
+       fussball-tippspiel-kostenlos, bundesliga-tippspiel) stehen bewusst
+       nicht mehr hier: Entscheidung offen, siehe SEO_SEITEN_ENTSCHEIDUNG.md.
+       Sobald entschieden ist, entweder wieder eintragen oder Redirects setzen. -->
 </urlset>
