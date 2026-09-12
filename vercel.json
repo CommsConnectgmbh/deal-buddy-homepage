@@ -5,16 +5,70 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
     },
     {
       "source": "/(.*)\\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|otf|mp4)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/tippspiel-app",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/tippspiel-app.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/tippspiel-mit-freunden",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/tippspiel-mit-freunden.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/fussball-tippspiel-kostenlos",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/fussball-tippspiel-kostenlos.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/bundesliga-tippspiel",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/bundesliga-tippspiel.html",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
