@@ -69,6 +69,16 @@
       "source": "/bundesliga-tippspiel.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/gewinnspiel",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/gewinnspiel.html",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }

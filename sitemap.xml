@@ -7,25 +7,25 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.deal-buddy.app/support.html</loc>
+    <loc>https://www.deal-buddy.app/support</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.deal-buddy.app/impressum.html</loc>
+    <loc>https://www.deal-buddy.app/impressum</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.deal-buddy.app/datenschutz.html</loc>
+    <loc>https://www.deal-buddy.app/datenschutz</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.deal-buddy.app/agb.html</loc>
+    <loc>https://www.deal-buddy.app/agb</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
