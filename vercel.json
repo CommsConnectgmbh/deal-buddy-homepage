@@ -99,6 +99,56 @@
       "source": "/images/index.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/admin",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin/creator-review",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin/creator-review.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/creator",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/creator/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/creator/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/creator/index.html",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
