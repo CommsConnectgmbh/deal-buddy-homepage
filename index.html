@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DealBuddy: Wetten mit Freunden. Der Verlierer liefert.</title>
-<meta name="description" content="Fordere jemanden aus deiner Gruppe heraus. Der Verlierer muss etwas tun, filmt es, und alle sehen zu. Im Browser oder als iPhone-App.">
+<meta name="description" content="Fordere jemanden aus deiner Gruppe heraus. Der Verlierer muss etwas tun, filmt es, und alle sehen zu. Als App für iPhone und Android oder im Browser.">
 <link rel="canonical" href="https://www.deal-buddy.app/">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Comms Connect GmbH">
@@ -38,7 +38,7 @@
   "url": "https://www.deal-buddy.app/",
   "description": "Wetten mit Freunden. Der Verlierer liefert. Alle sehen zu. Fordere jemanden aus deiner Gruppe heraus. Der Verlierer muss etwas tun, filmt es, und das Video geht in die Gruppe.",
   "applicationCategory": "SocialNetworkingApplication",
-  "operatingSystem": "iOS, Web",
+  "operatingSystem": "iOS, Android, Web",
   "inLanguage": "de",
   "installUrl": "https://apps.apple.com/de/app/dealbuddy/id6763754507",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
@@ -120,7 +120,7 @@ a { color: inherit; }
 .store__d { font: var(--type-body); color: var(--fg-secondary); margin-top: var(--space-2); }
 .store__row { display: grid; gap: var(--space-3); width: 100%; max-width: 22rem; }
 .store__row .btn svg { width: 22px; height: 22px; }
-@media (min-width: 640px) { .store__row { grid-template-columns: 1fr 1fr; max-width: 30rem; } }
+@media (min-width: 640px) { .store__row { grid-template-columns: 1fr 1fr; max-width: 30rem; } .store__row .btn--secondary { grid-column: 1 / -1; } }
 @media (min-width: 900px) { .store__t { font-size: var(--display-md); letter-spacing: var(--tracking-display-lg); } }
 
 /* --- Fußzeile --- */
@@ -329,9 +329,10 @@ a { color: inherit; }
   <!-- 4 · Store -->
   <section class="wrap sec" aria-labelledby="store-t">
     <div class="store">
-      <div><h2 class="store__t" id="store-t">Hol dir die App.</h2><p class="store__d">Im Browser oder auf dem iPhone. Kostenlos.</p></div>
+      <div><h2 class="store__t" id="store-t">Hol dir die App.</h2><p class="store__d">Für iPhone, Android oder direkt im Browser. Kostenlos.</p></div>
       <div class="store__row">
         <a class="btn btn--primary" href="https://apps.apple.com/de/app/dealbuddy/id6763754507"><svg class="ic" aria-hidden="true"><use href="#i-apple"/></svg>Im App Store laden</a>
+        <a class="btn btn--primary" href="https://play.google.com/store/apps/details?id=de.dealbuddy.app"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Bei Google Play laden</a>
         <a class="btn btn--secondary" href="https://app.deal-buddy.app"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Im Browser öffnen</a>
       </div>
     </div>

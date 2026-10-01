@@ -79,6 +79,26 @@
       "source": "/gewinnspiel.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/images",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/images/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/images/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/images/index.html",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }

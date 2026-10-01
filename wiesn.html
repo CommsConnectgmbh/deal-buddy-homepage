@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Wiesn-Gewinnspiel – DealBuddy</title><link href="favicon.ico" rel="icon"/><!-- Schriften lokal, siehe /fonts/fonts.css. Vorher fonts.googleapis.com: uebertrug bei jedem Aufruf die Besucher-IP an Google in die USA, ohne Einwilligung. --><link rel="stylesheet" href="/fonts/fonts.css"/><style>
+<html lang="de"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Wiesn-Gewinnspiel beendet | DealBuddy</title><meta name="robots" content="noindex"/><link href="favicon.ico" rel="icon"/><!-- Schriften lokal, siehe /fonts/fonts.css. Vorher fonts.googleapis.com: uebertrug bei jedem Aufruf die Besucher-IP an Google in die USA, ohne Einwilligung. --><link rel="stylesheet" href="/fonts/fonts.css"/><style>
 :root{--gold:#FFB800;--gold-dim:rgba(255,184,0,0.12);--gold-glow:rgba(255,184,0,0.35);--black:#060606;--bg2:#0d0d0d;--bg3:#111;--text:#f0ece4;--muted:rgba(240,236,228,0.45);--border:rgba(255,184,0,0.1);}
 *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
 body{background:var(--black);color:var(--text);font-family:"Crimson Text",Georgia,serif;font-size:18px;overflow-x:hidden;}
@@ -132,31 +132,12 @@ footer{border-top:1px solid var(--border);padding:48px 10%;display:flex;justify-
   <a href="/datenschutz">Datenschutz <span>DSGVO</span></a>
 </div>
 
-<div class="page-wrap"><div class="page-hero"><div class="page-hero-label reveal">Gewinnspiel</div><h1 class="reveal">Eine Challenge.<br/>Zwei Pl&auml;tze im Sch&uuml;tzen-Festzelt.</h1><p class="page-hero-meta reveal">Sonntag, 27. September 2026, 18 Uhr</p></div>
+<div class="page-wrap"><div class="page-hero"><div class="page-hero-label reveal">Gewinnspiel</div><h1 class="reveal">Die Wiesn-Aktion ist beendet.</h1><p class="page-hero-meta reveal">Teilnahme war vom 14. bis 21. September 2026 m&ouml;glich</p></div>
 
 <div class="aktion">
 
-<h2>Worum es geht</h2>
-<p>Du legst bis zum <strong>21. September</strong> eine Challenge in DealBuddy an, tr&auml;gst dich hier ein, und bist dabei. Am <strong>Sonntag, 27. September, um 18 Uhr</strong> sitzen die Gewinnerin oder der Gewinner und eine Begleitperson im Sch&uuml;tzen-Festzelt auf dem Oktoberfest.</p>
-<p><strong>Das Gewinnspiel ist unabh&auml;ngig vom Ausgang deiner Challenge.</strong> Es z&auml;hlt, dass du eine anlegst, nicht ob du sie gewinnst.</p>
-
-<h2>So geht es</h2>
-<ol>
-<li>Challenge anlegen unter <a href="https://app.deal-buddy.app">app.deal-buddy.app</a>. Dauert eine Minute und braucht keinen Download.</li>
-<li>Den Link in deinen Gruppenchat schicken, damit jemand dagegenh&auml;lt.</li>
-<li>Hier eintragen, mit derselben Adresse, unter der wir dich erreichen.</li>
-</ol>
-
-<h2>Eintragen</h2>
-<form id="f" autocomplete="on">
-  <label class="feld"><span>Dein Name</span><input type="text" id="name" name="name" required minlength="2" maxlength="60" autocomplete="name" placeholder="Rainer"></label>
-  <label class="feld"><span>Deine E-Mail</span><input type="email" id="email" name="email" required autocomplete="email" placeholder="du@beispiel.de"></label>
-  <label class="feld"><span>Worum geht es in deiner Challenge? (freiwillig)</span><input type="text" id="challenge" name="challenge" maxlength="120" placeholder="Jonas schafft keine 50 Liegest&uuml;tzen"></label>
-  <label class="haken"><input type="checkbox" id="foto"><span>Ich bin einverstanden, dass mein Vorname und Fotos vom Abend ver&ouml;ffentlicht werden d&uuml;rfen, falls ich gewinne. Freiwillig, jederzeit widerrufbar, und ohne Einfluss auf die Teilnahme.</span></label>
-  <button class="knopf" id="ab" type="submit">Ich bin dabei</button>
-  <div class="meldung" id="m"></div>
-</form>
-<p class="klein" style="margin-top:22px">Teilnahme kostenlos, kein Kauf n&ouml;tig. Nur ab 18. Das Gewinnspiel l&auml;uft auf dieser Seite, nicht in der App.</p>
+<p>Danke an alle, die mitgemacht haben. Neue Teilnahmen sind nicht mehr m&ouml;glich. Die Teilnahmebedingungen stehen unten weiter zum Nachlesen bereit.</p>
+<p>Challenges unter Freunden kannst du nat&uuml;rlich weiter anlegen: <a href="https://app.deal-buddy.app">app.deal-buddy.app</a> oder &uuml;ber die <a href="/download">App</a>.</p>
 
 <h2>Teilnahmebedingungen</h2>
 <div class="tb">
@@ -214,45 +195,4 @@ document.addEventListener('keydown', (e) => {
 
 </script>
 <script src="cookie-banner.js" defer></script>
-<script>
-(function(){
-  // Die Daten gehen an die App, nicht direkt an die Datenbank: So liegt kein
-  // Zugangsschluessel in diesem Repository.
-  var ZIEL = 'https://app.deal-buddy.app/api/wiesn';
-  var f = document.getElementById('f'), m = document.getElementById('m'), ab = document.getElementById('ab');
-  var TEXTE = {
-    vorbei: 'Der Aktionszeitraum ist vorbei.',
-    zu_frueh: 'Das Gewinnspiel hat noch nicht begonnen.',
-    zu_viele: 'Gerade sehr viel los. Bitte in ein paar Minuten nochmal.',
-    eingabe: 'Bitte pruefe Namen und E-Mail-Adresse.'
-  };
-  f.addEventListener('submit', function(e){
-    e.preventDefault();
-    m.className = 'meldung'; ab.disabled = true; ab.textContent = 'Moment';
-    fetch(ZIEL, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        challenge: document.getElementById('challenge').value || null,
-        foto_ok: document.getElementById('foto').checked
-      })
-    }).then(function(r){ return r.json().then(function(d){ return {ok: r.ok, d: d}; }); })
-    .then(function(x){
-      if (x.ok && x.d && x.d.ok) {
-        m.className = 'meldung gut';
-        m.textContent = 'Drin. Wenn du gewinnst, kommt eine Mail an diese Adresse. Viel Glueck.';
-        f.reset();
-      } else {
-        m.className = 'meldung schlecht';
-        m.textContent = TEXTE[x.d && x.d.fehler] || 'Das hat nicht geklappt. Bitte versuch es nochmal.';
-      }
-    }).catch(function(){
-      m.className = 'meldung schlecht';
-      m.textContent = 'Keine Verbindung. Bitte nochmal versuchen.';
-    }).then(function(){ ab.disabled = false; ab.textContent = 'Ich bin dabei'; });
-  });
-})();
-</script>
 </body></html>
