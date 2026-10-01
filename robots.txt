@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /card
 Disallow: /gewinnspiel
 
 Sitemap: https://www.deal-buddy.app/sitemap.xml

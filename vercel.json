@@ -149,6 +149,16 @@
       "source": "/creator/index.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/card",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/card.html",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
