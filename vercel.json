@@ -159,6 +159,11 @@
       "source": "/card.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/wiesn",
+      "destination": "/",
+      "permanent": false
     }
   ]
 }
